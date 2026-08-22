@@ -1,0 +1,58 @@
+:root {
+  color-scheme: dark;
+  font-family:
+    'Segoe UI',
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg, #0d0f13);
+  color: var(--text, #e7eaf1);
+  min-height: 100vh;
+}
+
+/* 悬浮球窗口:页面背景透明,透出桌面;球体/面板自带背景 */
+body.float-mode,
+body.float-mode #app {
+  background: transparent;
+  min-height: 0;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+/* ---------- 无边框窗口(titleBarStyle: hidden)的拖拽区 ---------- */
+/* 页面头部等整条区域可拖动窗口;内部交互控件一律 no-drag */
+.drag-region {
+  -webkit-app-region: drag;
+}
+
+/* drag-head 额外在右侧预留 caption overlay(min/max/close)的位置 */
+.drag-head {
+  -webkit-app-region: drag;
+  padding-right: 140px;
+}
+
+.drag-region button,
+.drag-region a,
+.drag-region input,
+.drag-region select,
+.drag-region label,
+.drag-region .no-drag,
+.drag-head button,
+.drag-head a,
+.drag-head input,
+.drag-head select,
+.drag-head label,
+.drag-head .no-drag {
+  -webkit-app-region: no-drag;
+}

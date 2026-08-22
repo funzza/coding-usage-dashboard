@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Usage — B · Console</title>
+<style>
+  :root {
+    --bg: #0a0c10;
+    --bg-panel: #0c0f14;
+    --line: #1a1f28;
+    --line-strong: #242b36;
+    --text: #d7dde5;
+    --text-dim: #8b94a1;
+    --label: #5c6673;
+    --green: #7ee787;
+    --amber: #f0b429;
+    --red: #ff7b72;
+    --mono: "Cascadia Mono", "JetBrains Mono", Consolas, monospace;
+    --sans: "Segoe UI Variable", "Segoe UI", system-ui, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; overflow: hidden; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 12px;
+    display: flex;
+    -webkit-font-smoothing: antialiased;
+  }
+  .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .microlabel {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--label);
+    font-weight: 600;
+  }
+
+  /* ============ SIDEBAR ============ */
+  .sidebar {
+    width: 236px;
+    flex: none;
+    background: var(--bg-panel);
+    border-right: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+  }
+  .brand {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 20px;
+    border-bottom: 1px solid var(--line);
+  }
+  .brand-mark {
+    width: 14px; height: 14px;
+    background: var(--green);
+    clip-path: polygon(0 0, 100% 0, 100% 65%, 65% 100%, 0 100%);
+  }
+  .brand-name { font-size: 14px; font-weight: 600; letter-spacing: 0.02em; }
+  .brand-tag { margin-left: auto; font-size: 9px; color: var(--label); font-family: var(--mono); }
+  .nav { padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .nav-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 34px;
+    padding: 0 20px;
+    font-size: 12.5px;
+    color: var(--text-dim);
+  }
+  .nav-item.active {
+    color: var(--text);
+    background: #10141b;
+    font-weight: 600;
+  }
+  .nav-item.active::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: var(--green);
+  }
+  .nav-item .kbd { margin-left: auto; font-family: var(--mono); font-size: 10px; color: var(--label); }
+  .side-section { padding: 14px 20px 6px; display: flex; align-items: baseline; }
+  .side-section .microlabel { flex: 1; }
+  .side-section .mono { font-size: 10px; color: var(--label); }
+  .agent-row {
+    display: flex;
+    align-items: center;
+    height: 30px;
+    padding: 0 20px;
+    font-size: 12px;
+  }
+  .agent-row .dot { width: 7px; height: 7px; border-radius: 50%; margin-right: 10px; flex: none; }
+  .agent-row .name { color: var(--text-dim); }
+  .agent-row .val { margin-left: auto; font-family: var(--mono); font-size: 12px; color: var(--text); font-variant-numeric: tabular-nums; }
+  .agent-row .val.dim { color: var(--label); }
+  .side-spacer { flex: 1; }
+  .alert-box {
+    margin: 4px 14px 0;
+    border: 1px solid rgba(255,123,114,.28);
+    border-left: 2px solid var(--red);
+    background: rgba(255,123,114,.05);
+    padding: 8px 10px;
+  }
+  .alert-line { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.04em; color: var(--text); }
+  .alert-sub { font-family: var(--mono); font-size: 9px; letter-spacing: 0.06em; color: var(--label); margin-top: 3px; }
+  .side-bottom { border-top: 1px solid var(--line); }
+  .side-action {
+    display: flex;
+    align-items: center;
+    height: 36px;
+    padding: 0 20px;
+    color: var(--text-dim);
+    font-size: 12.5px;
+    gap: 10px;
+  }
+  .side-action .mono { margin-left: auto; font-size: 10px; color: var(--label); }
+  .side-updated {
+    padding: 10px 20px 14px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--label);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px rgba(126,231,135,.7); }
+
+  /* ============ MAIN ============ */
+  .main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+
+  .topbar {
+    height: 60px;
+    flex: none;
+    display: flex;
+    align-items: center;
+    padding: 0 28px;
+    border-bottom: 1px solid var(--line);
+    gap: 16px;
+  }
+  .topbar h1 { font-size: 16px; font-weight: 600; letter-spacing: 0.01em; }
+  .topbar .crumb { font-family: var(--mono); font-size: 10px; color: var(--label); }
+  .seg {
+    margin-left: auto;
+    display: flex;
+    border: 1px solid var(--line-strong);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .seg button {
+    appearance: none;
+    border: none;
+    background: transparent;
+    color: var(--text-dim);
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 7px 14px;
+    cursor: default;
+    border-right: 1px solid var(--line);
+  }
+  .seg button:last-child { border-right: none; }
+  .seg button.on { background: #1a2230; color: var(--text); }
+
+  /* ---- KPI strip ---- */
+  .kpis {
+    flex: none;
+    display: grid;
+    grid-template-columns: 1.15fr 1fr 1fr 1fr 1fr 1fr;
+    border-bottom: 1px solid var(--line);
+  }
+  .kpi {
+    padding: 14px 18px 12px;
+    border-right: 1px solid var(--line);
+    min-width: 0;
+  }
+  .kpi:last-child { border-right: none; }
+  .kpi-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 6px; }
+  .kpi-head .delta { font-family: var(--mono); font-size: 9.5px; color: var(--label); }
+  .kpi-num {
+    font-family: var(--mono);
+    font-size: 25px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.1;
+    white-space: nowrap;
+  }
+  .kpi-num .unit { font-size: 15px; color: var(--text-dim); }
+  .kpi-sub { font-family: var(--mono); font-size: 10px; color: var(--label); margin-top: 2px; white-space: nowrap; }
+  .kpi-sub .g { color: var(--green); }
+  .kpi-sub .v { color: #a78bfa; }
+  .kpi svg { display: block; width: 100%; height: 26px; margin-top: 8px; }
+
+  /* ---- Subscriptions ---- */
+  .subs { flex: none; border-bottom: 1px solid var(--line); }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    padding: 12px 28px 0;
+    gap: 14px;
+  }
+  .section-head .meta { margin-left: auto; font-family: var(--mono); font-size: 10px; color: var(--label); }
+  table.sub-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .sub-table th {
+    text-align: left;
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--label);
+    font-weight: 600;
+    padding: 5px 12px 5px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .sub-table th:first-child { padding-left: 28px; }
+  .sub-table th:last-child { padding-right: 28px; }
+  .sub-table td {
+    padding: 0 12px 0 0;
+    height: 33px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: middle;
+    font-size: 12px;
+  }
+  .sub-table td:first-child { padding-left: 28px; }
+  .sub-table td:last-child { padding-right: 28px; }
+  .sub-table tr.group-last td { border-bottom: 1px solid var(--line-strong); }
+  .sub-table tr:last-child td { border-bottom: none; }
+  .c-provider { width: 168px; }
+  .c-window { width: 78px; }
+  .c-bar { width: auto; }
+  .c-pct { width: 58px; }
+  .c-reset { width: 86px; }
+  .c-tokens { width: 108px; }
+  .sub-provider { display: flex; align-items: center; gap: 9px; font-weight: 600; font-size: 12.5px; }
+  .sub-provider .dot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
+  .sub-provider .tier {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--label);
+    border: 1px solid var(--line-strong);
+    border-radius: 2px;
+    padding: 1px 5px;
+  }
+  .win { font-family: var(--mono); font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; }
+  .bar { position: relative; height: 4px; background: #161b23; border-radius: 2px; margin-right: 12px; }
+  .bar .fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 2px; }
+  .num { font-family: var(--mono); text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .pct { font-size: 12.5px; font-weight: 600; }
+  .reset { font-size: 11.5px; color: var(--text-dim); }
+  .tok { font-size: 12.5px; }
+  .alert { color: var(--red); }
+  .ok { color: var(--green); }
+  .warn { color: var(--amber); }
+  .muted { color: var(--label); }
+
+  /* ---- Trend ---- */
+  .trend { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+  .trend-head {
+    flex: none;
+    display: flex;
+    align-items: center;
+    padding: 12px 28px 0;
+    gap: 14px;
+  }
+  .trend-head .seg { margin-left: 0; }
+  .legend { margin-left: auto; display: flex; gap: 14px; align-items: center; }
+  .legend .item { display: flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 10px; color: var(--text-dim); }
+  .legend .sw { width: 8px; height: 8px; border-radius: 1px; }
+  .trend-readout { font-family: var(--mono); font-size: 10px; color: var(--label); }
+  .trend-readout b { color: var(--text); font-weight: 600; }
+  .chart-wrap { flex: 1; padding: 6px 20px 4px; min-height: 0; }
+  .chart-wrap svg { width: 100%; height: 100%; display: block; }
+
+  /* ---- Status bar ---- */
+  .statusbar {
+    flex: none;
+    height: 26px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    padding: 0 28px;
+    gap: 18px;
+    font-family: var(--mono);
+    font-size: 9.5px;
+    color: var(--label);
+    letter-spacing: 0.04em;
+  }
+  .statusbar .sep { color: var(--line-strong); }
+  .statusbar .right { margin-left: auto; display: flex; gap: 18px; }
+</style>
+</head>
+<body>
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark"></div>
+      <div class="brand-name">Usage</div>
+      <div class="brand-tag">v0.9.4</div>
+    </div>
+    <nav class="nav">
+      <div class="nav-item active">Overview<span class="kbd">1</span></div>
+      <div class="nav-item">Sessions<span class="kbd">2</span></div>
+    </nav>
+    <div class="side-section">
+      <span class="microlabel">Agents · Today</span>
+      <span class="mono">6 SRC</span>
+    </div>
+    <div class="agent-row"><span class="dot" style="background:#f6bd16"></span><span class="name">Claude</span><span class="val">162.04M</span></div>
+    <div class="agent-row"><span class="dot" style="background:#fb923c"></span><span class="name">Kimi</span><span class="val">83.63M</span></div>
+    <div class="agent-row"><span class="dot" style="background:#34d399"></span><span class="name">Opencode</span><span class="val">46.92M</span></div>
+    <div class="agent-row"><span class="dot" style="background:#5ad8a6"></span><span class="name">Codex</span><span class="val">26.63M</span></div>
+    <div class="agent-row"><span class="dot" style="background:#a78bfa"></span><span class="name">Grok</span><span class="val">994.9K</span></div>
+    <div class="agent-row"><span class="dot" style="background:#2dd4bf"></span><span class="name">Pi</span><span class="val dim">—</span></div>
+    <div class="side-section" style="margin-top:14px;border-top:1px solid var(--line)">
+      <span class="microlabel">Alerts</span>
+      <span class="mono" style="color:var(--red)">1 ACTIVE</span>
+    </div>
+    <div class="alert-box">
+      <div class="alert-line"><span class="alert">▲</span> GROK WEEKLY <span class="alert mono">100%</span></div>
+      <div class="alert-sub">LIMIT REACHED</div>
+      <div class="alert-sub">RESETS IN 22H 35M</div>
+    </div>
+    <div class="side-spacer"></div>
+    <div class="side-bottom">
+      <div class="side-action">Settings<span class="mono">CTRL+,</span></div>
+      <div class="side-action">Refresh<span class="mono">F5</span></div>
+      <div class="side-updated"><span class="pulse"></span>UPDATED 21:21:45</div>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN ================= -->
+  <div class="main">
+
+    <div class="topbar">
+      <h1>Overview</h1>
+      <span class="crumb">/ token-usage / local</span>
+      <div class="seg">
+        <button>Today</button>
+        <button>7D</button>
+        <button class="on">30D</button>
+        <button>All</button>
+      </div>
+    </div>
+
+    <!-- KPI strip -->
+    <div class="kpis" id="kpis">
+      <div class="kpi">
+        <div class="kpi-head"><span class="microlabel">Total Tokens · 30D</span><span class="delta">$3365</span></div>
+        <div class="kpi-num">6.64<span class="unit">B</span></div>
+        <div class="kpi-sub"><span class="g">NEW 595.26M</span> · <span class="v">CACHED 6.04B</span></div>
+        <svg data-spark="total" data-color="#7ee787" viewBox="0 0 200 26" preserveAspectRatio="none"></svg>
+      </div>
+      <div class="kpi">
+        <div class="kpi-head"><span class="microlabel">Input</span><span class="delta">8.2%</span></div>
+        <div class="kpi-num">543.92<span class="unit">M</span></div>
+        <div class="kpi-sub">&nbsp;</div>
+        <svg data-spark="input" data-color="#79b8ff" viewBox="0 0 200 26" preserveAspectRatio="none"></svg>
+      </div>
+      <div class="kpi">
+        <div class="kpi-head"><span class="microlabel">Output</span><span class="delta">0.5%</span></div>
+        <div class="kpi-num">34.21<span class="unit">M</span></div>
+        <div class="kpi-sub">&nbsp;</div>
+        <svg data-spark="output" data-color="#5ad8a6" viewBox="0 0 200 26" preserveAspectRatio="none"></svg>
+      </div>
+      <div class="kpi">
+        <div class="kpi-head"><span class="microlabel">Cache Creation</span><span class="delta">0.3%</span></div>
+        <div class="kpi-num">17.13<span class="unit">M</span></div>
+        <div class="kpi-sub">&nbsp;</div>
+        <svg data-spark="create" data-color="#f0b429" viewBox="0 0 200 26" preserveAspectRatio="none"></svg>
+      </div>
+      <div class="kpi">
+        <div class="kpi-head"><span class="microlabel">Cache Read</span><span class="delta">91.0%</span></div>
+        <div class="kpi-num">6.04<span class="unit">B</span></div>
+        <div class="kpi-sub">&nbsp;</div>
+        <svg data-spark="read" data-color="#a78bfa" viewBox="0 0 200 26" preserveAspectRatio="none"></svg>
+      </div>
+      <div class="kpi">
+        <div class="kpi-head"><span class="microlabel">Cached Input Share</span><span class="delta ok">▲ 1.2</span></div>
+        <div class="kpi-num" style="color:var(--green)">91.7<span class="unit">%</span></div>
+        <div class="kpi-sub">&nbsp;</div>
+        <svg data-spark="share" data-color="#7ee787" viewBox="0 0 200 26" preserveAspectRatio="none"></svg>
+      </div>
+    </div>
+
+    <!-- Subscriptions -->
+    <section class="subs">
+      <div class="section-head">
+        <span class="microlabel">Subscriptions</span>
+        <span class="meta">4 PROVIDERS · 8 WINDOWS · 1 LIMIT REACHED</span>
+      </div>
+      <table class="sub-table">
+        <thead>
+          <tr>
+            <th class="c-provider">Provider</th>
+            <th class="c-window">Window</th>
+            <th class="c-bar">Usage</th>
+            <th class="c-pct" style="text-align:right">%</th>
+            <th class="c-reset" style="text-align:right">Reset In</th>
+            <th class="c-tokens" style="text-align:right">This Cycle</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td rowspan="2"><div class="sub-provider"><span class="dot" style="background:#fb923c"></span>Kimi</div></td>
+            <td><span class="win">Weekly</span></td>
+            <td><div class="bar"><div class="fill" style="width:38%;background:var(--green)"></div></div></td>
+            <td class="num pct">38%</td>
+            <td class="num reset">6d 12h</td>
+            <td class="num tok">318.44M</td>
+          </tr>
+          <tr class="group-last">
+            <td><span class="win">5h</span></td>
+            <td><div class="bar"><div class="fill" style="width:18%;background:var(--green)"></div></div></td>
+            <td class="num pct">18%</td>
+            <td class="num reset">3h 3m</td>
+            <td class="num tok muted">—</td>
+          </tr>
+          <tr>
+            <td rowspan="2"><div class="sub-provider"><span class="dot" style="background:#5ad8a6"></span>ChatGPT<span class="tier">plus</span></div></td>
+            <td><span class="win">Weekly</span></td>
+            <td><div class="bar"><div class="fill" style="width:41%;background:var(--green)"></div></div></td>
+            <td class="num pct">41%</td>
+            <td class="num reset">5d 14h</td>
+            <td class="num tok">892.39M</td>
+          </tr>
+          <tr class="group-last">
+            <td><span class="win">Credits</span></td>
+            <td><div class="bar"></div></td>
+            <td class="num pct muted">—</td>
+            <td class="num reset muted">—</td>
+            <td class="num tok warn">$178.75</td>
+          </tr>
+          <tr>
+            <td rowspan="3"><div class="sub-provider"><span class="dot" style="background:#34d399"></span>OpenCode<span class="tier">go</span></div></td>
+            <td><span class="win">5h</span></td>
+            <td><div class="bar"><div class="fill" style="width:0.5%;background:var(--green)"></div></div></td>
+            <td class="num pct">0%</td>
+            <td class="num reset">4h 59m</td>
+            <td class="num tok muted">—</td>
+          </tr>
+          <tr>
+            <td><span class="win">Weekly</span></td>
+            <td><div class="bar"><div class="fill" style="width:21%;background:var(--green)"></div></div></td>
+            <td class="num pct">21%</td>
+            <td class="num reset">2d 10h</td>
+            <td class="num tok">1.57B</td>
+          </tr>
+          <tr class="group-last">
+            <td><span class="win">Monthly</span></td>
+            <td><div class="bar"><div class="fill" style="width:38%;background:var(--green)"></div></div></td>
+            <td class="num pct">38%</td>
+            <td class="num reset">15d 14h</td>
+            <td class="num tok">3.18B</td>
+          </tr>
+          <tr>
+            <td><div class="sub-provider"><span class="dot" style="background:#a78bfa"></span>Grok<span class="tier">super</span></div></td>
+            <td><span class="win alert">Weekly</span></td>
+            <td><div class="bar"><div class="fill" style="width:100%;background:var(--red)"></div></div></td>
+            <td class="num pct alert">100%</td>
+            <td class="num reset alert">22h 35m</td>
+            <td class="num tok alert">1.71B</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Trend -->
+    <section class="trend">
+      <div class="trend-head">
+        <span class="microlabel">Token Usage Trend</span>
+        <span class="trend-readout">LAST <b>8/21</b> · <b>318.00M</b></span>
+        <div style="flex:1"></div>
+        <div class="seg">
+          <button class="on">By Agent</button>
+          <button>By Model</button>
+        </div>
+        <div class="seg">
+          <button class="on">Day</button>
+          <button>Week</button>
+          <button>Month</button>
+        </div>
+        <div class="legend">
+          <span class="item"><span class="sw" style="background:#f6bd16"></span>claude</span>
+          <span class="item"><span class="sw" style="background:#5ad8a6"></span>codex</span>
+          <span class="item"><span class="sw" style="background:#a78bfa"></span>grok</span>
+          <span class="item"><span class="sw" style="background:#34d399"></span>opencode</span>
+          <span class="item"><span class="sw" style="background:#2dd4bf"></span>pi</span>
+          <span class="item"><span class="sw" style="background:#fb923c"></span>kimi</span>
+        </div>
+      </div>
+      <div class="chart-wrap">
+        <svg id="chart" viewBox="0 0 1380 460" preserveAspectRatio="none"></svg>
+      </div>
+    </section>
+
+    <div class="statusbar">
+      <span>RANGE 30D</span><span class="sep">|</span>
+      <span>6 AGENTS</span><span class="sep">|</span>
+      <span>SOURCE ~/.claude · ~/.kimi · ~/.codex …</span>
+      <div class="right">
+        <span style="color:var(--green)">● PARSE OK</span>
+        <span>UPDATED 21:21:45</span>
+      </div>
+    </div>
+  </div>
+
+<script>
+(function () {
+  var daily = [210,180,260,150,90,320,410,380,295,240,180,510,560,430,390,210,170,460,520,610,480,350,290,200,430,540,590,460,410,318];
+
+  /* ---------- KPI sparklines (30 pts each) ---------- */
+  var factors = { total: 1, input: 0.082, output: 0.00515, create: 0.00258, read: 0.91 };
+  function series(name) {
+    if (name === 'share') {
+      return daily.map(function (v, i) { return 88.4 + Math.sin(i * 0.9) * 1.1 + (i > 20 ? 1.6 : i > 10 ? 0.8 : 0); });
+    }
+    var f = factors[name];
+    return daily.map(function (v, i) { return v * f * (1 + Math.sin(i * 1.7) * 0.06); });
+  }
+  document.querySelectorAll('svg[data-spark]').forEach(function (svg) {
+    var data = series(svg.getAttribute('data-spark'));
+    var color = svg.getAttribute('data-color');
+    var W = 200, H = 26, pad = 2;
+    var min = Math.min.apply(null, data), max = Math.max.apply(null, data);
+    var span = (max - min) || 1;
+    var pts = data.map(function (v, i) {
+      var x = (i / (data.length - 1)) * W;
+      var y = H - pad - ((v - min) / span) * (H - pad * 2);
+      return [x, y];
+    });
+    var line = pts.map(function (p, i) { return (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' ');
+    var area = line + ' L' + W + ' ' + H + ' L0 ' + H + ' Z';
+    var last = pts[pts.length - 1];
+    svg.innerHTML =
+      '<path d="' + area + '" fill="' + color + '" fill-opacity="0.10"></path>' +
+      '<path d="' + line + '" fill="none" stroke="' + color + '" stroke-opacity="0.75" stroke-width="1.3"></path>' +
+      '<circle cx="' + last[0].toFixed(1) + '" cy="' + last[1].toFixed(1) + '" r="2" fill="' + color + '"></circle>';
+  });
+
+  /* ---------- Trend stacked bars ---------- */
+  var svg = document.getElementById('chart');
+  var NS = 'http://www.w3.org/2000/svg';
+  var W = 1380, H = 460;
+  var mL = 46, mR = 10, mT = 12, mB = 26;
+  var plotW = W - mL - mR, plotH = H - mT - mB;
+  var yMax = 700;
+  var layers = [
+    { k: 'claude',   share: 0.45, c: '#f6bd16' },
+    { k: 'kimi',     share: 0.20, c: '#fb923c' },
+    { k: 'opencode', share: 0.15, c: '#34d399' },
+    { k: 'codex',    share: 0.12, c: '#5ad8a6' },
+    { k: 'grok',     share: 0.05, c: '#a78bfa' },
+    { k: 'pi',       share: 0.03, c: '#2dd4bf' }
+  ];
+  function el(tag, attrs) {
+    var n = document.createElementNS(NS, tag);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    return n;
+  }
+  var html = '';
+  // gridlines
+  [0, 200, 400, 600].forEach(function (g) {
+    var y = mT + plotH - (g / yMax) * plotH;
+    html += '<line x1="' + mL + '" y1="' + y + '" x2="' + (W - mR) + '" y2="' + y + '" stroke="#1a1f28" stroke-width="1"/>';
+    if (g > 0) {
+      html += '<text x="' + (mL - 8) + '" y="' + (y + 3) + '" text-anchor="end" font-family="Cascadia Mono, Consolas, monospace" font-size="10" fill="#5c6673">' + g + 'M</text>';
+    }
+  });
+  // x tick verticals (behind bars)
+  var xticks = [[0, '7/23'], [9, '8/1'], [16, '8/8'], [23, '8/15'], [29, '8/21']];
+  var slot = plotW / daily.length;
+  var bw = slot * 0.62;
+  xticks.forEach(function (t) {
+    var x = mL + t[0] * slot + slot / 2;
+    html += '<line x1="' + x.toFixed(1) + '" y1="' + mT + '" x2="' + x.toFixed(1) + '" y2="' + (mT + plotH) + '" stroke="#141922" stroke-width="1"/>';
+  });
+  // bars
+  daily.forEach(function (v, i) {
+    var x = mL + i * slot + (slot - bw) / 2;
+    var acc = 0;
+    layers.forEach(function (L) {
+      var h = (v * L.share / yMax) * plotH;
+      var y = mT + plotH - ((acc + v * L.share) / yMax) * plotH;
+      html += '<rect x="' + x.toFixed(2) + '" y="' + y.toFixed(2) + '" width="' + bw.toFixed(2) + '" height="' + Math.max(h, 0.5).toFixed(2) + '" fill="' + L.c + '"/>';
+      acc += v * L.share;
+    });
+  });
+  // x labels
+  xticks.forEach(function (t) {
+    var x = mL + t[0] * slot + slot / 2;
+    html += '<text x="' + x.toFixed(1) + '" y="' + (H - 8) + '" text-anchor="middle" font-family="Cascadia Mono, Consolas, monospace" font-size="10" fill="#5c6673">' + t[1] + '</text>';
+  });
+  // baseline
+  html += '<line x1="' + mL + '" y1="' + (mT + plotH) + '" x2="' + (W - mR) + '" y2="' + (mT + plotH) + '" stroke="#242b36" stroke-width="1"/>';
+  svg.innerHTML = html;
+})();
+</script>
+</body>
+</html>

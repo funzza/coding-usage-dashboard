@@ -1,0 +1,32 @@
+{
+  "name": "coding-usage-dashboard",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Windows desktop dashboard on top of the locally installed ccusage CLI",
+  "main": "out/main/index.js",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "dist": "npm run build && electron-builder",
+    "start": "electron-vite preview",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "screenshot": "electron scripts/screenshot.cjs"
+  },
+  "dependencies": {
+    "echarts": "^6.1.0",
+    "pinia": "^4.0.3",
+    "vue": "^3.5.41",
+    "vue-echarts": "^8.1.0",
+    "vue-router": "^5.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.2.0",
+    "@vitejs/plugin-vue": "^6.0.8",
+    "electron": "^43.4.1",
+    "electron-builder": "^26.15.3",
+    "electron-vite": "^5.0.0",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.11"
+  }
+}

@@ -1,0 +1,22 @@
+appId: com.codingusagedashboard.app
+productName: Coding Usage Dashboard
+copyright: Copyright © 2026
+
+directories:
+  output: dist
+
+# 只打构建产物;ccusage 等数据源是运行时外部依赖,不入包
+files:
+  - out/**
+  - package.json
+
+win:
+  target: nsis
+  icon: resources/icon.png
+
+nsis:
+  oneClick: true
+  perMachine: false
+  allowToChangeInstallationDirectory: false
+  runAfterFinish: true
+  shortcutName: Coding Usage Dashboard

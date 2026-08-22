@@ -1,0 +1,1810 @@
+{
+  "session": [
+    {
+      "agent": "codex",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 15982848,
+      "inputTokens": 821868,
+      "metadata": {
+        "lastActivity": "2026-08-21T12:44:48.243Z",
+        "reasoningOutputTokens": 52709
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 15982848,
+          "cost": 15.802614,
+          "inputTokens": 821868,
+          "modelName": "gpt-5.6-sol",
+          "outputTokens": 123395
+        }
+      ],
+      "modelsUsed": [
+        "gpt-5.6-sol"
+      ],
+      "outputTokens": 123395,
+      "period": "2026/08/21/rollout-2026-08-21T12-23-17-01a0228f-1332-77b0-88aa-dfe2377cf618",
+      "totalCost": 15.802614,
+      "totalTokens": 16928111
+    },
+    {
+      "agent": "opencode",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 4375232,
+      "inputTokens": 326142,
+      "metadata": {
+        "lastActivity": "2026-08-21T09:13:07.170Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 2336512,
+          "cost": 0.060904264,
+          "inputTokens": 132627,
+          "modelName": "deepseek-v4-flash",
+          "outputTokens": 23289
+        },
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 166720,
+          "cost": 0,
+          "inputTokens": 48086,
+          "modelName": "x-preview-f-free",
+          "outputTokens": 17560
+        },
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 1872000,
+          "cost": 0,
+          "inputTokens": 145429,
+          "modelName": "ox-alpha-free",
+          "outputTokens": 7567
+        }
+      ],
+      "modelsUsed": [
+        "x-preview-f-free",
+        "deepseek-v4-flash",
+        "ox-alpha-free"
+      ],
+      "outputTokens": 48416,
+      "period": "ses_fdd11bd06ffebTB8XAPasI6nmX",
+      "totalCost": 0.060904264,
+      "totalTokens": 4752335
+    },
+    {
+      "agent": "claude",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 42908856,
+      "inputTokens": 43449044,
+      "metadata": {
+        "lastActivity": "2026-08-21T07:31:02.136Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 42908856,
+          "cost": 4.476030111999998,
+          "inputTokens": 43449044,
+          "modelName": "muse-spark-1.2-contributor",
+          "outputTokens": 226540
+        }
+      ],
+      "modelsUsed": [
+        "muse-spark-1.2-contributor"
+      ],
+      "outputTokens": 226540,
+      "period": "e9924289-57f7-4115-aee8-8ed463aa7487",
+      "totalCost": 4.476030111999998,
+      "totalTokens": 86584440
+    },
+    {
+      "agent": "opencode",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 523520,
+      "inputTokens": 58764,
+      "metadata": {
+        "lastActivity": "2026-08-21T07:23:57.378Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 523520,
+          "cost": 0.02423882,
+          "inputTokens": 58764,
+          "modelName": "deepseek-v4-flash",
+          "outputTokens": 11585
+        }
+      ],
+      "modelsUsed": [
+        "deepseek-v4-flash"
+      ],
+      "outputTokens": 11585,
+      "period": "ses_fdcd10162ffePvNmc1SzUF4kJe",
+      "totalCost": 0.02423882,
+      "totalTokens": 593869
+    },
+    {
+      "agent": "opencode",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 1102528,
+      "inputTokens": 83204,
+      "metadata": {
+        "lastActivity": "2026-08-21T07:11:06.343Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 1102528,
+          "cost": 0,
+          "inputTokens": 83204,
+          "modelName": "x-preview-f-free",
+          "outputTokens": 8463
+        }
+      ],
+      "modelsUsed": [
+        "x-preview-f-free"
+      ],
+      "outputTokens": 8463,
+      "period": "ses_fdcdfce23ffeaqP1ZaAdOjscdE",
+      "totalCost": 0,
+      "totalTokens": 1195964
+    },
+    {
+      "agent": "opencode",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 1215360,
+      "inputTokens": 78051,
+      "metadata": {
+        "lastActivity": "2026-08-21T07:01:11.886Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 1215360,
+          "cost": 0,
+          "inputTokens": 78051,
+          "modelName": "x-preview-f-free",
+          "outputTokens": 18109
+        }
+      ],
+      "modelsUsed": [
+        "x-preview-f-free"
+      ],
+      "outputTokens": 18109,
+      "period": "ses_fdce9decbffeH67qaA8BzifAp1",
+      "totalCost": 0,
+      "totalTokens": 1315319
+    },
+    {
+      "agent": "opencode",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 2632960,
+      "inputTokens": 77687,
+      "metadata": {
+        "lastActivity": "2026-08-21T06:49:51.381Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 2632960,
+          "cost": 0,
+          "inputTokens": 77687,
+          "modelName": "x-preview-f-free",
+          "outputTokens": 18127
+        }
+      ],
+      "modelsUsed": [
+        "x-preview-f-free"
+      ],
+      "outputTokens": 18127,
+      "period": "ses_fdcf99938ffeaJ72PtPEYZN7RL",
+      "totalCost": 0,
+      "totalTokens": 2732001
+    },
+    {
+      "agent": "opencode",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 2355840,
+      "inputTokens": 152804,
+      "metadata": {
+        "lastActivity": "2026-08-21T06:48:02.139Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 2355840,
+          "cost": 0,
+          "inputTokens": 152804,
+          "modelName": "x-preview-f-free",
+          "outputTokens": 22214
+        }
+      ],
+      "modelsUsed": [
+        "x-preview-f-free"
+      ],
+      "outputTokens": 22214,
+      "period": "ses_fdcf9633dffeYCRDgNYZas9Fye",
+      "totalCost": 0,
+      "totalTokens": 2537226
+    },
+    {
+      "agent": "opencode",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 1720640,
+      "inputTokens": 95085,
+      "metadata": {
+        "lastActivity": "2026-08-21T06:32:18.568Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 1720640,
+          "cost": 0,
+          "inputTokens": 95085,
+          "modelName": "x-preview-f-free",
+          "outputTokens": 15689
+        }
+      ],
+      "modelsUsed": [
+        "x-preview-f-free"
+      ],
+      "outputTokens": 15689,
+      "period": "ses_fdd0e92c1ffeZi2v0v3sp2EaVk",
+      "totalCost": 0,
+      "totalTokens": 1834475
+    },
+    {
+      "agent": "opencode",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 1187264,
+      "inputTokens": 75403,
+      "metadata": {
+        "lastActivity": "2026-08-21T06:19:19.711Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 1187264,
+          "cost": 0,
+          "inputTokens": 75403,
+          "modelName": "x-preview-f-free",
+          "outputTokens": 9507
+        }
+      ],
+      "modelsUsed": [
+        "x-preview-f-free"
+      ],
+      "outputTokens": 9507,
+      "period": "ses_fdd0df0f5ffe0TVNNqSWt7NRdI",
+      "totalCost": 0,
+      "totalTokens": 1274157
+    },
+    {
+      "agent": "opencode",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 43968,
+      "inputTokens": 4550,
+      "metadata": {
+        "lastActivity": "2026-08-21T06:13:06.158Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 43968,
+          "cost": 0,
+          "inputTokens": 4550,
+          "modelName": "x-preview-f-free",
+          "outputTokens": 2837
+        }
+      ],
+      "modelsUsed": [
+        "x-preview-f-free"
+      ],
+      "outputTokens": 2837,
+      "period": "ses_fdd0dafcbffeV61mU7qVtPG6JK",
+      "totalCost": 0,
+      "totalTokens": 52230
+    },
+    {
+      "agent": "claude",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 1805043,
+      "inputTokens": 1806180,
+      "metadata": {
+        "lastActivity": "2026-08-21T04:26:39.241Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 1805043,
+          "cost": 0.19236128600000005,
+          "inputTokens": 1806180,
+          "modelName": "muse-spark-1.2-contributor",
+          "outputTokens": 40666
+        }
+      ],
+      "modelsUsed": [
+        "muse-spark-1.2-contributor"
+      ],
+      "outputTokens": 40666,
+      "period": "6da27a2c-df66-4526-bfca-bce5d3e1963c",
+      "totalCost": 0.19236128600000005,
+      "totalTokens": 3651889
+    },
+    {
+      "agent": "claude",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 5990385,
+      "inputTokens": 5992392,
+      "metadata": {
+        "lastActivity": "2026-08-21T04:00:22.828Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 5990385,
+          "cost": 0.61981377,
+          "inputTokens": 5992392,
+          "modelName": "muse-spark-1.2-contributor",
+          "outputTokens": 42969
+        }
+      ],
+      "modelsUsed": [
+        "muse-spark-1.2-contributor"
+      ],
+      "outputTokens": 42969,
+      "period": "07d03de6-0425-4a50-bfaa-45ca0ed2cc61",
+      "totalCost": 0.61981377,
+      "totalTokens": 12025746
+    },
+    {
+      "agent": "codex",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 3135232,
+      "inputTokens": 207674,
+      "metadata": {
+        "lastActivity": "2026-08-21T03:53:08.451Z",
+        "reasoningOutputTokens": 16904
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 3135232,
+          "cost": 3.716766,
+          "inputTokens": 207674,
+          "modelName": "gpt-5.6-sol",
+          "outputTokens": 37026
+        }
+      ],
+      "modelsUsed": [
+        "gpt-5.6-sol"
+      ],
+      "outputTokens": 37026,
+      "period": "2026/08/21/rollout-2026-08-21T10-35-11-01a0222c-1c09-7370-8a27-fdb14b507270",
+      "totalCost": 3.716766,
+      "totalTokens": 3379932
+    },
+    {
+      "agent": "claude",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 29762168,
+      "inputTokens": 29890854,
+      "metadata": {
+        "lastActivity": "2026-08-21T03:24:25.589Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 29762168,
+          "cost": 3.073911135999999,
+          "inputTokens": 29890854,
+          "modelName": "muse-spark-1.2-contributor",
+          "outputTokens": 126507
+        }
+      ],
+      "modelsUsed": [
+        "muse-spark-1.2-contributor"
+      ],
+      "outputTokens": 126507,
+      "period": "1fd41359-36b6-46bc-b836-9b0b94d6f78b",
+      "totalCost": 3.073911135999999,
+      "totalTokens": 59779529
+    },
+    {
+      "agent": "codex",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 5141504,
+      "inputTokens": 276125,
+      "metadata": {
+        "lastActivity": "2026-08-21T03:19:59.507Z",
+        "reasoningOutputTokens": 8598
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 5141504,
+          "cost": 4.676687,
+          "inputTokens": 276125,
+          "modelName": "gpt-5.6-sol",
+          "outputTokens": 24177
+        }
+      ],
+      "modelsUsed": [
+        "gpt-5.6-sol"
+      ],
+      "outputTokens": 24177,
+      "period": "2026/08/21/rollout-2026-08-21T10-17-44-01a0221c-248a-7c70-9914-822f7b054a07",
+      "totalCost": 4.676687,
+      "totalTokens": 5441806
+    },
+    {
+      "agent": "opencode",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 17383509,
+      "inputTokens": 827510,
+      "metadata": {
+        "lastActivity": "2026-08-21T03:13:25.910Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 17383509,
+          "cost": 0.130788218,
+          "inputTokens": 827510,
+          "modelName": "muse-spark-1.2-contributor",
+          "outputTokens": 49358
+        }
+      ],
+      "modelsUsed": [
+        "muse-spark-1.2-contributor"
+      ],
+      "outputTokens": 49358,
+      "period": "ses_fdde6fb70ffewA0L78EXWYg4Vu",
+      "totalCost": 0.130788218,
+      "totalTokens": 18277370
+    },
+    {
+      "agent": "opencode",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 12082027,
+      "inputTokens": 221117,
+      "metadata": {
+        "lastActivity": "2026-08-21T01:02:28.353Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 12082027,
+          "cost": 0.05465755399999997,
+          "inputTokens": 221117,
+          "modelName": "muse-spark-1.2-contributor",
+          "outputTokens": 17157
+        }
+      ],
+      "modelsUsed": [
+        "muse-spark-1.2-contributor"
+      ],
+      "outputTokens": 17157,
+      "period": "ses_fde32231dffeTQIOb0Yauev1Gj",
+      "totalCost": 0.05465755399999997,
+      "totalTokens": 12345053
+    },
+    {
+      "agent": "opencode",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 177,
+      "inputTokens": 13345,
+      "metadata": {
+        "lastActivity": "2026-08-21T00:50:03.550Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 177,
+          "cost": 0.001368454,
+          "inputTokens": 13345,
+          "modelName": "muse-spark-1.2-contributor",
+          "outputTokens": 66
+        }
+      ],
+      "modelsUsed": [
+        "muse-spark-1.2-contributor"
+      ],
+      "outputTokens": 66,
+      "period": "ses_fde342396ffeCnSXrsEQcWfQIF",
+      "totalCost": 0.001368454,
+      "totalTokens": 13690
+    },
+    {
+      "agent": "claude",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 44185236,
+      "inputTokens": 44194390,
+      "metadata": {
+        "lastActivity": "2026-08-20T15:00:54.077Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 44185236,
+          "cost": 4.538433471999997,
+          "inputTokens": 44194390,
+          "modelName": "muse-spark-1.2-contributor",
+          "outputTokens": 153120
+        }
+      ],
+      "modelsUsed": [
+        "muse-spark-1.2-contributor"
+      ],
+      "outputTokens": 153120,
+      "period": "08755b0e-12bd-4dc0-a282-c411edc97833",
+      "totalCost": 4.538433471999997,
+      "totalTokens": 88532746
+    },
+    {
+      "agent": "grok",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 3930624,
+      "inputTokens": 1010472,
+      "metadata": {
+        "lastActivity": "2026-08-20T13:30:41.772Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 3930624,
+          "cost": 0.9353743400000001,
+          "inputTokens": 1010472,
+          "modelName": "grok-4.6-build",
+          "outputTokens": 31101
+        }
+      ],
+      "modelsUsed": [
+        "grok-4.6-build"
+      ],
+      "outputTokens": 31101,
+      "period": "01a01ec8-9414-7443-bda8-d30f430ed421",
+      "totalCost": 0.9353743400000001,
+      "totalTokens": 4972197
+    },
+    {
+      "agent": "codex",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 6626304,
+      "inputTokens": 232773,
+      "metadata": {
+        "lastActivity": "2026-08-20T13:29:12.185Z",
+        "reasoningOutputTokens": 9473
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 6626304,
+          "cost": 5.381487,
+          "inputTokens": 232773,
+          "modelName": "gpt-5.6-sol",
+          "outputTokens": 30149
+        }
+      ],
+      "modelsUsed": [
+        "gpt-5.6-sol"
+      ],
+      "outputTokens": 30149,
+      "period": "rollout-2026-08-20T20-24-26-01a01f21-398f-7643-b822-80e33e0706dd",
+      "totalCost": 5.381487,
+      "totalTokens": 6889226
+    },
+    {
+      "agent": "claude",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 85408753,
+      "inputTokens": 85447258,
+      "metadata": {
+        "lastActivity": "2026-08-20T13:24:18.187Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 85408753,
+          "cost": 8.756893506000006,
+          "inputTokens": 85447258,
+          "modelName": "muse-spark-1.2-contributor",
+          "outputTokens": 206751
+        }
+      ],
+      "modelsUsed": [
+        "muse-spark-1.2-contributor"
+      ],
+      "outputTokens": 206751,
+      "period": "7635f518-3661-4db0-a629-d6741d853969",
+      "totalCost": 8.756893506000006,
+      "totalTokens": 171062762
+    },
+    {
+      "agent": "codex",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 8641536,
+      "inputTokens": 398890,
+      "metadata": {
+        "lastActivity": "2026-08-20T13:19:35.692Z",
+        "reasoningOutputTokens": 10571
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 8641536,
+          "cost": 7.183088,
+          "inputTokens": 398890,
+          "modelName": "gpt-5.6-sol",
+          "outputTokens": 28929
+        }
+      ],
+      "modelsUsed": [
+        "gpt-5.6-sol"
+      ],
+      "outputTokens": 28929,
+      "period": "rollout-2026-08-20T20-05-41-01a01f10-10ec-7b12-8dde-774193c2c563",
+      "totalCost": 7.183088,
+      "totalTokens": 9069355
+    },
+    {
+      "agent": "grok",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 23097600,
+      "inputTokens": 1401234,
+      "metadata": {
+        "lastActivity": "2026-08-20T11:05:41.197Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 23097600,
+          "cost": 3.9807461800000006,
+          "inputTokens": 1401234,
+          "modelName": "grok-4.6-build",
+          "outputTokens": 108925
+        }
+      ],
+      "modelsUsed": [
+        "grok-4.6-build"
+      ],
+      "outputTokens": 108925,
+      "period": "01a01e01-355b-71e1-8d41-7b4cc8f3bfa2",
+      "totalCost": 3.9807461800000006,
+      "totalTokens": 24607759
+    },
+    {
+      "agent": "claude",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 23935794,
+      "inputTokens": 24083286,
+      "metadata": {
+        "lastActivity": "2026-08-20T10:48:38.835Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 23935794,
+          "cost": 2.4723673880000003,
+          "inputTokens": 24083286,
+          "modelName": "muse-spark-1.2-contributor",
+          "outputTokens": 80836
+        }
+      ],
+      "modelsUsed": [
+        "muse-spark-1.2-contributor"
+      ],
+      "outputTokens": 80836,
+      "period": "745c6be3-dc95-493d-802e-4ed8e0159e0d",
+      "totalCost": 2.4723673880000003,
+      "totalTokens": 48099916
+    },
+    {
+      "agent": "codex",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 765184,
+      "inputTokens": 90644,
+      "metadata": {
+        "lastActivity": "2026-08-20T10:45:55.689Z",
+        "reasoningOutputTokens": 4415
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 765184,
+          "cost": 1.213242,
+          "inputTokens": 90644,
+          "modelName": "gpt-5.6-sol",
+          "outputTokens": 12581
+        }
+      ],
+      "modelsUsed": [
+        "gpt-5.6-sol"
+      ],
+      "outputTokens": 12581,
+      "period": "rollout-2026-08-20T18-40-15-01a01ec1-d708-7b90-bb94-e322dbbcfe4a",
+      "totalCost": 1.213242,
+      "totalTokens": 868409
+    },
+    {
+      "agent": "opencode",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 4371968,
+      "inputTokens": 348898,
+      "metadata": {
+        "lastActivity": "2026-08-20T10:41:27.768Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 2221696,
+          "cost": 0.20393111200000003,
+          "inputTokens": 117027,
+          "modelName": "deepseek-v4-pro",
+          "outputTokens": 4640
+        },
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 2150272,
+          "cost": 0.084091424,
+          "inputTokens": 231871,
+          "modelName": "deepseek-v4-flash",
+          "outputTokens": 26275
+        }
+      ],
+      "modelsUsed": [
+        "deepseek-v4-flash",
+        "deepseek-v4-pro"
+      ],
+      "outputTokens": 30915,
+      "period": "ses_fe19ab6c0ffeQjpCPGTogxiXWg",
+      "totalCost": 0.28802253600000005,
+      "totalTokens": 4787482
+    },
+    {
+      "agent": "grok",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 6123392,
+      "inputTokens": 475168,
+      "metadata": {
+        "lastActivity": "2026-08-20T08:43:56.382Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 6123392,
+          "cost": 0.72758436,
+          "inputTokens": 475168,
+          "modelName": "grok-4.6-build",
+          "outputTokens": 44646
+        }
+      ],
+      "modelsUsed": [
+        "grok-4.6-build"
+      ],
+      "outputTokens": 44646,
+      "period": "01a01cb3-5c8f-7872-9283-afecbaa7f57b",
+      "totalCost": 0.72758436,
+      "totalTokens": 6643206
+    },
+    {
+      "agent": "opencode",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 52184735,
+      "inputTokens": 7166918,
+      "metadata": {
+        "lastActivity": "2026-08-20T08:37:11.328Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 52184735,
+          "cost": 0.8458856699999996,
+          "inputTokens": 7166918,
+          "modelName": "muse-spark-1.2-contributor",
+          "outputTokens": 81012
+        }
+      ],
+      "modelsUsed": [
+        "muse-spark-1.2-contributor"
+      ],
+      "outputTokens": 81012,
+      "period": "ses_fe1f65292ffe5XgSqgKQfdbY87",
+      "totalCost": 0.8458856699999996,
+      "totalTokens": 59475775
+    },
+    {
+      "agent": "codex",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 2123264,
+      "inputTokens": 159411,
+      "metadata": {
+        "lastActivity": "2026-08-20T08:34:17.713Z",
+        "reasoningOutputTokens": 6516
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 2123264,
+          "cost": 2.428717,
+          "inputTokens": 159411,
+          "modelName": "gpt-5.6-sol",
+          "outputTokens": 19001
+        }
+      ],
+      "modelsUsed": [
+        "gpt-5.6-sol"
+      ],
+      "outputTokens": 19001,
+      "period": "rollout-2026-08-20T16-07-10-01a01e35-b09a-75b0-8edc-e5a7a5a72afd",
+      "totalCost": 2.428717,
+      "totalTokens": 2301676
+    },
+    {
+      "agent": "claude",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 1252052,
+      "inputTokens": 1252691,
+      "metadata": {
+        "lastActivity": "2026-08-20T08:10:58.164Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 1252052,
+          "cost": 0.132250404,
+          "inputTokens": 1252691,
+          "modelName": "muse-spark-1.2-contributor",
+          "outputTokens": 22386
+        }
+      ],
+      "modelsUsed": [
+        "muse-spark-1.2-contributor"
+      ],
+      "outputTokens": 22386,
+      "period": "63fd3bc9-3040-447e-a547-31ad07360322",
+      "totalCost": 0.132250404,
+      "totalTokens": 2527129
+    },
+    {
+      "agent": "opencode",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 32659,
+      "inputTokens": 16940,
+      "metadata": {
+        "lastActivity": "2026-08-20T08:05:32.002Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 32659,
+          "cost": 0.0019677180000000002,
+          "inputTokens": 16940,
+          "modelName": "muse-spark-1.2-contributor",
+          "outputTokens": 705
+        }
+      ],
+      "modelsUsed": [
+        "muse-spark-1.2-contributor"
+      ],
+      "outputTokens": 705,
+      "period": "ses_fe1cc06c3ffep6ScCYR770tj6f",
+      "totalCost": 0.0019677180000000002,
+      "totalTokens": 50641
+    },
+    {
+      "agent": "opencode",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 189568,
+      "inputTokens": 30143,
+      "metadata": {
+        "lastActivity": "2026-08-20T08:04:16.471Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 189568,
+          "cost": 0.029044576000000003,
+          "inputTokens": 30143,
+          "modelName": "deepseek-v4-pro",
+          "outputTokens": 981
+        }
+      ],
+      "modelsUsed": [
+        "deepseek-v4-pro"
+      ],
+      "outputTokens": 981,
+      "period": "ses_fe1ce49bdffe4TV9TojP3DDU9G",
+      "totalCost": 0.029044576000000003,
+      "totalTokens": 222226
+    },
+    {
+      "agent": "opencode",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 2485032,
+      "inputTokens": 170825,
+      "metadata": {
+        "lastActivity": "2026-08-20T08:01:52.144Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 2485032,
+          "cost": 0.024142964000000006,
+          "inputTokens": 170825,
+          "modelName": "muse-spark-1.2-contributor",
+          "outputTokens": 7803
+        }
+      ],
+      "modelsUsed": [
+        "muse-spark-1.2-contributor"
+      ],
+      "outputTokens": 7803,
+      "period": "ses_fe1d41736ffeSOYhbDzEO3vsbk",
+      "totalCost": 0.024142964000000006,
+      "totalTokens": 2666309
+    },
+    {
+      "agent": "grok",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 56150784,
+      "inputTokens": 5592741,
+      "metadata": {
+        "lastActivity": "2026-08-20T07:09:00.151Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 56150784,
+          "cost": 10.23954982,
+          "inputTokens": 5592741,
+          "modelName": "grok-4.6-build",
+          "outputTokens": 319843
+        }
+      ],
+      "modelsUsed": [
+        "grok-4.6-build"
+      ],
+      "outputTokens": 319843,
+      "period": "01a01279-6e15-7c80-9612-a6343ef2c93e",
+      "totalCost": 10.23954982,
+      "totalTokens": 62063368
+    },
+    {
+      "agent": "codex",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 1078016,
+      "inputTokens": 96852,
+      "metadata": {
+        "lastActivity": "2026-08-20T07:05:04.144Z",
+        "reasoningOutputTokens": 3024
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 1078016,
+          "cost": 1.2598779999999998,
+          "inputTokens": 96852,
+          "modelName": "gpt-5.6-sol",
+          "outputTokens": 7887
+        }
+      ],
+      "modelsUsed": [
+        "gpt-5.6-sol"
+      ],
+      "outputTokens": 7887,
+      "period": "rollout-2026-08-20T14-57-40-01a01df6-10ac-7a30-963d-22f42f655006",
+      "totalCost": 1.2598779999999998,
+      "totalTokens": 1182755
+    },
+    {
+      "agent": "claude",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 26849596,
+      "inputTokens": 26853588,
+      "metadata": {
+        "lastActivity": "2026-08-20T06:56:06.640Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 26849596,
+          "cost": 2.755031992,
+          "inputTokens": 26853588,
+          "modelName": "muse-spark-1.2-contributor",
+          "outputTokens": 79870
+        }
+      ],
+      "modelsUsed": [
+        "muse-spark-1.2-contributor"
+      ],
+      "outputTokens": 79870,
+      "period": "b8f2fcc0-da6e-4fe7-8e39-00950b9eedd7",
+      "totalCost": 2.755031992,
+      "totalTokens": 53783054
+    },
+    {
+      "agent": "codex",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 965376,
+      "inputTokens": 90395,
+      "metadata": {
+        "lastActivity": "2026-08-20T06:53:37.222Z",
+        "reasoningOutputTokens": 5444
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 965376,
+          "cost": 1.327843,
+          "inputTokens": 90395,
+          "modelName": "gpt-5.6-sol",
+          "outputTokens": 13106
+        }
+      ],
+      "modelsUsed": [
+        "gpt-5.6-sol"
+      ],
+      "outputTokens": 13106,
+      "period": "rollout-2026-08-20T14-47-31-01a01dec-c6cf-74b3-b200-973057faa938",
+      "totalCost": 1.327843,
+      "totalTokens": 1068877
+    },
+    {
+      "agent": "opencode",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 177,
+      "inputTokens": 13836,
+      "metadata": {
+        "lastActivity": "2026-08-20T06:20:41.346Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 177,
+          "cost": 0.001446754,
+          "inputTokens": 13836,
+          "modelName": "muse-spark-1.2-contributor",
+          "outputTokens": 155
+        }
+      ],
+      "modelsUsed": [
+        "muse-spark-1.2-contributor"
+      ],
+      "outputTokens": 155,
+      "period": "ses_fe22cdd0bffeaDhYECWNPgRnRh",
+      "totalCost": 0.001446754,
+      "totalTokens": 14327
+    },
+    {
+      "agent": "claude",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 2184040,
+      "inputTokens": 2185328,
+      "metadata": {
+        "lastActivity": "2026-08-20T06:04:02.931Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 2184040,
+          "cost": 0.22645128000000006,
+          "inputTokens": 2185328,
+          "modelName": "muse-spark-1.2-contributor",
+          "outputTokens": 17752
+        }
+      ],
+      "modelsUsed": [
+        "muse-spark-1.2-contributor"
+      ],
+      "outputTokens": 17752,
+      "period": "64b57dd7-94d1-44e2-bfc7-c3094c8e47c8",
+      "totalCost": 0.22645128000000006,
+      "totalTokens": 4387120
+    },
+    {
+      "agent": "claude",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 25989512,
+      "inputTokens": 25993753,
+      "metadata": {
+        "lastActivity": "2026-08-20T05:41:29.499Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 25989512,
+          "cost": 2.6677011239999993,
+          "inputTokens": 25993753,
+          "modelName": "muse-spark-1.2-contributor",
+          "outputTokens": 81734
+        }
+      ],
+      "modelsUsed": [
+        "muse-spark-1.2-contributor"
+      ],
+      "outputTokens": 81734,
+      "period": "d637f48d-bf07-4d5a-aaf0-d364298b3fba",
+      "totalCost": 2.6677011239999993,
+      "totalTokens": 52064999
+    },
+    {
+      "agent": "codex",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 3447808,
+      "inputTokens": 357234,
+      "metadata": {
+        "lastActivity": "2026-08-20T05:37:57.388Z",
+        "reasoningOutputTokens": 10145
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 3447808,
+          "cost": 4.299224,
+          "inputTokens": 357234,
+          "modelName": "gpt-5.6-sol",
+          "outputTokens": 26305
+        }
+      ],
+      "modelsUsed": [
+        "gpt-5.6-sol"
+      ],
+      "outputTokens": 26305,
+      "period": "2026/08/20/rollout-2026-08-20T12-18-22-01a01d64-37bf-7692-954b-36e0e6f8a9c5",
+      "totalCost": 4.299224,
+      "totalTokens": 3831347
+    },
+    {
+      "agent": "claude",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 13233,
+      "inputTokens": 13260,
+      "metadata": {
+        "lastActivity": "2026-08-20T03:21:03.831Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 13233,
+          "cost": 0.0014042660000000002,
+          "inputTokens": 13260,
+          "modelName": "muse-spark-1.2-contributor",
+          "outputTokens": 259
+        }
+      ],
+      "modelsUsed": [
+        "muse-spark-1.2-contributor"
+      ],
+      "outputTokens": 259,
+      "period": "63be428d-bac8-4766-8d71-ba6f62261e16",
+      "totalCost": 0.0014042660000000002,
+      "totalTokens": 26752
+    },
+    {
+      "agent": "codex",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 4962816,
+      "inputTokens": 188278,
+      "metadata": {
+        "lastActivity": "2026-08-20T02:32:15.576Z",
+        "reasoningOutputTokens": 9452
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 4962816,
+          "cost": 4.018988,
+          "inputTokens": 188278,
+          "modelName": "gpt-5.6-sol",
+          "outputTokens": 19873
+        }
+      ],
+      "modelsUsed": [
+        "gpt-5.6-sol"
+      ],
+      "outputTokens": 19873,
+      "period": "rollout-2026-08-20T10-21-44-01a01cf9-71d5-7ef2-938e-e38561953ffd",
+      "totalCost": 4.018988,
+      "totalTokens": 5170967
+    },
+    {
+      "agent": "grok",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 152320,
+      "inputTokens": 415607,
+      "metadata": {
+        "lastActivity": "2026-08-20T00:45:34.328Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 152320,
+          "cost": 0.16889772,
+          "inputTokens": 415607,
+          "modelName": "grok-4.6-build",
+          "outputTokens": 14357
+        }
+      ],
+      "modelsUsed": [
+        "grok-4.6-build"
+      ],
+      "outputTokens": 14357,
+      "period": "01a01c98-e7f4-77b2-82e1-c02e8c9fd9e4",
+      "totalCost": 0.16889772,
+      "totalTokens": 582284
+    },
+    {
+      "agent": "grok",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 1597184,
+      "inputTokens": 385438,
+      "metadata": {
+        "lastActivity": "2026-08-19T16:19:58.595Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 1597184,
+          "cost": 0.2843454,
+          "inputTokens": 385438,
+          "modelName": "grok-4.6-build",
+          "outputTokens": 17192
+        }
+      ],
+      "modelsUsed": [
+        "grok-4.6-build"
+      ],
+      "outputTokens": 17192,
+      "period": "01a01acb-1354-7473-b1ab-2ce0a63f8ec9",
+      "totalCost": 0.2843454,
+      "totalTokens": 1999814
+    },
+    {
+      "agent": "codex",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 2408960,
+      "inputTokens": 110971,
+      "metadata": {
+        "lastActivity": "2026-08-19T12:29:04.637Z",
+        "reasoningOutputTokens": 7250
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 2408960,
+          "cost": 2.263335,
+          "inputTokens": 110971,
+          "modelName": "gpt-5.6-sol",
+          "outputTokens": 16800
+        }
+      ],
+      "modelsUsed": [
+        "gpt-5.6-sol"
+      ],
+      "outputTokens": 16800,
+      "period": "rollout-2026-08-19T20-02-02-01a019e6-5d22-7a80-8ecb-5f41d2e065f3",
+      "totalCost": 2.263335,
+      "totalTokens": 2536731
+    },
+    {
+      "agent": "grok",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 6829440,
+      "inputTokens": 1572403,
+      "metadata": {
+        "lastActivity": "2026-08-19T08:02:33.237Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 6829440,
+          "cost": 1.30203442,
+          "inputTokens": 1572403,
+          "modelName": "grok-4.6-build",
+          "outputTokens": 70952
+        }
+      ],
+      "modelsUsed": [
+        "grok-4.6-build"
+      ],
+      "outputTokens": 70952,
+      "period": "01a017ba-3933-71a3-8c61-c1232d9d298d",
+      "totalCost": 1.30203442,
+      "totalTokens": 8472795
+    },
+    {
+      "agent": "codex",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 3392768,
+      "inputTokens": 164856,
+      "metadata": {
+        "lastActivity": "2026-08-19T07:54:15.678Z",
+        "reasoningOutputTokens": 12575
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 3392768,
+          "cost": 3.392284,
+          "inputTokens": 164856,
+          "modelName": "gpt-5.6-sol",
+          "outputTokens": 29054
+        }
+      ],
+      "modelsUsed": [
+        "gpt-5.6-sol"
+      ],
+      "outputTokens": 29054,
+      "period": "2026/08/19/rollout-2026-08-19T15-27-57-01a018eb-6fac-7112-a030-53f6887c4f72",
+      "totalCost": 3.392284,
+      "totalTokens": 3586678
+    },
+    {
+      "agent": "grok",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 7691392,
+      "inputTokens": 752988,
+      "metadata": {
+        "lastActivity": "2026-08-19T07:43:57.079Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 7691392,
+          "cost": 1.09915404,
+          "inputTokens": 752988,
+          "modelName": "grok-4.6-build",
+          "outputTokens": 46747
+        }
+      ],
+      "modelsUsed": [
+        "grok-4.6-build"
+      ],
+      "outputTokens": 46747,
+      "period": "01a01889-3763-78b3-bca8-62aac2a8ed41",
+      "totalCost": 1.09915404,
+      "totalTokens": 8491127
+    },
+    {
+      "agent": "codex",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 3516672,
+      "inputTokens": 178279,
+      "metadata": {
+        "lastActivity": "2026-08-19T07:36:19.998Z",
+        "reasoningOutputTokens": 5368
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 3516672,
+          "cost": 3.091481,
+          "inputTokens": 178279,
+          "modelName": "gpt-5.6-sol",
+          "outputTokens": 14725
+        }
+      ],
+      "modelsUsed": [
+        "gpt-5.6-sol"
+      ],
+      "outputTokens": 14725,
+      "period": "rollout-2026-08-19T15-27-07-01a018ea-aa5f-7803-af4c-559a55af96fa",
+      "totalCost": 3.091481,
+      "totalTokens": 3709676
+    },
+    {
+      "agent": "grok",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 21539328,
+      "inputTokens": 1711392,
+      "metadata": {
+        "lastActivity": "2026-08-19T06:08:43.155Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 21539328,
+          "cost": 3.32888798,
+          "inputTokens": 1711392,
+          "modelName": "grok-4.6-build",
+          "outputTokens": 109070
+        }
+      ],
+      "modelsUsed": [
+        "grok-4.6-build"
+      ],
+      "outputTokens": 109070,
+      "period": "01a017c3-acf4-72c2-9881-ff7df49a2710",
+      "totalCost": 3.32888798,
+      "totalTokens": 23359790
+    },
+    {
+      "agent": "codex",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 7922176,
+      "inputTokens": 609028,
+      "metadata": {
+        "lastActivity": "2026-08-19T05:57:44.181Z",
+        "reasoningOutputTokens": 20486
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 7922176,
+          "cost": 8.423428,
+          "inputTokens": 609028,
+          "modelName": "gpt-5.6-sol",
+          "outputTokens": 47240
+        }
+      ],
+      "modelsUsed": [
+        "gpt-5.6-sol"
+      ],
+      "outputTokens": 47240,
+      "period": "rollout-2026-08-19T10-54-21-01a017f0-effd-7702-9abb-92acb4b072f8",
+      "totalCost": 8.423428,
+      "totalTokens": 8578444
+    },
+    {
+      "agent": "grok",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 19750656,
+      "inputTokens": 893675,
+      "metadata": {
+        "lastActivity": "2026-08-19T03:38:55.860Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 19750656,
+          "cost": 2.92723952,
+          "inputTokens": 893675,
+          "modelName": "grok-4.6-build",
+          "outputTokens": 94530
+        }
+      ],
+      "modelsUsed": [
+        "grok-4.6-build"
+      ],
+      "outputTokens": 94530,
+      "period": "01a017cb-5aab-7fc1-b168-546d7c4038cd",
+      "totalCost": 2.92723952,
+      "totalTokens": 20738861
+    },
+    {
+      "agent": "codex",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 3218944,
+      "inputTokens": 183705,
+      "metadata": {
+        "lastActivity": "2026-08-19T03:31:46.377Z",
+        "reasoningOutputTokens": 9569
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 3218944,
+          "cost": 3.164867,
+          "inputTokens": 183705,
+          "modelName": "gpt-5.6-sol",
+          "outputTokens": 21229
+        }
+      ],
+      "modelsUsed": [
+        "gpt-5.6-sol"
+      ],
+      "outputTokens": 21229,
+      "period": "2026/08/19/rollout-2026-08-19T11-00-46-01a017f6-d0c6-7ed3-8fb5-448cd4cc2b77",
+      "totalCost": 3.164867,
+      "totalTokens": 3423878
+    },
+    {
+      "agent": "grok",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 40017280,
+      "inputTokens": 1815369,
+      "metadata": {
+        "lastActivity": "2026-08-19T02:12:31.510Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 40017280,
+          "cost": 6.3233489,
+          "inputTokens": 1815369,
+          "modelName": "grok-4.6-build",
+          "outputTokens": 250906
+        }
+      ],
+      "modelsUsed": [
+        "grok-4.6-build"
+      ],
+      "outputTokens": 250906,
+      "period": "01a014fb-f80f-7302-bcc0-c82e9e1d2439",
+      "totalCost": 6.3233489,
+      "totalTokens": 42083555
+    },
+    {
+      "agent": "codex",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 15040512,
+      "inputTokens": 973505,
+      "metadata": {
+        "lastActivity": "2026-08-19T02:09:02.048Z",
+        "reasoningOutputTokens": 27379
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 15040512,
+          "cost": 14.619931000000001,
+          "inputTokens": 973505,
+          "modelName": "gpt-5.6-sol",
+          "outputTokens": 74405
+        }
+      ],
+      "modelsUsed": [
+        "gpt-5.6-sol"
+      ],
+      "outputTokens": 74405,
+      "period": "2026/08/19/rollout-2026-08-19T00-00-29-01a0159a-4f15-79e1-a2f5-66bd56b9681d",
+      "totalCost": 14.619931000000001,
+      "totalTokens": 16088422
+    },
+    {
+      "agent": "grok",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 30627712,
+      "inputTokens": 2318856,
+      "metadata": {
+        "lastActivity": "2026-08-19T01:52:25.335Z"
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 30627712,
+          "cost": 5.420589059999999,
+          "inputTokens": 2318856,
+          "modelName": "grok-4.6-build",
+          "outputTokens": 166312
+        }
+      ],
+      "modelsUsed": [
+        "grok-4.6-build"
+      ],
+      "outputTokens": 166312,
+      "period": "01a0136e-f715-7da3-9333-dcc717382682",
+      "totalCost": 5.420589059999999,
+      "totalTokens": 33112880
+    },
+    {
+      "agent": "codex",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 1282048,
+      "inputTokens": 124730,
+      "metadata": {
+        "lastActivity": "2026-08-19T01:39:16.427Z",
+        "reasoningOutputTokens": 7548
+      },
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 1282048,
+          "cost": 1.8001139999999998,
+          "inputTokens": 124730,
+          "modelName": "gpt-5.6-sol",
+          "outputTokens": 17848
+        }
+      ],
+      "modelsUsed": [
+        "gpt-5.6-sol"
+      ],
+      "outputTokens": 17848,
+      "period": "rollout-2026-08-19T09-28-13-01a017a2-1743-74d2-bb47-52bfba7da0a0",
+      "totalCost": 1.8001139999999998,
+      "totalTokens": 1424626
+    },
+    {
+      "agent": "kimi",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 27092992,
+      "inputTokens": 392211,
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 25915392,
+          "cost": 0.14574725759999993,
+          "inputTokens": 318270,
+          "modelName": "alibaba-token-plan-cn/deepseek-v4-flash-0731",
+          "outputTokens": 102237
+        },
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 1177600,
+          "cost": 0,
+          "inputTokens": 73941,
+          "modelName": "k3-256k",
+          "outputTokens": 8620
+        }
+      ],
+      "modelsUsed": [
+        "k3-256k",
+        "alibaba-token-plan-cn/deepseek-v4-flash-0731"
+      ],
+      "outputTokens": 110857,
+      "period": "session_06e05961-a77c-4c96-b328-ac32cd927f56",
+      "totalCost": 0.14574725759999993,
+      "totalTokens": 27596060
+    },
+    {
+      "agent": "kimi",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 78848,
+      "inputTokens": 32804,
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 78848,
+          "cost": 0.006813094400000001,
+          "inputTokens": 32804,
+          "modelName": "alibaba-token-plan-cn/deepseek-v4-flash-0731",
+          "outputTokens": 7142
+        }
+      ],
+      "modelsUsed": [
+        "alibaba-token-plan-cn/deepseek-v4-flash-0731"
+      ],
+      "outputTokens": 7142,
+      "period": "session_5d9019df-a6f0-4b29-9c73-c59615ea2007",
+      "totalCost": 0.006813094400000001,
+      "totalTokens": 118794
+    },
+    {
+      "agent": "kimi",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 723200,
+      "inputTokens": 58198,
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 723200,
+          "cost": 0,
+          "inputTokens": 58198,
+          "modelName": "k3-256k",
+          "outputTokens": 5900
+        }
+      ],
+      "modelsUsed": [
+        "k3-256k"
+      ],
+      "outputTokens": 5900,
+      "period": "session_6f917c80-c9ac-48ca-8d72-ecb2db0b1e88",
+      "totalCost": 0,
+      "totalTokens": 787298
+    },
+    {
+      "agent": "kimi",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 0,
+      "inputTokens": 24600,
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 0,
+          "cost": 0.0036736000000000004,
+          "inputTokens": 24600,
+          "modelName": "alibaba-token-plan-cn/deepseek-v4-flash-0731",
+          "outputTokens": 820
+        }
+      ],
+      "modelsUsed": [
+        "alibaba-token-plan-cn/deepseek-v4-flash-0731"
+      ],
+      "outputTokens": 820,
+      "period": "session_8d817e31-b111-449a-854a-126af2187c99",
+      "totalCost": 0.0036736000000000004,
+      "totalTokens": 25420
+    },
+    {
+      "agent": "kimi",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 64015578,
+      "inputTokens": 1091746,
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 64015578,
+          "cost": 0,
+          "inputTokens": 1091746,
+          "modelName": "k3-256k",
+          "outputTokens": 398964
+        }
+      ],
+      "modelsUsed": [
+        "k3-256k"
+      ],
+      "outputTokens": 398964,
+      "period": "session_940f0c29-48ec-4bf6-bbb9-788676f099c2",
+      "totalCost": 0,
+      "totalTokens": 65506288
+    },
+    {
+      "agent": "kimi",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 11815168,
+      "inputTokens": 350105,
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 11815168,
+          "cost": 0,
+          "inputTokens": 350105,
+          "modelName": "k3-256k",
+          "outputTokens": 56790
+        }
+      ],
+      "modelsUsed": [
+        "k3-256k"
+      ],
+      "outputTokens": 56790,
+      "period": "session_9da7c8a4-eb88-4aae-85af-0065bce1dac9",
+      "totalCost": 0,
+      "totalTokens": 12222063
+    },
+    {
+      "agent": "kimi",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 25600,
+      "inputTokens": 24282,
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 25600,
+          "cost": 0.004144,
+          "inputTokens": 24282,
+          "modelName": "alibaba-token-plan-cn/deepseek-v4-flash-0731",
+          "outputTokens": 2403
+        }
+      ],
+      "modelsUsed": [
+        "alibaba-token-plan-cn/deepseek-v4-flash-0731"
+      ],
+      "outputTokens": 2403,
+      "period": "session_b56f6eaf-ddfa-47fd-9e36-290580f59547",
+      "totalCost": 0.004144,
+      "totalTokens": 52285
+    },
+    {
+      "agent": "kimi",
+      "cacheCreationTokens": 0,
+      "cacheReadTokens": 1668608,
+      "inputTokens": 152034,
+      "modelBreakdowns": [
+        {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 1668608,
+          "cost": 0,
+          "inputTokens": 152034,
+          "modelName": "k3-256k",
+          "outputTokens": 14762
+        }
+      ],
+      "modelsUsed": [
+        "k3-256k"
+      ],
+      "outputTokens": 14762,
+      "period": "session_df64744d-5e80-478a-9eba-6069c9fd7c96",
+      "totalCost": 0,
+      "totalTokens": 1835404
+    }
+  ],
+  "totals": {
+    "cacheCreationTokens": 17138188,
+    "cacheReadTokens": 6710392673,
+    "inputTokens": 586956543,
+    "outputTokens": 37718566,
+    "totalCost": 3883.4576128199983,
+    "totalTokens": 7353076905
+  }
+}

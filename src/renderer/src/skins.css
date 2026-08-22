@@ -1,0 +1,507 @@
+/**
+ * 各皮肤的整套样式系统:tokens 负责颜色,这里负责排版/质感(字体、线型、圆角、发光、底纹)。
+ * 选择器一律 `html[data-skin='x']`(特异性 0-2-1),保证压过组件 scoped 样式(0-2-0),
+ * 与加载顺序无关。颜色一律不写死,仍走 var(--xxx) token。
+ * 覆盖范围:全部页面(Overview/Sessions/Subscriptions/Settings/Detail)+ 侧栏/状态栏 +
+ * 控件(tabs/dswitch/按钮/表单)+ 列表/表格 + 悬浮球展开面板。
+ */
+
+/* 四个新皮肤共用:打满(>=100%)的百分比数字标红 */
+html[data-skin='paper'] .w-pct.alert,
+html[data-skin='mono'] .w-pct.alert,
+html[data-skin='neon'] .w-pct.alert,
+html[data-skin='blueprint'] .w-pct.alert {
+  color: var(--red);
+}
+
+/* ═══════════════════════ Paper:暖纸 + 衬线数字 + 细线 ═══════════════════════ */
+html[data-skin='paper'] {
+  color-scheme: light;
+}
+
+/* 展示数字/标题全局衬线,所有页面一致 */
+html[data-skin='paper'] h1,
+html[data-skin='paper'] .brand-name,
+html[data-skin='paper'] .hero-total .big,
+html[data-skin='paper'] .hero-total .cost,
+html[data-skin='paper'] .donut .c-v,
+html[data-skin='paper'] .hero-detail .v,
+html[data-skin='paper'] .rows .tokens,
+html[data-skin='paper'] .table td.num,
+html[data-skin='paper'] .stat-card .value,
+html[data-skin='paper'] .stats .sv,
+html[data-skin='paper'] .panel-total,
+html[data-skin='paper'] .agent-value,
+html[data-skin='paper'] .quota-pct,
+html[data-skin='paper'] .w-pct,
+html[data-skin='paper'] .cycle b {
+  font-family: Georgia, 'Palatino Linotype', 'Times New Roman', serif;
+}
+
+html[data-skin='paper'] h1 {
+  font-weight: 500;
+}
+
+html[data-skin='paper'] .hero-total .big {
+  font-weight: 500;
+}
+
+html[data-skin='paper'] .hero-total .cost {
+  color: var(--accent);
+}
+
+/* 小节标题:宽字距 + 尾部发丝线(trend-title 是面板内联标题,不拉线) */
+html[data-skin='paper'] h2:not(.trend-title) {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: 0.14em;
+  color: var(--text-mute);
+}
+
+html[data-skin='paper'] h2:not(.trend-title)::after {
+  content: '';
+  flex: 1;
+  border-top: 1px solid var(--border);
+}
+
+/* 卡片:小圆角 + 暖纸阴影 */
+html[data-skin='paper'] .panel,
+html[data-skin='paper'] .quota-card,
+html[data-skin='paper'] .stat-card,
+html[data-skin='paper'] .setup-card,
+html[data-skin='paper'] .strip {
+  border-radius: 6px;
+  box-shadow: 0 1px 0 rgba(35, 32, 26, 0.05);
+}
+
+/* 控件 */
+html[data-skin='paper'] .tabs,
+html[data-skin='paper'] .dswitch,
+html[data-skin='paper'] .segmented,
+html[data-skin='paper'] .filter {
+  border-radius: 5px;
+}
+
+html[data-skin='paper'] .tab,
+html[data-skin='paper'] .thumb,
+html[data-skin='paper'] .opt {
+  border-radius: 3px;
+}
+
+html[data-skin='paper'] input[type='checkbox'] {
+  accent-color: var(--accent);
+}
+
+html[data-skin='paper'] .refresh-btn,
+html[data-skin='paper'] .btn {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--panel);
+  border-radius: 4px;
+}
+
+html[data-skin='paper'] .refresh-btn:hover:not(:disabled),
+html[data-skin='paper'] .btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+html[data-skin='paper'] .btn.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fbf8f0;
+}
+
+/* 侧栏:激活项用赭红竖条而非底色块 */
+html[data-skin='paper'] .nav-item.active {
+  background: transparent;
+  border-radius: 0;
+  box-shadow: inset 2.5px 0 0 var(--accent);
+  color: var(--text);
+  font-weight: 600;
+}
+
+html[data-skin='paper'] .updated {
+  font-family: Georgia, serif;
+  font-style: italic;
+}
+
+/* 悬浮球展开面板 */
+html[data-skin='paper'] .float-root .panel {
+  border-radius: 10px;
+  box-shadow: 0 8px 28px rgba(35, 32, 26, 0.18);
+}
+
+/* ═══════════════════════ Mono:瑞士黑白,粗规则线,零圆角 ═══════════════════════ */
+html[data-skin='mono'] {
+  color-scheme: light;
+}
+
+/* 标题/数字的重压排印 */
+html[data-skin='mono'] h1 {
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+html[data-skin='mono'] h2,
+html[data-skin='mono'] .trend-title {
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: var(--text);
+}
+
+html[data-skin='mono'] .hero-total .big,
+html[data-skin='mono'] .donut .c-v,
+html[data-skin='mono'] .stat-card .value,
+html[data-skin='mono'] .stats .sv {
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+html[data-skin='mono'] .table th,
+html[data-skin='mono'] .sk,
+html[data-skin='mono'] .nav-section,
+html[data-skin='mono'] .statusbar {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+}
+
+/* 零圆角:所有卡片/控件/条 */
+html[data-skin='mono'] .panel,
+html[data-skin='mono'] .quota-card,
+html[data-skin='mono'] .stat-card,
+html[data-skin='mono'] .setup-card,
+html[data-skin='mono'] .strip,
+html[data-skin='mono'] .tabs,
+html[data-skin='mono'] .tab,
+html[data-skin='mono'] .dswitch,
+html[data-skin='mono'] .thumb,
+html[data-skin='mono'] .opt,
+html[data-skin='mono'] .segmented,
+html[data-skin='mono'] .segmented button,
+html[data-skin='mono'] .filter,
+html[data-skin='mono'] .refresh-btn,
+html[data-skin='mono'] .btn,
+html[data-skin='mono'] .mode-toggle button,
+html[data-skin='mono'] .gran-toggle button,
+html[data-skin='mono'] .nav-item,
+html[data-skin='mono'] .composition,
+html[data-skin='mono'] .track,
+html[data-skin='mono'] .w-bar,
+html[data-skin='mono'] .w-fill,
+html[data-skin='mono'] .mini-bar,
+html[data-skin='mono'] .mini-fill,
+html[data-skin='mono'] .quota-bar,
+html[data-skin='mono'] .quota-fill,
+html[data-skin='mono'] .float-root .panel,
+html[data-skin='mono'] .warning-banner {
+  border-radius: 0;
+}
+
+/* 粗黑框 */
+html[data-skin='mono'] .panel,
+html[data-skin='mono'] .quota-card,
+html[data-skin='mono'] .stat-card,
+html[data-skin='mono'] .setup-card,
+html[data-skin='mono'] .strip,
+html[data-skin='mono'] .tabs,
+html[data-skin='mono'] .dswitch,
+html[data-skin='mono'] .segmented,
+html[data-skin='mono'] .filter,
+html[data-skin='mono'] .float-root .panel {
+  border-width: 1.5px;
+  border-color: var(--border-strong);
+}
+
+/* mono 的 --border 是纯黑,组件里拿它当控件底色会变成黑块;Swiss 控件一律白底黑框 */
+html[data-skin='mono'] .filter,
+html[data-skin='mono'] .segmented {
+  background: #ffffff;
+  color: var(--text);
+}
+
+html[data-skin='mono'] .segmented button.active {
+  background: var(--text);
+  color: #ffffff;
+}
+
+/* quota 条:白底黑框 */
+html[data-skin='mono'] .w-bar {
+  border: 1px solid var(--border-strong);
+  background: #ffffff;
+  height: 6px;
+}
+
+html[data-skin='mono'] .mini-bar {
+  border: 1px solid var(--border-strong);
+  background: #ffffff;
+}
+
+html[data-skin='mono'] .brand-mark {
+  background: var(--text);
+}
+
+html[data-skin='mono'] .nav-item.active {
+  background: transparent;
+  box-shadow: inset 3px 0 0 var(--text);
+  color: var(--text);
+  font-weight: 800;
+}
+
+html[data-skin='mono'] .refresh-btn,
+html[data-skin='mono'] .btn {
+  background: var(--text);
+  border: 1.5px solid var(--text);
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  font-size: 11px;
+}
+
+html[data-skin='mono'] .refresh-btn:hover:not(:disabled),
+html[data-skin='mono'] .btn:hover {
+  background: #333333;
+}
+
+html[data-skin='mono'] input[type='checkbox'] {
+  accent-color: #0a0a0a;
+}
+
+html[data-skin='mono'] .statusbar {
+  border-top: 1.5px solid var(--border-strong);
+}
+
+html[data-skin='mono'] .table th {
+  border-bottom: 1.5px solid var(--border-strong);
+}
+
+/* ═══════════════════════ Neon:深紫黑 + 霓虹发光 ═══════════════════════ */
+html[data-skin='neon'] body:not(.float-mode) {
+  background:
+    radial-gradient(900px 500px at 85% -10%, rgba(157, 107, 255, 0.12), transparent 60%),
+    radial-gradient(700px 500px at -10% 100%, rgba(0, 229, 255, 0.08), transparent 55%),
+    var(--bg);
+}
+
+/* 大数字:青→品红渐变发光 */
+html[data-skin='neon'] .hero-total .big {
+  background: linear-gradient(90deg, #7ff3ff, #00e5ff 45%, #ff2ea6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 18px rgba(0, 229, 255, 0.28));
+}
+
+html[data-skin='neon'] .hero-total .cost {
+  color: var(--green);
+  text-shadow: 0 0 12px rgba(182, 255, 60, 0.45);
+}
+
+html[data-skin='neon'] h1::before {
+  content: '// ';
+  color: #ff2ea6;
+  text-shadow: 0 0 10px rgba(255, 46, 166, 0.7);
+}
+
+/* 卡片带微弱冷光 */
+html[data-skin='neon'] .panel,
+html[data-skin='neon'] .quota-card,
+html[data-skin='neon'] .stat-card,
+html[data-skin='neon'] .strip {
+  border-color: var(--border);
+  box-shadow: 0 0 24px rgba(0, 229, 255, 0.04);
+}
+
+/* 控件:激活态青色辉光 */
+html[data-skin='neon'] .tab.active,
+html[data-skin='neon'] .dswitch .thumb,
+html[data-skin='neon'] .segmented button.active,
+html[data-skin='neon'] .mode-toggle button.active,
+html[data-skin='neon'] .gran-toggle button.active {
+  box-shadow: inset 0 0 0 1px rgba(0, 229, 255, 0.3);
+}
+
+html[data-skin='neon'] input[type='checkbox'] {
+  accent-color: #00e5ff;
+}
+
+html[data-skin='neon'] .refresh-btn,
+html[data-skin='neon'] .btn {
+  background: transparent;
+  border-color: var(--border-strong);
+  color: var(--accent);
+}
+
+html[data-skin='neon'] .refresh-btn:hover:not(:disabled),
+html[data-skin='neon'] .btn:hover {
+  box-shadow: 0 0 16px rgba(0, 229, 255, 0.18);
+  background: rgba(0, 229, 255, 0.06);
+}
+
+html[data-skin='neon'] .brand-mark {
+  background: linear-gradient(135deg, #00e5ff, #ff2ea6);
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.5);
+}
+
+html[data-skin='neon'] .brand-name {
+  text-shadow: 0 0 14px rgba(0, 229, 255, 0.35);
+}
+
+html[data-skin='neon'] .nav-item.active {
+  color: var(--accent);
+  box-shadow: inset 0 0 0 1px rgba(0, 229, 255, 0.22);
+}
+
+html[data-skin='neon'] .donut .c-v {
+  color: #ffffff;
+  text-shadow: 0 0 16px rgba(0, 229, 255, 0.5);
+}
+
+/* echarts canvas 透明底,drop-shadow 沿环图边缘发光 */
+html[data-skin='neon'] .donut .chart {
+  filter: drop-shadow(0 0 12px rgba(157, 107, 255, 0.3));
+}
+
+/* 侧栏/状态栏分隔线染青色 */
+html[data-skin='neon'] .sidebar {
+  border-right-color: var(--border);
+}
+
+html[data-skin='neon'] .statusbar {
+  border-top-color: var(--border);
+}
+
+html[data-skin='neon'] .float-root .panel {
+  border-color: var(--border-strong);
+  box-shadow: 0 0 32px rgba(0, 229, 255, 0.12);
+}
+
+/* ═══════════════════════ Blueprint:蓝图网格纸 + 虚线 + 黄色标注 ═══════════════════════ */
+html[data-skin='blueprint'] body:not(.float-mode) {
+  background-image:
+    linear-gradient(rgba(232, 241, 251, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(232, 241, 251, 0.05) 1px, transparent 1px),
+    linear-gradient(rgba(232, 241, 251, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(232, 241, 251, 0.09) 1px, transparent 1px);
+  background-size:
+    20px 20px,
+    20px 20px,
+    100px 100px,
+    100px 100px;
+}
+
+html[data-skin='blueprint'] h1 {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 16px;
+}
+
+html[data-skin='blueprint'] h2,
+html[data-skin='blueprint'] .trend-title {
+  letter-spacing: 0.16em;
+}
+
+html[data-skin='blueprint'] .hero-total .cost {
+  color: var(--accent);
+}
+
+/* 等宽字体用于状态栏/时间戳/更新时间:工程图批注感 */
+html[data-skin='blueprint'] .statusbar,
+html[data-skin='blueprint'] .updated,
+html[data-skin='blueprint'] .table td.time {
+  font-family: Consolas, 'Cascadia Mono', 'Courier New', monospace;
+}
+
+/* 虚线分隔:侧栏/状态栏/行/表格头/导航分隔 */
+html[data-skin='blueprint'] .sidebar {
+  border-right-style: dashed;
+}
+
+html[data-skin='blueprint'] .statusbar {
+  border-top-style: dashed;
+}
+
+html[data-skin='blueprint'] .rows .row + .row {
+  border-top-style: dashed;
+}
+
+html[data-skin='blueprint'] .nav-divider {
+  background: none;
+  border-top: 1px dashed var(--border);
+  height: 0;
+}
+
+html[data-skin='blueprint'] .table th {
+  border-bottom-style: dashed;
+}
+
+/* 面板/卡片:小圆角 */
+html[data-skin='blueprint'] .panel,
+html[data-skin='blueprint'] .quota-card,
+html[data-skin='blueprint'] .stat-card,
+html[data-skin='blueprint'] .strip {
+  border-radius: 2px;
+}
+
+/* 按钮:虚线框 */
+html[data-skin='blueprint'] .refresh-btn,
+html[data-skin='blueprint'] .btn {
+  background: transparent;
+  border-style: dashed;
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+
+html[data-skin='blueprint'] .refresh-btn:hover:not(:disabled),
+html[data-skin='blueprint'] .btn:hover {
+  border-color: var(--accent);
+  background: rgba(255, 210, 63, 0.06);
+}
+
+html[data-skin='blueprint'] input[type='checkbox'] {
+  accent-color: #ffd23f;
+}
+
+/* quota 填充:剖面线(打满时红色剖面线)。内联背景需 !important 压过 */
+html[data-skin='blueprint'] .w-fill {
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--quota-fill),
+    var(--quota-fill) 3px,
+    transparent 3px,
+    transparent 6px
+  ) !important;
+}
+
+html[data-skin='blueprint'] .windows li:has(.w-pct.alert) .w-fill {
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--red),
+    var(--red) 3px,
+    transparent 3px,
+    transparent 6px
+  ) !important;
+}
+
+html[data-skin='blueprint'] .brand-mark {
+  border-radius: 0;
+  background: transparent;
+  border: 1.5px solid var(--text);
+  position: relative;
+}
+
+html[data-skin='blueprint'] .brand-mark::after {
+  content: '';
+  position: absolute;
+  inset: 2.5px;
+  background: var(--accent);
+}
+
+html[data-skin='blueprint'] .float-root .panel {
+  border-style: dashed;
+  border-color: var(--border-strong);
+}

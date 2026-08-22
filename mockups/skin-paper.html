@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Skin — Paper</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #f4f0e6;
+    --panel: #fbf8f0;
+    --hair: #ddd5c0;
+    --hair-strong: #c6bda4;
+    --ink: #23201a;
+    --dim: #6f695a;
+    --faint: #a49b85;
+    --accent: #b8542e;
+    --c-input: #4a6580;
+    --c-output: #5d7341;
+    --c-creation: #c2953a;
+    --c-cacheread: #9b7bb8;
+  }
+  body {
+    background: var(--bg); color: var(--ink);
+    font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    display: grid; grid-template-columns: 208px 1fr; min-height: 100vh;
+  }
+  .serif { font-family: Georgia, "Palatino Linotype", "Times New Roman", serif; }
+  /* ---------- sidebar ---------- */
+  .sidebar { border-right: 1px solid var(--hair); padding: 24px 16px 18px 22px; display: flex; flex-direction: column; gap: 12px; }
+  .brand { display: flex; align-items: center; gap: 9px; padding: 2px 6px 6px; border-bottom: 2px solid var(--ink); padding-bottom: 12px; }
+  .brand-mark { width: 13px; height: 13px; background: var(--accent); border-radius: 2px; }
+  .brand-name { font-size: 16px; font-weight: 400; letter-spacing: .02em; }
+  .nav { display: flex; flex-direction: column; gap: 1px; flex: 1; }
+  .nav-item { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 3px; font-size: 12.5px; color: var(--dim); }
+  .nav-item.active { color: var(--ink); font-weight: 600; box-shadow: inset 2.5px 0 0 var(--accent); border-radius: 0; }
+  .nav-section { font-size: 10px; letter-spacing: .14em; color: var(--faint); text-transform: uppercase; padding: 16px 8px 6px; display: flex; align-items: center; gap: 2px; }
+  .view-tab { font-size: 10px; letter-spacing: .12em; padding: 2px 5px; color: var(--faint); }
+  .view-tab.active { color: var(--accent); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+  .today-hint { margin-left: auto; font-size: 9.5px; color: var(--faint); }
+  .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .agent-name { flex: 1; }
+  .agent-today { font-size: 11px; color: var(--faint); font-variant-numeric: tabular-nums; }
+  .refresh-btn { background: var(--ink); border: none; color: var(--panel); border-radius: 3px; padding: 8px 14px; font-size: 12px; letter-spacing: .06em; text-align: center; }
+  .updated { font-size: 10.5px; color: var(--faint); padding: 0 8px; font-style: italic; font-family: Georgia, serif; }
+  /* ---------- main ---------- */
+  .content { padding: 26px 42px 40px 40px; display: flex; flex-direction: column; gap: 26px; }
+  .head { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 2px solid var(--ink); padding-bottom: 10px; }
+  h1 { font-size: 22px; font-weight: 400; font-family: Georgia, serif; }
+  h1 .date { font-size: 12px; color: var(--faint); font-style: italic; margin-left: 10px; }
+  .seg { display: inline-flex; gap: 0; border: 1px solid var(--hair-strong); border-radius: 3px; overflow: hidden; background: var(--panel); }
+  .seg button { background: transparent; border: none; color: var(--dim); font-size: 11.5px; padding: 5px 14px; border-right: 1px solid var(--hair); }
+  .seg button:last-child { border-right: none; }
+  .seg button.active { background: var(--ink); color: var(--panel); font-weight: 600; }
+  /* ---------- hero ---------- */
+  .hero { display: grid; grid-template-columns: auto 1fr; gap: 56px; align-items: end; }
+  .hero-k { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); }
+  .hero-big { font-size: 64px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.02; margin: 4px 0 6px; font-variant-numeric: tabular-nums; }
+  .hero-sub { display: flex; align-items: baseline; gap: 16px; }
+  .hero-cost { font-size: 20px; color: var(--accent); font-family: Georgia, serif; }
+  .hero-split { font-size: 12px; color: var(--dim); }
+  .hero-right { padding-bottom: 4px; }
+  .comp-bar { display: flex; height: 8px; border: 1px solid var(--hair-strong); background: var(--panel); }
+  .comp-bar span { display: block; height: 100%; }
+  .legend { display: flex; gap: 22px; margin-top: 10px; align-items: baseline; }
+  .legend .item { display: flex; align-items: baseline; gap: 6px; font-size: 11.5px; color: var(--dim); }
+  .legend .item b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; font-family: Georgia, serif; }
+  .legend .item:last-child { margin-left: auto; }
+  .sq { width: 8px; height: 8px; display: inline-block; border-radius: 1px; }
+  h2 { font-size: 10.5px; letter-spacing: .16em; color: var(--faint); text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+  h2::after { content: ""; flex: 1; border-top: 1px solid var(--hair); }
+  /* ---------- subscriptions ---------- */
+  .quota-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .qcard { background: var(--panel); border: 1px solid var(--hair); border-radius: 4px; padding: 13px 15px; box-shadow: 0 1px 0 rgba(35,32,26,.06); }
+  .qcard .qhead { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; }
+  .qcard .qtime { margin-left: auto; font-size: 10.5px; color: var(--faint); font-weight: 400; font-style: italic; font-family: Georgia, serif; }
+  .qrow { display: flex; align-items: baseline; margin-top: 9px; font-size: 11.5px; color: var(--dim); }
+  .qrow .qv { margin-left: auto; font-variant-numeric: tabular-nums; color: var(--ink); }
+  .qrow .qp { color: var(--accent); font-weight: 700; margin-left: 8px; font-family: Georgia, serif; }
+  .qbar { height: 3px; background: #e7e0cd; margin-top: 5px; }
+  .qbar span { display: block; height: 100%; background: var(--ink); }
+  .qbar.limit span { background: var(--accent); }
+  /* ---------- hourly ---------- */
+  .panel-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px; }
+  .panel-title { font-size: 15px; font-weight: 400; font-family: Georgia, serif; }
+  .panel-sub { font-size: 11px; color: var(--faint); margin-left: 10px; font-style: italic; font-family: Georgia, serif; }
+  .tip { position: absolute; background: var(--panel); border: 1px solid var(--hair-strong); border-radius: 3px; padding: 8px 12px; font-size: 11px; line-height: 1.7; color: var(--dim); pointer-events: none; box-shadow: 2px 2px 0 rgba(35,32,26,.10); }
+  .tip b { color: var(--ink); font-variant-numeric: tabular-nums; }
+  .tip .tip-head { color: var(--ink); font-weight: 600; margin-bottom: 2px; font-family: Georgia, serif; }
+  /* ---------- donut + rows ---------- */
+  .share-panel { display: grid; grid-template-columns: 300px 1fr; gap: 44px; align-items: center; }
+  .donut-wrap { position: relative; width: 260px; height: 260px; }
+  .donut-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; }
+  .donut-center .dc-k { font-size: 10px; color: var(--faint); letter-spacing: .14em; text-transform: uppercase; }
+  .donut-center .dc-v { font-size: 30px; font-variant-numeric: tabular-nums; font-family: Georgia, serif; }
+  .donut-center .dc-c { font-size: 11px; color: var(--faint); font-style: italic; font-family: Georgia, serif; }
+  .rows { list-style: none; }
+  .row { display: grid; grid-template-columns: 10px 170px 1fr 84px 64px 56px; align-items: center; gap: 12px; padding: 7px 0; }
+  .row + .row { border-top: 1px solid var(--hair); }
+  .row .name { font-size: 12.5px; font-weight: 500; }
+  .row .tokens { font-size: 13px; text-align: right; font-variant-numeric: tabular-nums; font-family: Georgia, serif; }
+  .row .cost { font-size: 11.5px; color: var(--dim); text-align: right; font-variant-numeric: tabular-nums; }
+  .row .pct { font-size: 11px; color: var(--faint); text-align: right; font-variant-numeric: tabular-nums; }
+  .bar-track { height: 5px; background: #e7e0cd; }
+  .mini-bar { display: flex; height: 100%; }
+  .mini-bar span { display: block; height: 100%; }
+  .statusbar { position: fixed; bottom: 0; left: 208px; right: 0; height: 26px; display: flex; align-items: center; gap: 20px; padding: 0 40px; border-top: 1px solid var(--hair); background: var(--bg); font-size: 9.5px; letter-spacing: .1em; color: var(--faint); text-transform: uppercase; }
+</style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark"></span><span class="brand-name serif">Usage</span></div>
+    <nav class="nav">
+      <div class="nav-item active">Overview</div>
+      <div class="nav-item">Sessions</div>
+      <div class="nav-item">Subscriptions</div>
+      <div class="nav-section">
+        <span class="view-tab">Agents</span><span class="view-tab active">Models</span>
+        <span class="today-hint">Today</span>
+      </div>
+      <div class="nav-item"><span class="dot" style="background:#8a5a3b"></span><span class="agent-name">muse-spark-1.2</span><span class="agent-today">192.64M</span></div>
+      <div class="nav-item"><span class="dot" style="background:#5d7341"></span><span class="agent-name">k3-256k</span><span class="agent-today">81.70M</span></div>
+      <div class="nav-item"><span class="dot" style="background:#4a6580"></span><span class="agent-name">gpt-5.6-sol</span><span class="agent-today">26.63M</span></div>
+      <div class="nav-item"><span class="dot" style="background:#a05a5a"></span><span class="agent-name">x-preview-f-free</span><span class="agent-today">11.15M</span></div>
+      <div class="nav-item"><span class="dot" style="background:#c2953a"></span><span class="agent-name">deepseek-v4-flash</span><span class="agent-today">3.09M</span></div>
+    </nav>
+    <div class="nav-item">Settings</div>
+    <button class="refresh-btn">Refresh</button>
+    <p class="updated">Updated 21:03:05</p>
+  </aside>
+
+  <main class="content">
+    <header class="head">
+      <h1 class="serif">Overview<span class="date">Friday, August 22</span></h1>
+      <div class="seg">
+        <button class="active">Today</button><button>Weekly</button><button>Monthly</button><button>All</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div>
+        <p class="hero-k">Total Tokens · Today</p>
+        <p class="hero-big serif">317.30<i style="font-size:32px;font-style:normal;color:var(--dim)">M</i></p>
+        <div class="hero-sub">
+          <span class="hero-cost">$33.53</span>
+          <span class="hero-split">New 87.40M · Cached 229.83M</span>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="comp-bar">
+          <span style="width:27.1%;background:var(--c-input)"></span>
+          <span style="width:0.4%;background:var(--c-output)"></span>
+          <span style="width:72.4%;background:var(--c-cacheread)"></span>
+        </div>
+        <div class="legend">
+          <span class="item"><span class="sq" style="background:var(--c-input)"></span>Input <b>86.08M</b></span>
+          <span class="item"><span class="sq" style="background:var(--c-output)"></span>Output <b>1.33M</b></span>
+          <span class="item"><span class="sq" style="background:var(--c-cacheread)"></span>Cache Read <b>229.83M</b></span>
+          <span class="item">Cached Input Share <b>72.8%</b></span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Subscriptions</h2>
+      <div class="quota-grid">
+        <div class="qcard">
+          <div class="qhead"><span class="dot" style="background:#b8542e"></span>Kimi<span class="qtime">1 min ago</span></div>
+          <div class="qrow">Weekly · in 6d 12h<span class="qv">317.30M</span><span class="qp">38%</span></div>
+          <div class="qbar"><span style="width:38%"></span></div>
+          <div class="qrow">5h · in 3h 18m<span class="qv">317.30M</span><span class="qp">15%</span></div>
+          <div class="qbar"><span style="width:15%"></span></div>
+        </div>
+        <div class="qcard">
+          <div class="qhead"><span class="dot" style="background:#5d7341"></span>ChatGPT<span class="qtime">1 min ago</span></div>
+          <div class="qrow">Weekly · in 5d 15h<span class="qv">891.25M</span><span class="qp">41%</span></div>
+          <div class="qbar"><span style="width:41%"></span></div>
+          <div class="qrow">Credits<span class="qv">$178.75</span></div>
+        </div>
+        <div class="qcard">
+          <div class="qhead"><span class="dot" style="background:#4a6580"></span>OpenCode Go<span class="qtime">1 min ago</span></div>
+          <div class="qrow">5h · in 4h 59m<span class="qv">317.30M</span><span class="qp">0%</span></div>
+          <div class="qbar"><span style="width:2%"></span></div>
+          <div class="qrow">Weekly · in 2d 10h<span class="qv">1.57B</span><span class="qp">21%</span></div>
+          <div class="qbar"><span style="width:21%"></span></div>
+        </div>
+        <div class="qcard">
+          <div class="qhead"><span class="dot" style="background:#a05a5a"></span>Grok<span class="qtime">1 min ago</span></div>
+          <div class="qrow">Weekly · in 22h 35m<span class="qv">1.71B</span><span class="qp">100%</span></div>
+          <div class="qbar limit"><span style="width:100%"></span></div>
+          <div class="qrow" style="color:var(--accent)">Limit reached — resets in 22h 35m</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="panel-head">
+        <span><span class="panel-title serif">Today's Activity</span><span class="panel-sub">by session, per hour</span></span>
+      </div>
+      <div style="position:relative">
+        <svg viewBox="0 0 1400 190" width="100%" height="190" preserveAspectRatio="none">
+          <line x1="0" y1="20" x2="1400" y2="20" stroke="#e2dac6"/>
+          <line x1="0" y1="70" x2="1400" y2="70" stroke="#e2dac6"/>
+          <line x1="0" y1="120" x2="1400" y2="120" stroke="#e2dac6"/>
+          <line x1="0" y1="170" x2="1400" y2="170" stroke="#c6bda4"/>
+          <g id="hbars"></g>
+        </svg>
+        <div style="display:flex;justify-content:space-between;font-size:9.5px;color:var(--faint);padding:3px 2px 0;font-variant-numeric:tabular-nums">
+          <span>0:00</span><span>3:00</span><span>6:00</span><span>9:00</span><span>12:00</span><span>15:00</span><span>18:00</span><span>21:00</span><span>24:00</span>
+        </div>
+        <div class="tip" style="left:60%;top:0">
+          <p class="tip-head">15:00 – 16:00 · 58.2M</p>
+          <span style="color:#8a5a3b">■</span> muse-spark-1.2 <b>41.20M</b><br>
+          <span style="color:#5d7341">■</span> k3-256k <b>12.10M</b><br>
+          <span style="color:#4a6580">■</span> gpt-5.6-sol <b>4.90M</b>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Today by Model</h2>
+      <div class="share-panel">
+        <div class="donut-wrap">
+          <svg viewBox="0 0 300 300" width="260" height="260">
+            <circle cx="150" cy="150" r="112" fill="none" stroke="#e7e0cd" stroke-width="20"/>
+            <circle cx="150" cy="150" r="112" fill="none" stroke="#8a5a3b" stroke-width="20"
+              stroke-dasharray="427.2 703.7" stroke-dashoffset="0" transform="rotate(-90 150 150)"/>
+            <circle cx="150" cy="150" r="112" fill="none" stroke="#5d7341" stroke-width="20"
+              stroke-dasharray="181.2 703.7" stroke-dashoffset="-427.2" transform="rotate(-90 150 150)"/>
+            <circle cx="150" cy="150" r="112" fill="none" stroke="#4a6580" stroke-width="20"
+              stroke-dasharray="59.1 703.7" stroke-dashoffset="-608.4" transform="rotate(-90 150 150)"/>
+            <circle cx="150" cy="150" r="112" fill="none" stroke="#a05a5a" stroke-width="20"
+              stroke-dasharray="24.7 703.7" stroke-dashoffset="-667.5" transform="rotate(-90 150 150)"/>
+            <circle cx="150" cy="150" r="112" fill="none" stroke="#c2953a" stroke-width="20"
+              stroke-dasharray="11.4 703.7" stroke-dashoffset="-692.2" transform="rotate(-90 150 150)"/>
+          </svg>
+          <div class="donut-center">
+            <span class="dc-k">Today</span>
+            <span class="dc-v">317.3M</span>
+            <span class="dc-c">$33.53 · 5 models</span>
+          </div>
+        </div>
+        <ul class="rows">
+          <li class="row"><span class="dot" style="background:#8a5a3b"></span><span class="name">muse-spark-1.2-contributor</span>
+            <span class="bar-track"><span class="mini-bar" style="width:100%"><span style="width:24%;background:var(--c-input)"></span><span style="width:76%;background:var(--c-cacheread)"></span></span></span>
+            <span class="tokens">192.64M</span><span class="cost">$20.30</span><span class="pct">60.7%</span></li>
+          <li class="row"><span class="dot" style="background:#5d7341"></span><span class="name">k3-256k</span>
+            <span class="bar-track"><span class="mini-bar" style="width:42.4%"><span style="width:30%;background:var(--c-input)"></span><span style="width:70%;background:var(--c-cacheread)"></span></span></span>
+            <span class="tokens">81.70M</span><span class="cost">$8.60</span><span class="pct">25.7%</span></li>
+          <li class="row"><span class="dot" style="background:#4a6580"></span><span class="name">gpt-5.6-sol</span>
+            <span class="bar-track"><span class="mini-bar" style="width:13.8%"><span style="width:35%;background:var(--c-input)"></span><span style="width:2%;background:var(--c-output)"></span><span style="width:63%;background:var(--c-cacheread)"></span></span></span>
+            <span class="tokens">26.63M</span><span class="cost">$3.10</span><span class="pct">8.4%</span></li>
+          <li class="row"><span class="dot" style="background:#a05a5a"></span><span class="name">x-preview-f-free</span>
+            <span class="bar-track"><span class="mini-bar" style="width:5.8%"><span style="width:28%;background:var(--c-input)"></span><span style="width:72%;background:var(--c-cacheread)"></span></span></span>
+            <span class="tokens">11.15M</span><span class="cost">$0.90</span><span class="pct">3.5%</span></li>
+          <li class="row"><span class="dot" style="background:#c2953a"></span><span class="name">deepseek-v4-flash</span>
+            <span class="bar-track"><span class="mini-bar" style="width:1.6%"><span style="width:40%;background:var(--c-input)"></span><span style="width:60%;background:var(--c-cacheread)"></span></span></span>
+            <span class="tokens">3.09M</span><span class="cost">$0.40</span><span class="pct">1.0%</span></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="statusbar">
+    <span>Range Today</span><span>6 Agents</span><span>ccusage 20.0.20</span><span>Updated 21:03:05</span>
+  </footer>
+
+  <script>
+    const colors = ['#8a5a3b','#5d7341','#4a6580','#a05a5a','#c2953a'];
+    const hours = [
+      [0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[2,0,0,0,0],
+      [5,1,0,0,0],[9,3,1,0,0],[14,5,2,1,0],[22,8,3,2,1],[31,11,4,3,1],[38,14,5,3,2],
+      [29,10,4,3,1],[35,12,5,3,2],[44,15,6,4,2],[41,12,5,4,2],[26,9,4,2,1],[18,6,3,2,1],
+      [12,4,2,1,0],[7,2,1,1,0],[3,1,1,0,0],[1,0,0,0,0],[0,0,0,0,0]
+    ];
+    const maxV = 65, H = 150, base = 170, n = 24, gap = 14;
+    const bw = (1400 - gap*(n+1)) / n;
+    let out = '';
+    hours.forEach((segs, i) => {
+      const x = gap + i*(bw+gap);
+      let y = base;
+      segs.forEach((v, j) => {
+        if (v <= 0) return;
+        const h = Math.max(2, v/maxV*H);
+        y -= h;
+        out += '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + bw.toFixed(1) + '" height="' + h.toFixed(1) + '" fill="' + colors[j] + '"/>';
+      });
+    });
+    document.getElementById('hbars').innerHTML = out;
+  </script>
+</body>
+</html>
