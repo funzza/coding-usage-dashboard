@@ -20,6 +20,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run typecheck
+      # tests already ran on the same commit via CI; keep a cheap re-run here
+      # in case someone tags a commit that skipped main
       - run: npm test
       - name: Build installer and upload draft release
         run: npm run release
