@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Usage — A · Focus</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 100vw; height: 100vh;
+    overflow: hidden;
+    background: #0d0f13;
+    color: #e7eaf1;
+    font-family: "Segoe UI Variable", "Segoe UI", system-ui, sans-serif;
+    font-variant-numeric: tabular-nums;
+    -webkit-font-smoothing: antialiased;
+  }
+  body { display: flex; }
+
+  /* ---------- Sidebar ---------- */
+  aside {
+    width: 212px; flex: none;
+    height: 100%;
+    border-right: 1px solid rgba(255,255,255,0.05);
+    padding: 26px 14px 20px 20px;
+    display: flex; flex-direction: column;
+  }
+  .brand {
+    font-size: 15px; font-weight: 650; letter-spacing: 0.01em;
+    padding: 2px 8px 0 8px;
+  }
+  .nav { margin-top: 26px; display: flex; flex-direction: column; gap: 2px; }
+  .nav-item {
+    display: flex; align-items: center; gap: 9px;
+    font-size: 13px; color: #8b93a1;
+    padding: 7px 8px; border-radius: 8px;
+  }
+  .nav-item.active {
+    color: #e7eaf1;
+    background: rgba(255,255,255,0.045);
+  }
+  .nav-item.active .nav-dot { background: #6e8bff; }
+  .nav-dot { width: 5px; height: 5px; border-radius: 50%; background: #454c59; flex: none; }
+
+  .side-label {
+    margin: 30px 8px 8px 8px;
+    font-size: 10.5px; font-weight: 600; letter-spacing: 0.09em;
+    color: #565f6e;
+  }
+  .agent-list { display: flex; flex-direction: column; gap: 1px; }
+  .agent-row {
+    display: flex; align-items: center; gap: 9px;
+    padding: 6px 8px; border-radius: 8px;
+    font-size: 12.5px; color: #c3c9d4;
+  }
+  .agent-row .dot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
+  .agent-row .name { flex: 1; }
+  .agent-row .val { font-size: 12px; color: #8b93a1; }
+
+  .side-bottom { margin-top: auto; display: flex; flex-direction: column; gap: 2px; }
+  .side-btn {
+    display: flex; align-items: center; gap: 9px;
+    font-size: 13px; color: #8b93a1;
+    padding: 7px 8px; border-radius: 8px;
+  }
+  .updated {
+    margin-top: 10px; padding: 0 8px;
+    font-size: 11px; color: #565f6e;
+  }
+
+  /* ---------- Main ---------- */
+  main {
+    flex: 1; height: 100%; min-width: 0;
+    padding: 28px 42px 26px 40px;
+    display: flex; flex-direction: column;
+  }
+
+  .topbar { display: flex; align-items: center; justify-content: space-between; }
+  .page-title { font-size: 15px; font-weight: 600; color: #e7eaf1; }
+  .range-tabs {
+    display: flex; gap: 2px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 9px; padding: 3px;
+  }
+  .range-tabs span {
+    font-size: 12px; color: #8b93a1;
+    padding: 5px 13px; border-radius: 7px;
+  }
+  .range-tabs span.on {
+    color: #c9d3ff;
+    background: rgba(110,139,255,0.16);
+  }
+
+  /* ---------- Hero ---------- */
+  .hero { margin-top: 38px; }
+  .hero-label { font-size: 12.5px; color: #8b93a1; }
+  .hero-num {
+    margin-top: 8px;
+    font-size: 58px; font-weight: 700; letter-spacing: -0.02em;
+    line-height: 1; color: #f2f4f8;
+  }
+  .hero-sub { margin-top: 14px; display: flex; align-items: baseline; gap: 18px; }
+  .hero-cost { font-size: 19px; font-weight: 650; color: #dfe3ec; }
+  .hero-split { font-size: 12.5px; color: #8b93a1; }
+
+  .comp-bar {
+    margin-top: 26px;
+    width: 100%; height: 6px; border-radius: 3px;
+    display: flex; overflow: hidden;
+  }
+  .comp-bar div { height: 100%; min-width: 3px; }
+  .comp-legend {
+    margin-top: 12px;
+    display: flex; align-items: center; gap: 26px;
+    font-size: 12px; color: #8b93a1;
+  }
+  .comp-legend .item { display: flex; align-items: center; gap: 7px; }
+  .comp-legend .item .dot { width: 7px; height: 7px; border-radius: 50%; }
+  .comp-legend .item b { font-weight: 600; color: #c3c9d4; }
+  .comp-legend .share { margin-left: auto; color: #8b93a1; }
+  .comp-legend .share b { font-weight: 650; color: #e7eaf1; font-size: 12.5px; }
+
+  /* ---------- Subscriptions ---------- */
+  .subs { margin-top: 40px; }
+  .section-label {
+    font-size: 10.5px; font-weight: 600; letter-spacing: 0.09em;
+    color: #565f6e; margin-bottom: 12px;
+  }
+  .sub-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .sub-card {
+    border: 1px solid rgba(255,255,255,0.055);
+    border-radius: 10px;
+    padding: 16px 18px 14px 18px;
+    display: flex; flex-direction: column;
+    min-height: 178px;
+  }
+  .sub-head { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+  .sub-head .dot { width: 7px; height: 7px; border-radius: 50%; }
+  .sub-head .name { font-size: 13px; font-weight: 600; color: #e7eaf1; flex: 1; }
+  .sub-head .cycle { font-size: 11.5px; color: #565f6e; }
+
+  .quota { margin-bottom: 11px; }
+  .quota:last-of-type { margin-bottom: 0; }
+  .quota-top { display: flex; align-items: baseline; margin-bottom: 6px; }
+  .quota-name { font-size: 11.5px; color: #8b93a1; }
+  .quota-reset { font-size: 11px; color: #565f6e; margin-left: 7px; }
+  .quota-pct { margin-left: auto; font-size: 12.5px; font-weight: 650; color: #dfe3ec; }
+  .quota-pct.alert { color: #f87171; }
+  .quota-bar { height: 3px; border-radius: 2px; background: rgba(255,255,255,0.07); overflow: hidden; }
+  .quota-bar div { height: 100%; border-radius: 2px; background: #97a1b5; }
+  .quota-bar div.alert { background: #f87171; }
+  .sub-foot {
+    margin-top: auto; padding-top: 10px;
+    font-size: 11.5px; color: #565f6e;
+  }
+  .sub-foot b { font-weight: 600; color: #8b93a1; }
+  .sub-foot.alert b { color: #f87171; }
+
+  /* ---------- Trend ---------- */
+  .trend { margin-top: 38px; flex: 1; display: flex; flex-direction: column; min-height: 0; }
+  .trend-head { display: flex; align-items: center; }
+  .trend-title { font-size: 14px; font-weight: 600; color: #e7eaf1; }
+  .trend-controls { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+  .seg {
+    display: flex; gap: 2px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 8px; padding: 3px;
+  }
+  .seg span { font-size: 11.5px; color: #8b93a1; padding: 4px 11px; border-radius: 6px; }
+  .seg span.on { color: #c9d3ff; background: rgba(110,139,255,0.16); }
+  .trend-legend {
+    display: flex; align-items: center; gap: 18px;
+    margin-top: 12px;
+    font-size: 11px; color: #8b93a1;
+  }
+  .trend-legend .item { display: flex; align-items: center; gap: 6px; }
+  .trend-legend .dot { width: 7px; height: 7px; border-radius: 2px; }
+  .chart-wrap { flex: 1; margin-top: 6px; min-height: 0; }
+  svg { display: block; width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+
+<aside>
+  <div class="brand">Usage</div>
+  <nav class="nav">
+    <div class="nav-item active"><span class="nav-dot"></span>Overview</div>
+    <div class="nav-item"><span class="nav-dot"></span>Sessions</div>
+  </nav>
+
+  <div class="side-label">AGENTS · TODAY</div>
+  <div class="agent-list">
+    <div class="agent-row"><span class="dot" style="background:#f6bd16"></span><span class="name">Claude</span><span class="val">162.04M</span></div>
+    <div class="agent-row"><span class="dot" style="background:#fb923c"></span><span class="name">Kimi</span><span class="val">83.63M</span></div>
+    <div class="agent-row"><span class="dot" style="background:#34d399"></span><span class="name">Opencode</span><span class="val">46.92M</span></div>
+    <div class="agent-row"><span class="dot" style="background:#5ad8a6"></span><span class="name">Codex</span><span class="val">26.63M</span></div>
+    <div class="agent-row"><span class="dot" style="background:#a78bfa"></span><span class="name">Grok</span><span class="val">994.9K</span></div>
+    <div class="agent-row"><span class="dot" style="background:#2dd4bf"></span><span class="name">Pi</span><span class="val">—</span></div>
+  </div>
+
+  <div class="side-bottom">
+    <div class="side-btn">Settings</div>
+    <div class="side-btn">Refresh</div>
+    <div class="updated">Updated 21:21:45</div>
+  </div>
+</aside>
+
+<main>
+  <div class="topbar">
+    <div class="page-title">Overview</div>
+    <div class="range-tabs">
+      <span>Today</span><span>7D</span><span class="on">30D</span><span>All</span>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="hero-label">Total Tokens · 30 Days</div>
+    <div class="hero-num">6.64B</div>
+    <div class="hero-sub">
+      <span class="hero-cost">$3365</span>
+      <span class="hero-split">New 595.26M · Cached 6.04B</span>
+    </div>
+    <div class="comp-bar">
+      <div style="width:8.20%; background:#5b8ff9"></div>
+      <div style="width:0.52%; background:#5ad8a6"></div>
+      <div style="width:0.26%; background:#f6bd16"></div>
+      <div style="width:91.02%; background:#b175f8"></div>
+    </div>
+    <div class="comp-legend">
+      <span class="item"><span class="dot" style="background:#5b8ff9"></span>Input <b>543.92M</b></span>
+      <span class="item"><span class="dot" style="background:#5ad8a6"></span>Output <b>34.21M</b></span>
+      <span class="item"><span class="dot" style="background:#f6bd16"></span>Cache Creation <b>17.13M</b></span>
+      <span class="item"><span class="dot" style="background:#b175f8"></span>Cache Read <b>6.04B</b></span>
+      <span class="share">Cached Input Share <b>91.7%</b></span>
+    </div>
+  </section>
+
+  <section class="subs">
+    <div class="section-label">SUBSCRIPTIONS</div>
+    <div class="sub-grid">
+
+      <div class="sub-card">
+        <div class="sub-head"><span class="dot" style="background:#fb923c"></span><span class="name">Kimi</span><span class="cycle">318.44M this cycle</span></div>
+        <div class="quota">
+          <div class="quota-top"><span class="quota-name">Weekly</span><span class="quota-reset">resets in 6d 12h</span><span class="quota-pct">38%</span></div>
+          <div class="quota-bar"><div style="width:38%"></div></div>
+        </div>
+        <div class="quota">
+          <div class="quota-top"><span class="quota-name">5h</span><span class="quota-reset">resets in 3h 3m</span><span class="quota-pct">18%</span></div>
+          <div class="quota-bar"><div style="width:18%"></div></div>
+        </div>
+      </div>
+
+      <div class="sub-card">
+        <div class="sub-head"><span class="dot" style="background:#5ad8a6"></span><span class="name">ChatGPT plus</span><span class="cycle">892.39M this cycle</span></div>
+        <div class="quota">
+          <div class="quota-top"><span class="quota-name">Weekly</span><span class="quota-reset">resets in 5d 14h</span><span class="quota-pct">41%</span></div>
+          <div class="quota-bar"><div style="width:41%"></div></div>
+        </div>
+        <div class="quota">
+          <div class="quota-top"><span class="quota-name">Credits</span><span class="quota-reset">available balance</span><span class="quota-pct">$178.75</span></div>
+        </div>
+      </div>
+
+      <div class="sub-card">
+        <div class="sub-head"><span class="dot" style="background:#34d399"></span><span class="name">OpenCode Go</span><span class="cycle">3.18B this cycle</span></div>
+        <div class="quota">
+          <div class="quota-top"><span class="quota-name">5h</span><span class="quota-reset">resets in 4h 59m</span><span class="quota-pct">0%</span></div>
+          <div class="quota-bar"></div>
+        </div>
+        <div class="quota">
+          <div class="quota-top"><span class="quota-name">Weekly</span><span class="quota-reset">resets in 2d 10h</span><span class="quota-pct">21%</span></div>
+          <div class="quota-bar"><div style="width:21%"></div></div>
+        </div>
+        <div class="quota">
+          <div class="quota-top"><span class="quota-name">Monthly</span><span class="quota-reset">resets in 15d 14h</span><span class="quota-pct">38%</span></div>
+          <div class="quota-bar"><div style="width:38%"></div></div>
+        </div>
+      </div>
+
+      <div class="sub-card">
+        <div class="sub-head"><span class="dot" style="background:#a78bfa"></span><span class="name">Grok</span><span class="cycle">1.71B this cycle</span></div>
+        <div class="quota">
+          <div class="quota-top"><span class="quota-name">Weekly</span><span class="quota-reset">resets in 22h 35m</span><span class="quota-pct alert">100%</span></div>
+          <div class="quota-bar"><div class="alert" style="width:100%"></div></div>
+        </div>
+        <div class="sub-foot alert"><b>Weekly quota exhausted</b></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="trend">
+    <div class="trend-head">
+      <div class="trend-title">Token Usage Trend</div>
+      <div class="trend-controls">
+        <div class="seg"><span class="on">By Agent</span><span>By Model</span></div>
+        <div class="seg"><span class="on">Day</span><span>Week</span><span>Month</span></div>
+      </div>
+    </div>
+    <div class="trend-legend">
+      <span class="item"><span class="dot" style="background:#f6bd16"></span>claude</span>
+      <span class="item"><span class="dot" style="background:#5ad8a6"></span>codex</span>
+      <span class="item"><span class="dot" style="background:#a78bfa"></span>grok</span>
+      <span class="item"><span class="dot" style="background:#34d399"></span>opencode</span>
+      <span class="item"><span class="dot" style="background:#2dd4bf"></span>pi</span>
+      <span class="item"><span class="dot" style="background:#fb923c"></span>kimi</span>
+    </div>
+    <div class="chart-wrap">
+      <svg id="chart" preserveAspectRatio="none"></svg>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  var data = [210,180,260,150,90,320,410,380,295,240,180,510,560,430,390,210,170,460,520,610,480,350,290,200,430,540,590,460,410,318];
+  // stack order bottom -> top: claude, codex, grok, opencode, pi, kimi
+  var layers = [
+    { name: 'claude',   color: '#f6bd16', share: 0.45 },
+    { name: 'codex',    color: '#5ad8a6', share: 0.12 },
+    { name: 'grok',     color: '#a78bfa', share: 0.05 },
+    { name: 'opencode', color: '#34d399', share: 0.15 },
+    { name: 'pi',       color: '#2dd4bf', share: 0.03 },
+    { name: 'kimi',     color: '#fb923c', share: 0.20 }
+  ];
+  var svg = document.getElementById('chart');
+  var W = 1350, H = 340;
+  var padL = 34, padR = 4, padT = 10, padB = 24;
+  var plotW = W - padL - padR, plotH = H - padT - padB;
+  var maxV = 600;
+  svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+
+  var ns = 'http://www.w3.org/2000/svg';
+  function el(tag, attrs) {
+    var e = document.createElementNS(ns, tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+  function y(v) { return padT + plotH - (v / maxV) * plotH; }
+
+  // gridlines + y labels
+  [0, 200, 400, 600].forEach(function (g) {
+    svg.appendChild(el('line', {
+      x1: padL, x2: W - padR, y1: y(g), y2: y(g),
+      stroke: 'rgba(255,255,255,0.05)', 'stroke-width': 1
+    }));
+    if (g > 0) {
+      var t = el('text', {
+        x: padL - 8, y: y(g) + 3.5, 'text-anchor': 'end',
+        'font-size': 10.5, fill: '#565f6e'
+      });
+      t.textContent = g + 'M';
+      svg.appendChild(t);
+    }
+  });
+
+  // bars
+  var n = data.length;
+  var step = plotW / n;
+  var bw = 22;
+  data.forEach(function (total, i) {
+    var x = padL + i * step + (step - bw) / 2;
+    var acc = 0;
+    layers.forEach(function (layer, li) {
+      var v = total * layer.share;
+      var y1 = y(acc + v), y0 = y(acc);
+      var h = Math.max(y0 - y1, 0.5);
+      var attrs = { x: x, y: y1, width: bw, height: h, fill: layer.color, opacity: 0.92 };
+      if (li === layers.length - 1) { attrs.rx = 2.5; }
+      // round bottom of lowest layer
+      if (li === 0) { attrs.rx = 2.5; }
+      svg.appendChild(el('rect', attrs));
+      acc += v;
+    });
+  });
+
+  // x labels
+  var labels = { 0: '7/23', 9: '8/1', 16: '8/8', 23: '8/15', 29: '8/21' };
+  Object.keys(labels).forEach(function (idx) {
+    var i = Number(idx);
+    var cx = padL + i * step + step / 2;
+    var t = el('text', {
+      x: cx, y: H - 6, 'text-anchor': 'middle',
+      'font-size': 10.5, fill: '#565f6e'
+    });
+    t.textContent = labels[idx];
+    svg.appendChild(t);
+  });
+})();
+</script>
+
+</body>
+</html>

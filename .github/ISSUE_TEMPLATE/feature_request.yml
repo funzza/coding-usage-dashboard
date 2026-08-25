@@ -1,0 +1,29 @@
+name: Feature request
+description: A change you would like in the desktop app
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What is painful today?
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: Idea
+      description: What should the app do instead?
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Scope
+      options:
+        - Windows desktop (current)
+        - WSL data source
+        - New agent / quota provider
+        - Other
+    validations:
+      required: true

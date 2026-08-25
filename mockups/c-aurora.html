@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Coding Usage Dashboard — C · Aurora</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    width: 100vw; height: 100vh; overflow: hidden;
+    background: #0e1016;
+    color: #e8ecf5;
+    font-family: "Segoe UI Variable", "Segoe UI", system-ui, sans-serif;
+    display: flex; position: relative;
+    -webkit-font-smoothing: antialiased;
+  }
+  .num { font-variant-numeric: tabular-nums; }
+
+  /* ---- ambient aurora light ---- */
+  .aurora {
+    position: absolute; pointer-events: none; z-index: 0;
+  }
+  .aurora.top {
+    top: -340px; left: 8%; right: 4%; height: 640px;
+    background: radial-gradient(ellipse 60% 55% at 45% 40%,
+      rgba(91,143,249,.17), rgba(139,92,246,.07) 52%, transparent 72%);
+  }
+  .aurora.left {
+    top: 30%; left: -180px; width: 460px; height: 620px;
+    background: radial-gradient(ellipse 55% 50% at 50% 50%,
+      rgba(90,216,166,.05), transparent 70%);
+  }
+
+  /* ---- sidebar ---- */
+  .sidebar {
+    width: 244px; flex: none; height: 100%;
+    padding: 24px 16px 20px;
+    display: flex; flex-direction: column;
+    background: linear-gradient(180deg, rgba(255,255,255,.018), rgba(255,255,255,0));
+    border-right: 1px solid rgba(255,255,255,.05);
+    position: relative; z-index: 1;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 10px;
+    padding: 2px 10px 20px;
+    font-size: 17px; font-weight: 600; letter-spacing: .01em;
+  }
+  .brand .logo {
+    width: 22px; height: 22px; border-radius: 7px;
+    background: linear-gradient(135deg, #5b8ff9, #b175f8);
+    box-shadow: 0 0 14px rgba(91,143,249,.45), inset 0 1px 0 rgba(255,255,255,.35);
+  }
+  .nav { display: flex; flex-direction: column; gap: 4px; }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 12px; border-radius: 999px;
+    font-size: 13.5px; color: #9aa3b8; cursor: default;
+  }
+  .nav-item svg { width: 15px; height: 15px; flex: none; opacity: .8; }
+  .nav-item.active {
+    background: linear-gradient(90deg, rgba(91,143,249,.20), rgba(139,92,246,.10));
+    color: #dbe6ff;
+    box-shadow: inset 0 0 0 1px rgba(91,143,249,.22), 0 4px 14px -6px rgba(91,143,249,.35);
+  }
+  .side-label {
+    margin: 26px 12px 10px;
+    font-size: 10.5px; font-weight: 600; letter-spacing: .14em;
+    color: #6b7387;
+  }
+  .agent {
+    display: flex; align-items: center; gap: 10px;
+    padding: 7px 12px; border-radius: 10px;
+    font-size: 13px; color: #c6cddd;
+  }
+  .agent .dot {
+    width: 8px; height: 8px; border-radius: 50%; flex: none;
+  }
+  .agent .val {
+    margin-left: auto; color: #8f97ac; font-size: 12.5px;
+    font-variant-numeric: tabular-nums;
+  }
+  .side-foot { margin-top: auto; display: flex; flex-direction: column; gap: 2px; }
+  .foot-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 12px; border-radius: 999px;
+    font-size: 13px; color: #9aa3b8;
+  }
+  .foot-item svg { width: 14px; height: 14px; opacity: .75; }
+  .updated {
+    padding: 10px 12px 0; font-size: 11px; color: #5d6478;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---- main ---- */
+  main {
+    flex: 1; height: 100%; position: relative; z-index: 1;
+    padding: 24px 30px 24px;
+    display: flex; flex-direction: column; gap: 18px;
+  }
+  .card {
+    border-radius: 16px;
+    border: 1px solid transparent;
+    background:
+      linear-gradient(180deg, #161927, #13161f) padding-box,
+      linear-gradient(165deg, rgba(255,255,255,.11), rgba(255,255,255,.025) 38%, rgba(91,143,249,.09) 90%) border-box;
+    box-shadow:
+      0 20px 44px -26px rgba(0,0,0,.6),
+      inset 0 1px 0 rgba(255,255,255,.045);
+  }
+  .label {
+    font-size: 11px; font-weight: 600; letter-spacing: .13em;
+    text-transform: uppercase; color: #7c8499;
+  }
+
+  /* hero */
+  .hero { padding: 24px 30px 22px; flex: none; }
+  .hero-top { display: flex; align-items: flex-end; margin-top: 12px; }
+  .hero-num {
+    font-size: 64px; line-height: .95; font-weight: 600; letter-spacing: -.025em;
+    background: linear-gradient(180deg, #ffffff 20%, #b8ceff 95%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    font-variant-numeric: tabular-nums;
+  }
+  .hero-cost {
+    margin-left: auto; text-align: right;
+  }
+  .hero-cost .cost {
+    font-size: 30px; font-weight: 600; letter-spacing: -.01em;
+    color: #f2f5fc; font-variant-numeric: tabular-nums;
+  }
+  .hero-cost .split {
+    margin-top: 5px; font-size: 12.5px; color: #8f97ac;
+    font-variant-numeric: tabular-nums;
+  }
+  .hero-cost .split b { color: #c6cddd; font-weight: 600; }
+  .comp-bar {
+    margin-top: 20px; height: 10px; border-radius: 999px;
+    display: flex; overflow: hidden;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.4), 0 1px 0 rgba(255,255,255,.04);
+    background: rgba(255,255,255,.04);
+  }
+  .comp-bar span {
+    display: block; height: 100%;
+    background-image: linear-gradient(180deg, rgba(255,255,255,.32), rgba(255,255,255,0) 55%);
+  }
+  .legend {
+    margin-top: 14px; display: flex; gap: 22px; flex-wrap: wrap;
+    font-size: 12px; color: #9aa3b8;
+  }
+  .legend .item { display: flex; align-items: center; gap: 7px; }
+  .legend .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .legend b { color: #dde3f0; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .legend .item.share { margin-left: auto; color: #7c8499; }
+  .legend .item.share b { color: #b175f8; }
+
+  /* subscriptions */
+  .subs {
+    flex: none; display: grid;
+    grid-template-columns: 1fr 1fr; gap: 18px;
+  }
+  .sub { padding: 18px 22px 16px; position: relative; overflow: hidden; }
+  .sub-head { display: flex; align-items: center; gap: 10px; margin-bottom: 13px; }
+  .sub-head .pdot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+  .sub-head .name { font-size: 14px; font-weight: 600; color: #eef1f8; }
+  .sub-head .tag {
+    margin-left: auto; font-size: 10.5px; font-weight: 600; letter-spacing: .08em;
+    padding: 3px 9px; border-radius: 999px; color: #9aa3b8;
+    background: rgba(255,255,255,.05);
+  }
+  .quota { display: flex; flex-direction: column; gap: 11px; }
+  .q-row-head {
+    display: flex; align-items: baseline; gap: 8px; margin-bottom: 5px;
+    font-size: 12px; color: #8f97ac;
+  }
+  .q-row-head .qname { font-weight: 500; }
+  .q-row-head .pct {
+    font-size: 13px; font-weight: 600; color: #e8ecf5;
+    font-variant-numeric: tabular-nums;
+  }
+  .q-row-head .reset { font-variant-numeric: tabular-nums; }
+  .q-row-head .used { margin-left: auto; font-size: 11px; color: #6b7387; font-variant-numeric: tabular-nums; }
+  .track {
+    height: 8px; border-radius: 999px; overflow: hidden;
+    background: rgba(255,255,255,.055);
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.35);
+  }
+  .fill {
+    height: 100%; border-radius: 999px; position: relative;
+    background-image: linear-gradient(180deg, rgba(255,255,255,.30), rgba(255,255,255,0) 60%);
+  }
+  .fill::after {
+    content: ""; position: absolute; right: 0; top: 0; bottom: 0; width: 14px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.28));
+    border-radius: 999px;
+  }
+  .credits {
+    display: flex; align-items: baseline; gap: 8px;
+    font-size: 12px; color: #8f97ac;
+    margin-top: 4px; padding: 10px 14px; border-radius: 12px;
+    background: rgba(255,255,255,.03);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.05);
+  }
+  .credits b { font-size: 20px; font-weight: 600; color: #f2f5fc; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+  .credits .hint { margin-left: auto; font-size: 11px; color: #5d6478; }
+  .sub-note {
+    display: flex; align-items: center; gap: 8px;
+    margin-top: 4px; padding: 9px 14px; border-radius: 12px;
+    font-size: 11.5px; color: #f0898a;
+    background: rgba(248,113,113,.07);
+    box-shadow: inset 0 0 0 1px rgba(248,113,113,.14);
+  }
+
+  .sub.danger {
+    background:
+      linear-gradient(180deg, #1a1720, #151318) padding-box,
+      linear-gradient(165deg, rgba(248,113,113,.38), rgba(248,113,113,.05) 45%, rgba(248,113,113,.14) 95%) border-box;
+    box-shadow:
+      0 0 46px -10px rgba(248,113,113,.22),
+      0 20px 44px -26px rgba(0,0,0,.6),
+      inset 0 1px 0 rgba(248,113,113,.12);
+  }
+  .sub.danger .tag { color: #fca5a5; background: rgba(248,113,113,.12); }
+
+  /* trend */
+  .trend { flex: 1; padding: 20px 26px 14px; display: flex; flex-direction: column; min-height: 0; }
+  .trend-head { display: flex; align-items: center; gap: 14px; }
+  .trend-head h2 { font-size: 16px; font-weight: 600; letter-spacing: -.01em; }
+  .seg {
+    display: flex; gap: 2px; padding: 3px; border-radius: 999px;
+    background: rgba(255,255,255,.045);
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.3);
+  }
+  .seg button {
+    border: 0; background: transparent; color: #8f97ac;
+    font: inherit; font-size: 12px; font-weight: 500;
+    padding: 4px 13px; border-radius: 999px; cursor: default;
+  }
+  .seg button.on {
+    background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.06));
+    color: #f2f5fc;
+    box-shadow: 0 2px 8px -2px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.12);
+  }
+  .trend-head .modes { margin-left: auto; display: flex; gap: 10px; }
+  .trend-legend {
+    display: flex; gap: 16px; margin-top: 12px;
+    font-size: 11.5px; color: #8f97ac;
+  }
+  .trend-legend .item { display: flex; align-items: center; gap: 6px; }
+  .trend-legend .dot { width: 7px; height: 7px; border-radius: 50%; }
+  .chart { flex: 1; margin-top: 8px; min-height: 0; }
+  .chart svg { width: 100%; height: 100%; display: block; }
+</style>
+</head>
+<body>
+  <div class="aurora top"></div>
+  <div class="aurora left"></div>
+
+  <aside class="sidebar">
+    <div class="brand"><span class="logo"></span>Usage</div>
+    <nav class="nav">
+      <div class="nav-item active">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1.5" y="1.5" width="5.5" height="5.5" rx="1.5"/><rect x="9" y="1.5" width="5.5" height="5.5" rx="1.5"/><rect x="1.5" y="9" width="5.5" height="5.5" rx="1.5"/><rect x="9" y="9" width="5.5" height="5.5" rx="1.5"/></svg>
+        Overview
+      </div>
+      <div class="nav-item">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6.2"/><path d="M8 4.5V8l2.4 1.6"/></svg>
+        Sessions
+      </div>
+    </nav>
+
+    <div class="side-label">AGENTS · TODAY</div>
+    <div class="agent"><span class="dot" style="background:#f6bd16; box-shadow:0 0 8px rgba(246,189,22,.55)"></span>Claude<span class="val">162.04M</span></div>
+    <div class="agent"><span class="dot" style="background:#fb923c; box-shadow:0 0 8px rgba(251,146,60,.55)"></span>Kimi<span class="val">83.63M</span></div>
+    <div class="agent"><span class="dot" style="background:#34d399; box-shadow:0 0 8px rgba(52,211,153,.55)"></span>Opencode<span class="val">46.92M</span></div>
+    <div class="agent"><span class="dot" style="background:#5ad8a6; box-shadow:0 0 8px rgba(90,216,166,.55)"></span>Codex<span class="val">26.63M</span></div>
+    <div class="agent"><span class="dot" style="background:#a78bfa; box-shadow:0 0 8px rgba(167,139,250,.55)"></span>Grok<span class="val">994.9K</span></div>
+    <div class="agent"><span class="dot" style="background:#2dd4bf; box-shadow:0 0 8px rgba(45,212,191,.5)"></span>Pi<span class="val">—</span></div>
+
+    <div class="side-foot">
+      <div class="foot-item">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="2.2"/><path d="M13.3 8a5.3 5.3 0 0 0-.1-1l1.4-1.1-1.4-2.4-1.6.7a5.3 5.3 0 0 0-1.7-1L9.6 1.5H6.9l-.3 1.7a5.3 5.3 0 0 0-1.7 1l-1.6-.7-1.4 2.4L3.3 7a5.3 5.3 0 0 0 0 2l-1.4 1.1 1.4 2.4 1.6-.7a5.3 5.3 0 0 0 1.7 1l.3 1.7h2.7l.3-1.7a5.3 5.3 0 0 0 1.7-1l1.6.7 1.4-2.4-1.4-1.1c.06-.33.1-.66.1-1Z" stroke-linejoin="round"/></svg>
+        Settings
+      </div>
+      <div class="foot-item">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M13.5 8a5.5 5.5 0 1 1-1.6-3.9"/><path d="M13.5 2.5v3h-3"/></svg>
+        Refresh
+      </div>
+      <div class="updated">Updated 21:21:45</div>
+    </div>
+  </aside>
+
+  <main>
+    <!-- HERO -->
+    <section class="card hero">
+      <div class="label">Total Tokens · 30 Days</div>
+      <div class="hero-top">
+        <div class="hero-num">6.64B</div>
+        <div class="hero-cost">
+          <div class="cost">$3365</div>
+          <div class="split">New <b>595.26M</b> · Cached <b>6.04B</b></div>
+        </div>
+      </div>
+      <div class="comp-bar">
+        <span style="width:8.2%;  background-color:#5b8ff9"></span>
+        <span style="width:6px;   background-color:#5ad8a6"></span>
+        <span style="width:4px;   background-color:#f6bd16"></span>
+        <span style="flex:1;      background-color:#b175f8"></span>
+      </div>
+      <div class="legend">
+        <span class="item"><span class="dot" style="background:#5b8ff9"></span>Input <b>543.92M</b></span>
+        <span class="item"><span class="dot" style="background:#5ad8a6"></span>Output <b>34.21M</b></span>
+        <span class="item"><span class="dot" style="background:#f6bd16"></span>Cache Creation <b>17.13M</b></span>
+        <span class="item"><span class="dot" style="background:#b175f8"></span>Cache Read <b>6.04B</b></span>
+        <span class="item share">Cached Input Share <b>91.7%</b></span>
+      </div>
+    </section>
+
+    <!-- SUBSCRIPTIONS -->
+    <section class="subs">
+      <div class="card sub">
+        <div class="sub-head">
+          <span class="pdot" style="background:#fb923c; box-shadow:0 0 10px rgba(251,146,60,.6)"></span>
+          <span class="name">Kimi</span><span class="tag">SUBSCRIPTION</span>
+        </div>
+        <div class="quota">
+          <div>
+            <div class="q-row-head"><span class="qname">Weekly</span><span class="pct">38%</span><span class="reset">6d 12h</span><span class="used">318.44M this cycle</span></div>
+            <div class="track"><div class="fill" style="width:38%; background-color:#fb923c"></div></div>
+          </div>
+          <div>
+            <div class="q-row-head"><span class="qname">5h</span><span class="pct">18%</span><span class="reset">3h 3m</span></div>
+            <div class="track"><div class="fill" style="width:18%; background-color:#fb923c"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card sub">
+        <div class="sub-head">
+          <span class="pdot" style="background:#5ad8a6; box-shadow:0 0 10px rgba(90,216,166,.6)"></span>
+          <span class="name">ChatGPT Plus</span><span class="tag">SUBSCRIPTION</span>
+        </div>
+        <div class="quota">
+          <div>
+            <div class="q-row-head"><span class="qname">Weekly</span><span class="pct">41%</span><span class="reset">5d 14h</span><span class="used">892.39M this cycle</span></div>
+            <div class="track"><div class="fill" style="width:41%; background-color:#5ad8a6"></div></div>
+          </div>
+          <div class="credits">Credits <b>$178.75</b><span class="hint">pay-as-you-go balance</span></div>
+        </div>
+      </div>
+
+      <div class="card sub">
+        <div class="sub-head">
+          <span class="pdot" style="background:#5b8ff9; box-shadow:0 0 10px rgba(91,143,249,.6)"></span>
+          <span class="name">OpenCode Go</span><span class="tag">SUBSCRIPTION</span>
+        </div>
+        <div class="quota" style="gap:9px">
+          <div>
+            <div class="q-row-head"><span class="qname">5h</span><span class="pct">0%</span><span class="reset">4h 59m</span></div>
+            <div class="track"><div class="fill" style="width:1.5%; background-color:#5b8ff9"></div></div>
+          </div>
+          <div>
+            <div class="q-row-head"><span class="qname">Weekly</span><span class="pct">21%</span><span class="reset">2d 10h</span><span class="used">1.57B</span></div>
+            <div class="track"><div class="fill" style="width:21%; background-color:#5b8ff9"></div></div>
+          </div>
+          <div>
+            <div class="q-row-head"><span class="qname">Monthly</span><span class="pct">38%</span><span class="reset">15d 14h</span><span class="used">3.18B</span></div>
+            <div class="track"><div class="fill" style="width:38%; background-color:#5b8ff9"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card sub danger">
+        <div class="sub-head">
+          <span class="pdot" style="background:#f87171; box-shadow:0 0 12px rgba(248,113,113,.75)"></span>
+          <span class="name">Grok</span><span class="tag">LIMIT REACHED</span>
+        </div>
+        <div class="quota">
+          <div>
+            <div class="q-row-head"><span class="qname">Weekly</span><span class="pct" style="color:#fca5a5">100%</span><span class="reset">22h 35m</span><span class="used">1.71B this cycle</span></div>
+            <div class="track"><div class="fill" style="width:100%; background-color:#f87171; box-shadow:0 0 14px rgba(248,113,113,.5)"></div></div>
+          </div>
+          <div class="sub-note">Weekly quota exhausted — throttled until reset in 22h 35m</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TREND -->
+    <section class="card trend">
+      <div class="trend-head">
+        <h2>Token Usage Trend</h2>
+        <div class="seg"><button class="on">By Agent</button><button>By Model</button></div>
+        <div class="modes">
+          <div class="seg"><button class="on">Day</button><button>Week</button><button>Month</button></div>
+        </div>
+      </div>
+      <div class="trend-legend">
+        <span class="item"><span class="dot" style="background:#f6bd16"></span>Claude</span>
+        <span class="item"><span class="dot" style="background:#fb923c"></span>Kimi</span>
+        <span class="item"><span class="dot" style="background:#34d399"></span>Opencode</span>
+        <span class="item"><span class="dot" style="background:#5ad8a6"></span>Codex</span>
+        <span class="item"><span class="dot" style="background:#a78bfa"></span>Grok</span>
+        <span class="item"><span class="dot" style="background:#2dd4bf"></span>Pi</span>
+      </div>
+      <div class="chart"><svg id="chart" viewBox="0 0 1330 300" preserveAspectRatio="none"></svg></div>
+    </section>
+  </main>
+
+<script>
+(function () {
+  var totals = [210,180,260,150,90,320,410,380,295,240,180,510,560,430,390,210,170,460,520,610,480,350,290,200,430,540,590,460,410,318];
+  var stack = [
+    ['#f6bd16', .45], ['#fb923c', .20], ['#34d399', .15],
+    ['#5ad8a6', .12], ['#a78bfa', .05], ['#2dd4bf', .03]
+  ];
+  var W = 1330, H = 300, padL = 6, padR = 6, padT = 14, padB = 30;
+  var plotW = W - padL - padR, plotH = H - padT - padB;
+  var max = 610, n = totals.length;
+  var gap = 10, bw = (plotW - gap * (n - 1)) / n;
+  var s = '';
+
+  // faint gridlines
+  [0, 200, 400, 600].forEach(function (v) {
+    var y = padT + plotH - (v / max) * plotH;
+    s += '<line x1="' + padL + '" y1="' + y + '" x2="' + (W - padR) + '" y2="' + y +
+         '" stroke="rgba(255,255,255,.05)" stroke-width="1"/>';
+  });
+
+  totals.forEach(function (t, i) {
+    var x = padL + i * (bw + gap);
+    var y = padT + plotH;
+    var hTotal = (t / max) * plotH;
+    stack.forEach(function (seg, j) {
+      var h = hTotal * seg[1];
+      y -= h;
+      var top = (j === stack.length - 1);
+      var r = top ? Math.min(2.5, bw / 2, h / 2) : 0;
+      s += '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + bw.toFixed(1) +
+           '" height="' + Math.max(h, .5).toFixed(1) + '" rx="' + r + '" fill="' + seg[0] + '" fill-opacity=".92"/>';
+    });
+  });
+
+  // x labels
+  var labels = [[0,'7/23'],[9,'8/1'],[16,'8/8'],[23,'8/15'],[29,'8/21']];
+  labels.forEach(function (l) {
+    var x = padL + l[0] * (bw + gap) + bw / 2;
+    s += '<text x="' + x.toFixed(1) + '" y="' + (H - 9) + '" text-anchor="middle" font-size="11" fill="#5d6478" font-family="inherit">' + l[1] + '</text>';
+  });
+
+  document.getElementById('chart').innerHTML = s;
+})();
+</script>
+</body>
+</html>

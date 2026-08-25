@@ -1,0 +1,19 @@
+node_modules/
+out/
+dist/
+*.log
+screenshots/
+.zcode/
+.env
+.env.*
+*.local
+Thumbs.db
+Desktop.ini
+coverage/
+.vscode/
+.idea/
+
+# Local research notes (machine paths, not for the public tree)
+docs/quota-research-*.md
+docs/quota-rounds-plan.md
+docs/overview-redesign-plan.md

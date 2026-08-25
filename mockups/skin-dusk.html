@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Skin — Dusk</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #171209;
+    --panel: #211a10;
+    --panel2: #2a2114;
+    --line: #3a2e1c;
+    --text: #f0e4cf;
+    --dim: #b09a7a;
+    --faint: #7a6a52;
+    --amber: #e8a33d;
+    --copper: #c96f4a;
+    --olive: #a3a15c;
+    --rose: #c97b7b;
+    --bronze: #b08d57;
+    --teal: #6f9e8f;
+  }
+  body {
+    background:
+      radial-gradient(800px 480px at 90% -10%, rgba(232,163,61,0.07), transparent 60%),
+      var(--bg);
+    color: var(--text);
+    font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    display: grid; grid-template-columns: 208px 1fr; min-height: 100vh;
+  }
+  /* ---------- sidebar ---------- */
+  .sidebar { border-right: 1px solid var(--line); padding: 24px 16px 18px 22px; display: flex; flex-direction: column; gap: 12px; background: rgba(0,0,0,0.18); }
+  .brand { display: flex; align-items: center; gap: 9px; padding: 2px 6px 12px; border-bottom: 1px solid var(--line); }
+  .brand-mark { width: 13px; height: 13px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #f6cd7a, var(--amber) 60%, #8a5c1a); }
+  .brand-name { font-size: 15.5px; font-weight: 650; letter-spacing: .01em; }
+  .nav { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+  .nav-item { display: flex; align-items: center; gap: 8px; padding: 6px 9px; border-radius: 7px; font-size: 12.5px; color: var(--dim); }
+  .nav-item.active { background: var(--panel2); color: var(--amber); font-weight: 600; box-shadow: inset 0 0 0 1px rgba(232,163,61,0.25); }
+  .nav-section { font-size: 10px; letter-spacing: .13em; color: var(--faint); text-transform: uppercase; padding: 16px 8px 6px; display: flex; align-items: center; gap: 2px; }
+  .view-tab { font-size: 10px; letter-spacing: .1em; padding: 2px 5px; border-radius: 4px; color: var(--faint); }
+  .view-tab.active { color: var(--amber); font-weight: 700; }
+  .today-hint { margin-left: auto; font-size: 9.5px; color: var(--faint); }
+  .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .agent-name { flex: 1; }
+  .agent-today { font-size: 11px; color: var(--faint); font-variant-numeric: tabular-nums; }
+  .refresh-btn { background: linear-gradient(180deg, #f0b45a, #d18a2b); border: none; color: #241703; border-radius: 8px; padding: 8px 14px; font-size: 12.5px; font-weight: 700; text-align: center; box-shadow: 0 2px 10px rgba(232,163,61,0.25); }
+  .updated { font-size: 10.5px; color: var(--faint); padding: 0 8px; }
+  /* ---------- main ---------- */
+  .content { padding: 26px 42px 40px 40px; display: flex; flex-direction: column; gap: 26px; }
+  .head { display: flex; align-items: center; justify-content: space-between; }
+  h1 { font-size: 17px; font-weight: 650; }
+  .seg { display: inline-flex; gap: 2px; background: var(--panel); border: 1px solid var(--line); border-radius: 9px; padding: 3px; }
+  .seg button { background: transparent; border: none; color: var(--dim); font-size: 11.5px; padding: 5px 14px; border-radius: 7px; }
+  .seg button.active { background: var(--panel2); color: var(--amber); font-weight: 700; box-shadow: inset 0 0 0 1px rgba(232,163,61,0.3); }
+  /* ---------- hero ---------- */
+  .hero-card { background: linear-gradient(160deg, var(--panel2), var(--panel) 65%); border: 1px solid var(--line); border-radius: 16px; padding: 22px 26px; box-shadow: 0 8px 24px rgba(0,0,0,0.28); }
+  .hero { display: grid; grid-template-columns: auto 1fr; gap: 56px; align-items: end; }
+  .hero-k { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); }
+  .hero-big { font-size: 62px; font-weight: 750; letter-spacing: -0.03em; line-height: 1.02; margin: 6px 0 8px; font-variant-numeric: tabular-nums; color: #f8ecd4; }
+  .hero-big i { font-style: normal; font-size: 30px; color: var(--amber); }
+  .hero-sub { display: flex; align-items: baseline; gap: 16px; }
+  .hero-cost { font-size: 20px; font-weight: 700; color: var(--amber); }
+  .hero-split { font-size: 12px; color: var(--dim); }
+  .hero-right { padding-bottom: 2px; }
+  .comp-bar { display: flex; height: 9px; border-radius: 5px; overflow: hidden; background: rgba(0,0,0,0.35); }
+  .comp-bar span { display: block; height: 100%; }
+  .legend { display: flex; gap: 22px; margin-top: 11px; align-items: baseline; }
+  .legend .item { display: flex; align-items: baseline; gap: 6px; font-size: 11.5px; color: var(--dim); }
+  .legend .item b { color: var(--text); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .legend .item:last-child { margin-left: auto; }
+  .sq { width: 8px; height: 8px; border-radius: 3px; display: inline-block; }
+  h2 { font-size: 10.5px; letter-spacing: .15em; color: var(--faint); text-transform: uppercase; margin-bottom: 12px; }
+  /* ---------- subscriptions ---------- */
+  .quota-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .qcard { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; box-shadow: 0 4px 14px rgba(0,0,0,0.22); }
+  .qcard .qhead { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 650; }
+  .qcard .qtime { margin-left: auto; font-size: 10.5px; color: var(--faint); font-weight: 400; }
+  .qrow { display: flex; align-items: baseline; margin-top: 10px; font-size: 11.5px; color: var(--dim); }
+  .qrow .qv { margin-left: auto; font-variant-numeric: tabular-nums; color: var(--text); }
+  .qrow .qp { color: var(--amber); font-weight: 700; margin-left: 8px; }
+  .qbar { height: 5px; border-radius: 3px; background: rgba(0,0,0,0.35); margin-top: 5px; overflow: hidden; }
+  .qbar span { display: block; height: 100%; background: linear-gradient(90deg, #d18a2b, #f0b45a); border-radius: 3px; }
+  .qbar.limit span { background: linear-gradient(90deg, #b8452e, #e86a4a); }
+  .limit-text { color: #e8866a; font-size: 10.5px; }
+  /* ---------- hourly ---------- */
+  .panel-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px; }
+  .panel-title { font-size: 14.5px; font-weight: 650; }
+  .panel-sub { font-size: 10.5px; color: var(--faint); margin-left: 10px; }
+  .tip { position: absolute; background: #2c2214; border: 1px solid #4a3a22; border-radius: 10px; padding: 9px 13px; font-size: 11px; line-height: 1.7; color: var(--dim); pointer-events: none; box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
+  .tip b { color: var(--text); font-variant-numeric: tabular-nums; }
+  .tip .tip-head { color: var(--amber); font-weight: 700; margin-bottom: 2px; }
+  /* ---------- donut + rows ---------- */
+  .share-panel { display: grid; grid-template-columns: 300px 1fr; gap: 44px; align-items: center; }
+  .donut-wrap { position: relative; width: 260px; height: 260px; }
+  .donut-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; }
+  .donut-center .dc-k { font-size: 9.5px; color: var(--faint); letter-spacing: .14em; text-transform: uppercase; }
+  .donut-center .dc-v { font-size: 31px; font-weight: 750; font-variant-numeric: tabular-nums; color: #f8ecd4; }
+  .donut-center .dc-c { font-size: 11px; color: var(--dim); }
+  .rows { list-style: none; }
+  .row { display: grid; grid-template-columns: 10px 170px 1fr 84px 64px 56px; align-items: center; gap: 12px; padding: 8px 0; }
+  .row + .row { border-top: 1px solid rgba(240,228,207,0.07); }
+  .row .name { font-size: 12.5px; font-weight: 500; }
+  .row .tokens { font-size: 13px; font-weight: 650; text-align: right; font-variant-numeric: tabular-nums; }
+  .row .cost { font-size: 11.5px; color: var(--dim); text-align: right; }
+  .row .pct { font-size: 11px; color: var(--faint); text-align: right; font-variant-numeric: tabular-nums; }
+  .bar-track { height: 6px; border-radius: 3px; background: rgba(0,0,0,0.32); }
+  .mini-bar { display: flex; height: 100%; border-radius: 3px; overflow: hidden; }
+  .mini-bar span { display: block; height: 100%; }
+  .statusbar { position: fixed; bottom: 0; left: 208px; right: 0; height: 26px; display: flex; align-items: center; gap: 20px; padding: 0 40px; border-top: 1px solid var(--line); background: #14100a; font-size: 9.5px; letter-spacing: .09em; color: var(--faint); text-transform: uppercase; }
+</style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark"></span><span class="brand-name">Usage</span></div>
+    <nav class="nav">
+      <div class="nav-item active">Overview</div>
+      <div class="nav-item">Sessions</div>
+      <div class="nav-item">Subscriptions</div>
+      <div class="nav-section">
+        <span class="view-tab">Agents</span><span class="view-tab active">Models</span>
+        <span class="today-hint">Today</span>
+      </div>
+      <div class="nav-item"><span class="dot" style="background:#e8a33d"></span><span class="agent-name">muse-spark-1.2</span><span class="agent-today">192.64M</span></div>
+      <div class="nav-item"><span class="dot" style="background:#c96f4a"></span><span class="agent-name">k3-256k</span><span class="agent-today">81.70M</span></div>
+      <div class="nav-item"><span class="dot" style="background:#a3a15c"></span><span class="agent-name">gpt-5.6-sol</span><span class="agent-today">26.63M</span></div>
+      <div class="nav-item"><span class="dot" style="background:#c97b7b"></span><span class="agent-name">x-preview-f-free</span><span class="agent-today">11.15M</span></div>
+      <div class="nav-item"><span class="dot" style="background:#6f9e8f"></span><span class="agent-name">deepseek-v4-flash</span><span class="agent-today">3.09M</span></div>
+    </nav>
+    <div class="nav-item">Settings</div>
+    <button class="refresh-btn">Refresh</button>
+    <p class="updated">Updated 21:03:05</p>
+  </aside>
+
+  <main class="content">
+    <header class="head">
+      <h1>Overview</h1>
+      <div class="seg">
+        <button class="active">Today</button><button>Weekly</button><button>Monthly</button><button>All</button>
+      </div>
+    </header>
+
+    <section class="hero-card">
+      <div class="hero">
+        <div>
+          <p class="hero-k">Total Tokens · Today</p>
+          <p class="hero-big">317.30<i>M</i></p>
+          <div class="hero-sub">
+            <span class="hero-cost">$33.53</span>
+            <span class="hero-split">New 87.40M · Cached 229.83M</span>
+          </div>
+        </div>
+        <div class="hero-right">
+          <div class="comp-bar">
+            <span style="width:27.1%;background:#d18a2b"></span>
+            <span style="width:0.4%;background:#a3a15c"></span>
+            <span style="width:72.4%;background:#8a6ab8"></span>
+          </div>
+          <div class="legend">
+            <span class="item"><span class="sq" style="background:#d18a2b"></span>Input <b>86.08M</b></span>
+            <span class="item"><span class="sq" style="background:#a3a15c"></span>Output <b>1.33M</b></span>
+            <span class="item"><span class="sq" style="background:#8a6ab8"></span>Cache Read <b>229.83M</b></span>
+            <span class="item">Cached Input Share <b style="color:var(--amber)">72.8%</b></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Subscriptions</h2>
+      <div class="quota-grid">
+        <div class="qcard">
+          <div class="qhead"><span class="dot" style="background:#e8a33d"></span>Kimi<span class="qtime">1 min ago</span></div>
+          <div class="qrow">Weekly · in 6d 12h<span class="qv">317.30M</span><span class="qp">38%</span></div>
+          <div class="qbar"><span style="width:38%"></span></div>
+          <div class="qrow">5h · in 3h 18m<span class="qv">317.30M</span><span class="qp">15%</span></div>
+          <div class="qbar"><span style="width:15%"></span></div>
+        </div>
+        <div class="qcard">
+          <div class="qhead"><span class="dot" style="background:#a3a15c"></span>ChatGPT<span class="qtime">1 min ago</span></div>
+          <div class="qrow">Weekly · in 5d 15h<span class="qv">891.25M</span><span class="qp">41%</span></div>
+          <div class="qbar"><span style="width:41%"></span></div>
+          <div class="qrow">Credits<span class="qv" style="color:var(--amber)">$178.75</span></div>
+        </div>
+        <div class="qcard">
+          <div class="qhead"><span class="dot" style="background:#6f9e8f"></span>OpenCode Go<span class="qtime">1 min ago</span></div>
+          <div class="qrow">5h · in 4h 59m<span class="qv">317.30M</span><span class="qp">0%</span></div>
+          <div class="qbar"><span style="width:2%"></span></div>
+          <div class="qrow">Weekly · in 2d 10h<span class="qv">1.57B</span><span class="qp">21%</span></div>
+          <div class="qbar"><span style="width:21%"></span></div>
+        </div>
+        <div class="qcard" style="border-color:rgba(232,106,74,0.4)">
+          <div class="qhead"><span class="dot" style="background:#c97b7b"></span>Grok<span class="qtime">1 min ago</span></div>
+          <div class="qrow">Weekly · in 22h 35m<span class="qv">1.71B</span><span class="qp" style="color:#e86a4a">100%</span></div>
+          <div class="qbar limit"><span style="width:100%"></span></div>
+          <div class="qrow limit-text">Limit reached — resets in 22h 35m</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="panel-head">
+        <span><span class="panel-title">Today's Activity</span><span class="panel-sub">by session · per hour</span></span>
+      </div>
+      <div style="position:relative">
+        <svg viewBox="0 0 1400 190" width="100%" height="190" preserveAspectRatio="none">
+          <line x1="0" y1="20" x2="1400" y2="20" stroke="#2c2214"/>
+          <line x1="0" y1="70" x2="1400" y2="70" stroke="#2c2214"/>
+          <line x1="0" y1="120" x2="1400" y2="120" stroke="#2c2214"/>
+          <line x1="0" y1="170" x2="1400" y2="170" stroke="#3a2e1c"/>
+          <g id="hbars"></g>
+        </svg>
+        <div style="display:flex;justify-content:space-between;font-size:9.5px;color:var(--faint);padding:3px 2px 0;font-variant-numeric:tabular-nums">
+          <span>0:00</span><span>3:00</span><span>6:00</span><span>9:00</span><span>12:00</span><span>15:00</span><span>18:00</span><span>21:00</span><span>24:00</span>
+        </div>
+        <div class="tip" style="left:60%;top:0">
+          <p class="tip-head">15:00 – 16:00 · 58.2M</p>
+          <span style="color:#e8a33d">●</span> muse-spark-1.2 <b>41.20M</b><br>
+          <span style="color:#c96f4a">●</span> k3-256k <b>12.10M</b><br>
+          <span style="color:#a3a15c">●</span> gpt-5.6-sol <b>4.90M</b>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Today by Model</h2>
+      <div class="share-panel">
+        <div class="donut-wrap">
+          <svg viewBox="0 0 300 300" width="260" height="260">
+            <circle cx="150" cy="150" r="112" fill="none" stroke="#2c2214" stroke-width="22"/>
+            <circle cx="150" cy="150" r="112" fill="none" stroke="#e8a33d" stroke-width="22"
+              stroke-dasharray="427.2 703.7" stroke-dashoffset="0" transform="rotate(-90 150 150)"/>
+            <circle cx="150" cy="150" r="112" fill="none" stroke="#c96f4a" stroke-width="22"
+              stroke-dasharray="181.2 703.7" stroke-dashoffset="-427.2" transform="rotate(-90 150 150)"/>
+            <circle cx="150" cy="150" r="112" fill="none" stroke="#a3a15c" stroke-width="22"
+              stroke-dasharray="59.1 703.7" stroke-dashoffset="-608.4" transform="rotate(-90 150 150)"/>
+            <circle cx="150" cy="150" r="112" fill="none" stroke="#c97b7b" stroke-width="22"
+              stroke-dasharray="24.7 703.7" stroke-dashoffset="-667.5" transform="rotate(-90 150 150)"/>
+            <circle cx="150" cy="150" r="112" fill="none" stroke="#6f9e8f" stroke-width="22"
+              stroke-dasharray="11.4 703.7" stroke-dashoffset="-692.2" transform="rotate(-90 150 150)"/>
+          </svg>
+          <div class="donut-center">
+            <span class="dc-k">Today</span>
+            <span class="dc-v">317.3M</span>
+            <span class="dc-c">$33.53 · 5 models</span>
+          </div>
+        </div>
+        <ul class="rows">
+          <li class="row"><span class="dot" style="background:#e8a33d"></span><span class="name">muse-spark-1.2-contributor</span>
+            <span class="bar-track"><span class="mini-bar" style="width:100%"><span style="width:24%;background:#d18a2b"></span><span style="width:76%;background:#8a6ab8"></span></span></span>
+            <span class="tokens">192.64M</span><span class="cost">$20.30</span><span class="pct">60.7%</span></li>
+          <li class="row"><span class="dot" style="background:#c96f4a"></span><span class="name">k3-256k</span>
+            <span class="bar-track"><span class="mini-bar" style="width:42.4%"><span style="width:30%;background:#d18a2b"></span><span style="width:70%;background:#8a6ab8"></span></span></span>
+            <span class="tokens">81.70M</span><span class="cost">$8.60</span><span class="pct">25.7%</span></li>
+          <li class="row"><span class="dot" style="background:#a3a15c"></span><span class="name">gpt-5.6-sol</span>
+            <span class="bar-track"><span class="mini-bar" style="width:13.8%"><span style="width:35%;background:#d18a2b"></span><span style="width:2%;background:#a3a15c"></span><span style="width:63%;background:#8a6ab8"></span></span></span>
+            <span class="tokens">26.63M</span><span class="cost">$3.10</span><span class="pct">8.4%</span></li>
+          <li class="row"><span class="dot" style="background:#c97b7b"></span><span class="name">x-preview-f-free</span>
+            <span class="bar-track"><span class="mini-bar" style="width:5.8%"><span style="width:28%;background:#d18a2b"></span><span style="width:72%;background:#8a6ab8"></span></span></span>
+            <span class="tokens">11.15M</span><span class="cost">$0.90</span><span class="pct">3.5%</span></li>
+          <li class="row"><span class="dot" style="background:#6f9e8f"></span><span class="name">deepseek-v4-flash</span>
+            <span class="bar-track"><span class="mini-bar" style="width:1.6%"><span style="width:40%;background:#d18a2b"></span><span style="width:60%;background:#8a6ab8"></span></span></span>
+            <span class="tokens">3.09M</span><span class="cost">$0.40</span><span class="pct">1.0%</span></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="statusbar">
+    <span>Range Today</span><span>6 Agents</span><span>ccusage 20.0.20</span><span>Updated 21:03:05</span>
+  </footer>
+
+  <script>
+    const colors = ['#e8a33d','#c96f4a','#a3a15c','#c97b7b','#6f9e8f'];
+    const hours = [
+      [0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[2,0,0,0,0],
+      [5,1,0,0,0],[9,3,1,0,0],[14,5,2,1,0],[22,8,3,2,1],[31,11,4,3,1],[38,14,5,3,2],
+      [29,10,4,3,1],[35,12,5,3,2],[44,15,6,4,2],[41,12,5,4,2],[26,9,4,2,1],[18,6,3,2,1],
+      [12,4,2,1,0],[7,2,1,1,0],[3,1,1,0,0],[1,0,0,0,0],[0,0,0,0,0]
+    ];
+    const maxV = 65, H = 150, base = 170, n = 24, gap = 12;
+    const bw = (1400 - gap*(n+1)) / n;
+    let out = '';
+    hours.forEach((segs, i) => {
+      const x = gap + i*(bw+gap);
+      let y = base;
+      segs.forEach((v, j) => {
+        if (v <= 0) return;
+        const h = Math.max(2, v/maxV*H);
+        y -= h;
+        out += '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + bw.toFixed(1) + '" height="' + h.toFixed(1) + '" rx="2.5" fill="' + colors[j] + '"/>';
+      });
+    });
+    document.getElementById('hbars').innerHTML = out;
+  </script>
+</body>
+</html>

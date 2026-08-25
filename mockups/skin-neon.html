@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Skin — Neon</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #06060f;
+    --panel: rgba(148,120,255,0.05);
+    --line: rgba(0,229,255,0.14);
+    --line-strong: rgba(0,229,255,0.35);
+    --text: #d9f4ff;
+    --dim: #7d8bb0;
+    --faint: #49547a;
+    --cyan: #00e5ff;
+    --magenta: #ff2ea6;
+    --lime: #b6ff3c;
+    --amber: #ffc24d;
+    --violet: #9d6bff;
+  }
+  body {
+    background:
+      radial-gradient(900px 500px at 85% -10%, rgba(157,107,255,0.12), transparent 60%),
+      radial-gradient(700px 500px at -10% 100%, rgba(0,229,255,0.08), transparent 55%),
+      var(--bg);
+    color: var(--text);
+    font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    display: grid; grid-template-columns: 208px 1fr; min-height: 100vh;
+  }
+  .mono { font-family: Consolas, "Cascadia Mono", "Courier New", monospace; }
+  /* ---------- sidebar ---------- */
+  .sidebar { border-right: 1px solid var(--line); padding: 24px 16px 18px 22px; display: flex; flex-direction: column; gap: 12px; background: rgba(10,10,24,0.55); }
+  .brand { display: flex; align-items: center; gap: 9px; padding: 2px 6px 12px; border-bottom: 1px solid var(--line); }
+  .brand-mark { width: 13px; height: 13px; border-radius: 3px; background: linear-gradient(135deg, var(--cyan), var(--magenta)); box-shadow: 0 0 12px rgba(0,229,255,.55); }
+  .brand-name { font-size: 15px; font-weight: 700; letter-spacing: .04em; text-shadow: 0 0 14px rgba(0,229,255,.4); }
+  .nav { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+  .nav-item { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 6px; font-size: 12.5px; color: var(--dim); }
+  .nav-item.active { background: rgba(0,229,255,0.09); color: var(--cyan); box-shadow: inset 0 0 0 1px rgba(0,229,255,0.22), 0 0 16px rgba(0,229,255,0.08); }
+  .nav-section { font-size: 10px; letter-spacing: .14em; color: var(--faint); text-transform: uppercase; padding: 16px 8px 6px; display: flex; align-items: center; gap: 2px; }
+  .view-tab { font-size: 10px; letter-spacing: .1em; padding: 2px 5px; border-radius: 4px; color: var(--faint); }
+  .view-tab.active { color: var(--cyan); text-shadow: 0 0 8px rgba(0,229,255,.6); font-weight: 700; }
+  .today-hint { margin-left: auto; font-size: 9.5px; color: var(--faint); }
+  .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .agent-name { flex: 1; }
+  .agent-today { font-size: 11px; color: var(--faint); font-variant-numeric: tabular-nums; }
+  .refresh-btn { background: transparent; border: 1px solid var(--line-strong); color: var(--cyan); border-radius: 6px; padding: 8px 14px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; text-shadow: 0 0 10px rgba(0,229,255,.5); box-shadow: 0 0 18px rgba(0,229,255,0.10), inset 0 0 12px rgba(0,229,255,0.05); }
+  .updated { font-size: 10.5px; color: var(--faint); padding: 0 8px; }
+  /* ---------- main ---------- */
+  .content { padding: 26px 42px 40px 40px; display: flex; flex-direction: column; gap: 26px; }
+  .head { display: flex; align-items: center; justify-content: space-between; }
+  h1 { font-size: 18px; font-weight: 700; letter-spacing: .04em; }
+  h1::before { content: "// "; color: var(--magenta); text-shadow: 0 0 10px rgba(255,46,166,.7); }
+  .seg { display: inline-flex; gap: 2px; background: rgba(10,12,26,.8); border: 1px solid var(--line); border-radius: 8px; padding: 3px; }
+  .seg button { background: transparent; border: none; color: var(--dim); font-size: 11.5px; padding: 5px 14px; border-radius: 6px; letter-spacing: .04em; }
+  .seg button.active { background: rgba(0,229,255,0.14); color: var(--cyan); font-weight: 700; text-shadow: 0 0 10px rgba(0,229,255,.6); box-shadow: inset 0 0 0 1px rgba(0,229,255,0.3); }
+  /* ---------- hero ---------- */
+  .hero { display: grid; grid-template-columns: auto 1fr; gap: 56px; align-items: end; }
+  .hero-k { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--faint); }
+  .hero-big { font-size: 68px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; margin: 6px 0 8px; font-variant-numeric: tabular-nums;
+    background: linear-gradient(90deg, #7ff3ff, #00e5ff 45%, #ff2ea6);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 0 22px rgba(0,229,255,0.35)); }
+  .hero-sub { display: flex; align-items: baseline; gap: 16px; }
+  .hero-cost { font-size: 21px; font-weight: 700; color: var(--lime); text-shadow: 0 0 14px rgba(182,255,60,.5); }
+  .hero-split { font-size: 12px; color: var(--dim); }
+  .hero-right { padding-bottom: 4px; }
+  .comp-bar { display: flex; height: 8px; border-radius: 4px; overflow: hidden; background: rgba(255,255,255,0.06); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05); }
+  .comp-bar span { display: block; height: 100%; }
+  .legend { display: flex; gap: 22px; margin-top: 10px; align-items: baseline; }
+  .legend .item { display: flex; align-items: baseline; gap: 6px; font-size: 11.5px; color: var(--dim); }
+  .legend .item b { color: var(--text); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .legend .item:last-child { margin-left: auto; }
+  .sq { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+  h2 { font-size: 10.5px; letter-spacing: .18em; color: var(--faint); text-transform: uppercase; margin-bottom: 12px; }
+  h2 b { color: var(--cyan); font-weight: 700; text-shadow: 0 0 8px rgba(0,229,255,.5); }
+  /* ---------- subscriptions ---------- */
+  .quota-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .qcard { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; backdrop-filter: blur(6px); }
+  .qcard .qhead { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; }
+  .qcard .qtime { margin-left: auto; font-size: 10.5px; color: var(--faint); font-weight: 400; }
+  .qrow { display: flex; align-items: baseline; margin-top: 10px; font-size: 11.5px; color: var(--dim); }
+  .qrow .qv { margin-left: auto; font-variant-numeric: tabular-nums; color: var(--text); }
+  .qrow .qp { color: var(--cyan); font-weight: 700; margin-left: 8px; text-shadow: 0 0 8px rgba(0,229,255,.45); }
+  .qbar { height: 4px; border-radius: 2px; background: rgba(255,255,255,0.07); margin-top: 5px; overflow: hidden; }
+  .qbar span { display: block; height: 100%; background: linear-gradient(90deg, var(--cyan), #4d9fff); box-shadow: 0 0 10px rgba(0,229,255,.55); border-radius: 2px; }
+  .qbar.limit span { background: linear-gradient(90deg, var(--magenta), #ff5c5c); box-shadow: 0 0 12px rgba(255,46,166,.7); }
+  .limit-text { color: var(--magenta); font-size: 10.5px; text-shadow: 0 0 10px rgba(255,46,166,.6); }
+  /* ---------- hourly ---------- */
+  .panel-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px; }
+  .panel-title { font-size: 14.5px; font-weight: 700; letter-spacing: .03em; }
+  .panel-sub { font-size: 10.5px; color: var(--faint); margin-left: 10px; }
+  .tip { position: absolute; background: rgba(12,14,30,.92); border: 1px solid var(--line-strong); border-radius: 8px; padding: 9px 13px; font-size: 11px; line-height: 1.7; color: var(--dim); pointer-events: none; box-shadow: 0 0 24px rgba(0,229,255,0.15); backdrop-filter: blur(4px); }
+  .tip b { color: var(--text); font-variant-numeric: tabular-nums; }
+  .tip .tip-head { color: var(--cyan); font-weight: 700; margin-bottom: 2px; text-shadow: 0 0 8px rgba(0,229,255,.4); }
+  /* ---------- donut + rows ---------- */
+  .share-panel { display: grid; grid-template-columns: 300px 1fr; gap: 44px; align-items: center; }
+  .donut-wrap { position: relative; width: 260px; height: 260px; filter: drop-shadow(0 0 18px rgba(157,107,255,0.18)); }
+  .donut-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; }
+  .donut-center .dc-k { font-size: 9.5px; color: var(--faint); letter-spacing: .16em; text-transform: uppercase; }
+  .donut-center .dc-v { font-size: 32px; font-weight: 800; font-variant-numeric: tabular-nums; color: #fff; text-shadow: 0 0 18px rgba(0,229,255,.55); }
+  .donut-center .dc-c { font-size: 11px; color: var(--dim); }
+  .rows { list-style: none; }
+  .row { display: grid; grid-template-columns: 10px 170px 1fr 84px 64px 56px; align-items: center; gap: 12px; padding: 8px 0; }
+  .row + .row { border-top: 1px solid rgba(255,255,255,0.05); }
+  .row .name { font-size: 12.5px; font-weight: 500; }
+  .row .tokens { font-size: 13px; font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
+  .row .cost { font-size: 11.5px; color: var(--dim); text-align: right; }
+  .row .pct { font-size: 11px; color: var(--faint); text-align: right; font-variant-numeric: tabular-nums; }
+  .bar-track { height: 5px; border-radius: 3px; background: rgba(255,255,255,0.06); }
+  .mini-bar { display: flex; height: 100%; border-radius: 3px; overflow: hidden; }
+  .mini-bar span { display: block; height: 100%; }
+  .statusbar { position: fixed; bottom: 0; left: 208px; right: 0; height: 26px; display: flex; align-items: center; gap: 20px; padding: 0 40px; border-top: 1px solid var(--line); background: rgba(6,6,15,.9); font-size: 9.5px; letter-spacing: .1em; color: var(--faint); text-transform: uppercase; }
+  .ok { color: var(--lime); text-shadow: 0 0 8px rgba(182,255,60,.5); }
+</style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark"></span><span class="brand-name">USAGE</span></div>
+    <nav class="nav">
+      <div class="nav-item active">Overview</div>
+      <div class="nav-item">Sessions</div>
+      <div class="nav-item">Subscriptions</div>
+      <div class="nav-section">
+        <span class="view-tab">Agents</span><span class="view-tab active">Models</span>
+        <span class="today-hint">Today</span>
+      </div>
+      <div class="nav-item"><span class="dot" style="background:#00e5ff;box-shadow:0 0 8px #00e5ff"></span><span class="agent-name">muse-spark-1.2</span><span class="agent-today">192.64M</span></div>
+      <div class="nav-item"><span class="dot" style="background:#9d6bff;box-shadow:0 0 8px #9d6bff"></span><span class="agent-name">k3-256k</span><span class="agent-today">81.70M</span></div>
+      <div class="nav-item"><span class="dot" style="background:#ff2ea6;box-shadow:0 0 8px #ff2ea6"></span><span class="agent-name">gpt-5.6-sol</span><span class="agent-today">26.63M</span></div>
+      <div class="nav-item"><span class="dot" style="background:#b6ff3c;box-shadow:0 0 8px #b6ff3c"></span><span class="agent-name">x-preview-f-free</span><span class="agent-today">11.15M</span></div>
+      <div class="nav-item"><span class="dot" style="background:#ffc24d;box-shadow:0 0 8px #ffc24d"></span><span class="agent-name">deepseek-v4-flash</span><span class="agent-today">3.09M</span></div>
+    </nav>
+    <div class="nav-item">Settings</div>
+    <button class="refresh-btn">↻ Refresh</button>
+    <p class="updated mono">21:03:05</p>
+  </aside>
+
+  <main class="content">
+    <header class="head">
+      <h1>Overview</h1>
+      <div class="seg">
+        <button class="active">Today</button><button>Weekly</button><button>Monthly</button><button>All</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div>
+        <p class="hero-k">Total Tokens · Today</p>
+        <p class="hero-big">317.30M</p>
+        <div class="hero-sub">
+          <span class="hero-cost">$33.53</span>
+          <span class="hero-split">New 87.40M · Cached 229.83M</span>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="comp-bar">
+          <span style="width:27.1%;background:#00e5ff;box-shadow:0 0 12px rgba(0,229,255,.6)"></span>
+          <span style="width:0.4%;background:#b6ff3c"></span>
+          <span style="width:72.4%;background:#9d6bff;box-shadow:0 0 12px rgba(157,107,255,.6)"></span>
+        </div>
+        <div class="legend">
+          <span class="item"><span class="sq" style="background:#00e5ff;box-shadow:0 0 6px #00e5ff"></span>Input <b>86.08M</b></span>
+          <span class="item"><span class="sq" style="background:#b6ff3c;box-shadow:0 0 6px #b6ff3c"></span>Output <b>1.33M</b></span>
+          <span class="item"><span class="sq" style="background:#9d6bff;box-shadow:0 0 6px #9d6bff"></span>Cache Read <b>229.83M</b></span>
+          <span class="item">Cached Input Share <b style="color:var(--cyan)">72.8%</b></span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2><b>▸</b> Subscriptions</h2>
+      <div class="quota-grid">
+        <div class="qcard">
+          <div class="qhead"><span class="dot" style="background:#00e5ff;box-shadow:0 0 8px #00e5ff"></span>Kimi<span class="qtime">1 min ago</span></div>
+          <div class="qrow">Weekly · in 6d 12h<span class="qv">317.30M</span><span class="qp">38%</span></div>
+          <div class="qbar"><span style="width:38%"></span></div>
+          <div class="qrow">5h · in 3h 18m<span class="qv">317.30M</span><span class="qp">15%</span></div>
+          <div class="qbar"><span style="width:15%"></span></div>
+        </div>
+        <div class="qcard">
+          <div class="qhead"><span class="dot" style="background:#b6ff3c;box-shadow:0 0 8px #b6ff3c"></span>ChatGPT<span class="qtime">1 min ago</span></div>
+          <div class="qrow">Weekly · in 5d 15h<span class="qv">891.25M</span><span class="qp">41%</span></div>
+          <div class="qbar"><span style="width:41%"></span></div>
+          <div class="qrow">Credits<span class="qv" style="color:var(--lime)">$178.75</span></div>
+        </div>
+        <div class="qcard">
+          <div class="qhead"><span class="dot" style="background:#9d6bff;box-shadow:0 0 8px #9d6bff"></span>OpenCode Go<span class="qtime">1 min ago</span></div>
+          <div class="qrow">5h · in 4h 59m<span class="qv">317.30M</span><span class="qp">0%</span></div>
+          <div class="qbar"><span style="width:2%"></span></div>
+          <div class="qrow">Weekly · in 2d 10h<span class="qv">1.57B</span><span class="qp">21%</span></div>
+          <div class="qbar"><span style="width:21%"></span></div>
+        </div>
+        <div class="qcard" style="border-color:rgba(255,46,166,0.35)">
+          <div class="qhead"><span class="dot" style="background:#ff2ea6;box-shadow:0 0 8px #ff2ea6"></span>Grok<span class="qtime">1 min ago</span></div>
+          <div class="qrow">Weekly · in 22h 35m<span class="qv">1.71B</span><span class="qp" style="color:var(--magenta);text-shadow:0 0 8px rgba(255,46,166,.6)">100%</span></div>
+          <div class="qbar limit"><span style="width:100%"></span></div>
+          <div class="qrow limit-text">⚠ LIMIT REACHED — resets in 22h 35m</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="panel-head">
+        <span><span class="panel-title">Today's Activity</span><span class="panel-sub">by session · per hour</span></span>
+      </div>
+      <div style="position:relative">
+        <svg viewBox="0 0 1400 190" width="100%" height="190" preserveAspectRatio="none">
+          <defs>
+            <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+              <feGaussianBlur stdDeviation="3.2" result="b"/>
+              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <line x1="0" y1="20" x2="1400" y2="20" stroke="rgba(0,229,255,0.07)"/>
+          <line x1="0" y1="70" x2="1400" y2="70" stroke="rgba(0,229,255,0.07)"/>
+          <line x1="0" y1="120" x2="1400" y2="120" stroke="rgba(0,229,255,0.07)"/>
+          <line x1="0" y1="170" x2="1400" y2="170" stroke="rgba(0,229,255,0.22)"/>
+          <g id="hbars" filter="url(#glow)"></g>
+        </svg>
+        <div class="mono" style="display:flex;justify-content:space-between;font-size:9.5px;color:var(--faint);padding:3px 2px 0">
+          <span>00:00</span><span>03:00</span><span>06:00</span><span>09:00</span><span>12:00</span><span>15:00</span><span>18:00</span><span>21:00</span><span>24:00</span>
+        </div>
+        <div class="tip" style="left:60%;top:0">
+          <p class="tip-head">15:00 – 16:00 · 58.2M</p>
+          <span style="color:#00e5ff">●</span> muse-spark-1.2 <b>41.20M</b><br>
+          <span style="color:#9d6bff">●</span> k3-256k <b>12.10M</b><br>
+          <span style="color:#ff2ea6">●</span> gpt-5.6-sol <b>4.90M</b>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2><b>▸</b> Today by Model</h2>
+      <div class="share-panel">
+        <div class="donut-wrap">
+          <svg viewBox="0 0 300 300" width="260" height="260">
+            <circle cx="150" cy="150" r="112" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="20"/>
+            <g filter="url(#glow2)">
+            <circle cx="150" cy="150" r="112" fill="none" stroke="#00e5ff" stroke-width="20"
+              stroke-dasharray="427.2 703.7" stroke-dashoffset="0" transform="rotate(-90 150 150)"/>
+            <circle cx="150" cy="150" r="112" fill="none" stroke="#9d6bff" stroke-width="20"
+              stroke-dasharray="181.2 703.7" stroke-dashoffset="-427.2" transform="rotate(-90 150 150)"/>
+            <circle cx="150" cy="150" r="112" fill="none" stroke="#ff2ea6" stroke-width="20"
+              stroke-dasharray="59.1 703.7" stroke-dashoffset="-608.4" transform="rotate(-90 150 150)"/>
+            <circle cx="150" cy="150" r="112" fill="none" stroke="#b6ff3c" stroke-width="20"
+              stroke-dasharray="24.7 703.7" stroke-dashoffset="-667.5" transform="rotate(-90 150 150)"/>
+            <circle cx="150" cy="150" r="112" fill="none" stroke="#ffc24d" stroke-width="20"
+              stroke-dasharray="11.4 703.7" stroke-dashoffset="-692.2" transform="rotate(-90 150 150)"/>
+            </g>
+            <defs>
+              <filter id="glow2" x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="4" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+          </svg>
+          <div class="donut-center">
+            <span class="dc-k">Today</span>
+            <span class="dc-v">317.3M</span>
+            <span class="dc-c">$33.53 · 5 models</span>
+          </div>
+        </div>
+        <ul class="rows">
+          <li class="row"><span class="dot" style="background:#00e5ff;box-shadow:0 0 8px #00e5ff"></span><span class="name">muse-spark-1.2-contributor</span>
+            <span class="bar-track"><span class="mini-bar" style="width:100%"><span style="width:24%;background:#00e5ff;box-shadow:0 0 8px rgba(0,229,255,.5)"></span><span style="width:76%;background:#9d6bff"></span></span></span>
+            <span class="tokens">192.64M</span><span class="cost">$20.30</span><span class="pct">60.7%</span></li>
+          <li class="row"><span class="dot" style="background:#9d6bff;box-shadow:0 0 8px #9d6bff"></span><span class="name">k3-256k</span>
+            <span class="bar-track"><span class="mini-bar" style="width:42.4%"><span style="width:30%;background:#00e5ff"></span><span style="width:70%;background:#9d6bff"></span></span></span>
+            <span class="tokens">81.70M</span><span class="cost">$8.60</span><span class="pct">25.7%</span></li>
+          <li class="row"><span class="dot" style="background:#ff2ea6;box-shadow:0 0 8px #ff2ea6"></span><span class="name">gpt-5.6-sol</span>
+            <span class="bar-track"><span class="mini-bar" style="width:13.8%"><span style="width:35%;background:#00e5ff"></span><span style="width:2%;background:#b6ff3c"></span><span style="width:63%;background:#9d6bff"></span></span></span>
+            <span class="tokens">26.63M</span><span class="cost">$3.10</span><span class="pct">8.4%</span></li>
+          <li class="row"><span class="dot" style="background:#b6ff3c;box-shadow:0 0 8px #b6ff3c"></span><span class="name">x-preview-f-free</span>
+            <span class="bar-track"><span class="mini-bar" style="width:5.8%"><span style="width:28%;background:#00e5ff"></span><span style="width:72%;background:#9d6bff"></span></span></span>
+            <span class="tokens">11.15M</span><span class="cost">$0.90</span><span class="pct">3.5%</span></li>
+          <li class="row"><span class="dot" style="background:#ffc24d;box-shadow:0 0 8px #ffc24d"></span><span class="name">deepseek-v4-flash</span>
+            <span class="bar-track"><span class="mini-bar" style="width:1.6%"><span style="width:40%;background:#00e5ff"></span><span style="width:60%;background:#9d6bff"></span></span></span>
+            <span class="tokens">3.09M</span><span class="cost">$0.40</span><span class="pct">1.0%</span></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="statusbar">
+    <span>Range Today</span><span>6 Agents</span><span>ccusage 20.0.20</span><span class="ok">● Parse OK</span><span>Updated 21:03:05</span>
+  </footer>
+
+  <script>
+    const colors = ['#00e5ff','#9d6bff','#ff2ea6','#b6ff3c','#ffc24d'];
+    const hours = [
+      [0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[2,0,0,0,0],
+      [5,1,0,0,0],[9,3,1,0,0],[14,5,2,1,0],[22,8,3,2,1],[31,11,4,3,1],[38,14,5,3,2],
+      [29,10,4,3,1],[35,12,5,3,2],[44,15,6,4,2],[41,12,5,4,2],[26,9,4,2,1],[18,6,3,2,1],
+      [12,4,2,1,0],[7,2,1,1,0],[3,1,1,0,0],[1,0,0,0,0],[0,0,0,0,0]
+    ];
+    const maxV = 65, H = 150, base = 170, n = 24, gap = 12;
+    const bw = (1400 - gap*(n+1)) / n;
+    let out = '';
+    hours.forEach((segs, i) => {
+      const x = gap + i*(bw+gap);
+      let y = base;
+      segs.forEach((v, j) => {
+        if (v <= 0) return;
+        const h = Math.max(2, v/maxV*H);
+        y -= h;
+        out += '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + bw.toFixed(1) + '" height="' + h.toFixed(1) + '" rx="2" fill="' + colors[j] + '"/>';
+      });
+    });
+    document.getElementById('hbars').innerHTML = out;
+  </script>
+</body>
+</html>

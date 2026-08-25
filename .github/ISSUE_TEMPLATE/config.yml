@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: ccusage CLI
+    url: https://github.com/ccusage/ccusage
+    about: Bugs in the ccusage CLI itself belong there, not here.
