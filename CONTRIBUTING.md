@@ -20,7 +20,7 @@ npm run typecheck
 
 | Path | Role |
 | --- | --- |
-| `src/main/` | Electron main: ccusage / WSL / ZCode / DSH / Qoder adapters, quota collectors, tray, float window |
+| `src/main/` | Electron main: ccusage / WSL / ZCode / DSH / Qoder / Cursor adapters, quota collectors, tray, float window |
 | `src/preload/` | IPC bridge. Renderer never talks to Node APIs directly |
 | `src/renderer/` | Vue 3 UI |
 | `src/shared/` | Normalized usage model and pure helpers shared by main + renderer |

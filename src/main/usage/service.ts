@@ -7,6 +7,8 @@ import { collectDshUsage } from '../dsh'
 import { DSH_AGENT } from '../dsh/adapter'
 import { collectQoderUsage } from '../qoder'
 import { QODER_AGENT } from '../qoder/adapter'
+import { collectCursorUsage } from '../cursor'
+import { CURSOR_AGENT } from '../cursor/adapter'
 import {
   collectWslCcusageDaily,
   collectWslCcusageSessions,
@@ -82,17 +84,20 @@ export function getLastSnapshot(): UsageSnapshot | null {
 
 /**
  * 额外数据源(ccusage 未覆盖的 agent):每个源自包含 collect,fail-soft。
+ * 本地文件源(zcode/dsh/qoder)同步执行;API 源(cursor,带本机登录态调官方接口)
+ * 异步执行——mergeExtraSources 统一 await,顺序串行,单源失败不影响其余。
  * 防双算:ccusage 将来若支持同名 agent(snapshot 里出现同名同 origin 条目),
  * 本地源自动让位。守卫按 (agent, origin) 双匹配——Windows/WSL 两侧互不干扰。
  */
 const EXTRA_SOURCES: Array<{
   name: string
   origin: UsageOrigin
-  collect: () => SourceCollectResult
+  collect: () => SourceCollectResult | Promise<SourceCollectResult>
 }> = [
   { name: ZCODE_AGENT, origin: 'windows', collect: () => collectZcodeUsage() },
   { name: DSH_AGENT, origin: 'windows', collect: () => collectDshUsage() },
-  { name: QODER_AGENT, origin: 'windows', collect: () => collectQoderUsage() }
+  { name: QODER_AGENT, origin: 'windows', collect: () => collectQoderUsage() },
+  { name: CURSOR_AGENT, origin: 'windows', collect: () => collectCursorUsage() }
 ]
 
 /**
@@ -119,7 +124,7 @@ function wslFileSources(wslHome: string): Array<{
   ]
 }
 
-function mergeExtraSources(snapshot: UsageSnapshot, wslHome: string | null): void {
+async function mergeExtraSources(snapshot: UsageSnapshot, wslHome: string | null): Promise<void> {
   const sources = [...EXTRA_SOURCES, ...(wslHome ? wslFileSources(wslHome) : [])]
   for (const source of sources) {
     const covered = snapshot.agents.some(
@@ -129,7 +134,7 @@ function mergeExtraSources(snapshot: UsageSnapshot, wslHome: string | null): voi
       snapshot.sources[source.name] = { state: 'skipped', reason: 'covered by ccusage' }
       continue
     }
-    const { daily, status } = source.collect()
+    const { daily, status } = await source.collect()
     snapshot.sources[source.name] = status
     if (daily && daily.length > 0) mergeDailyIntoSnapshot(snapshot, daily)
   }
@@ -201,7 +206,7 @@ async function doRefresh(): Promise<RefreshResult> {
       const snapshot = adaptDailyReport(raw, engine, new Date(), durationMs)
       // WSL ccusage 先并入:WSL 文件源的防双算守卫要看到它的 (agent, wsl) 条目
       await mergeWslDaily(snapshot, wslPipeline)
-      mergeExtraSources(snapshot, await wslHomePromise)
+      await mergeExtraSources(snapshot, await wslHomePromise)
       lastSnapshot = snapshot
       result = { ok: true, snapshot }
     } catch (err) {

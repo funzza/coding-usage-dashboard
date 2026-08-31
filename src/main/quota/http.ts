@@ -18,7 +18,7 @@ type FetchLike = (url: string, init?: RequestInit) => Promise<Response>
  * 结果缓存,import('electron') 在 Node 下解析出二进制路径字符串,net 为 undefined。
  */
 let cachedFetch: FetchLike | null = null
-async function resolveFetch(): Promise<FetchLike> {
+export async function resolveFetch(): Promise<FetchLike> {
   if (cachedFetch) return cachedFetch
   try {
     const mod = (await import('electron')) as { net?: { fetch?: FetchLike } }

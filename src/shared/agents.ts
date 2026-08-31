@@ -25,7 +25,8 @@ export function parseAgentKey(key: string): { agent: string; origin: UsageOrigin
 const DISPLAY_NAMES: Record<string, string> = {
   zcode: 'ZCode',
   dsh: 'DSH',
-  qoder: 'Qoder'
+  qoder: 'Qoder',
+  cursor: 'Cursor'
 }
 
 /** agentKey → 展示名:kimi → "Kimi",kimi@wsl → "Kimi (WSL)",zcode@wsl → "ZCode (WSL)" */
@@ -40,6 +41,7 @@ const SOURCE_DISPLAY_NAMES: Record<string, string> = {
   zcode: 'ZCode',
   dsh: 'DSH',
   qoder: 'Qoder',
+  cursor: 'Cursor',
   'wsl-ccusage': 'WSL ccusage',
   'zcode-wsl': 'ZCode (WSL)',
   'dsh-wsl': 'DSH (WSL)'

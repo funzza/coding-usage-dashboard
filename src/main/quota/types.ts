@@ -12,7 +12,7 @@
 import type { UsageOrigin } from '../../shared/agents'
 import type { TokenUsage } from '../../shared/usage-model'
 
-export type QuotaProviderId = 'kimi' | 'codex' | 'opencode-go' | 'grok'
+export type QuotaProviderId = 'kimi' | 'codex' | 'opencode-go' | 'grok' | 'cursor'
 
 /** 单个限额窗口(5h / 周 / 月,窗口集合由各家数据动态决定,不硬编码) */
 export interface QuotaWindow {

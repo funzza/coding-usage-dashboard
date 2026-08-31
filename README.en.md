@@ -2,7 +2,7 @@
 
 English | [简体中文](README.md)
 
-A Windows desktop dashboard for local AI coding usage. It uses your already-installed [ccusage](https://github.com/ccusage/ccusage) CLI as the main engine, plus direct readers for ZCode / DSH / Qoder, and a parallel collector for usage **inside the default WSL distro**. Open it and look — no CLI commands to remember.
+A Windows desktop dashboard for local AI coding usage. It uses your already-installed [ccusage](https://github.com/ccusage/ccusage) CLI as the main engine, plus direct readers for ZCode / DSH / Qoder, a Cursor collector that calls the official API with your local login, and a parallel collector for usage **inside the default WSL distro**. Open it and look — no CLI commands to remember.
 
 **Windows 10/11 only.** Everything is computed on-device. No telemetry.
 
@@ -18,7 +18,7 @@ This is a personal tool that was opened up, not a complete product. Agents, subs
 
 - **Multi-agent usage**: whatever ccusage reports, plus three first-party local adapters, all normalized to one model
 - **WSL**: runs ccusage inside the default distro in parallel; WSL agents show up as `Claude (WSL)` etc. Missing WSL is a silent absence
-- **Subscription quotas**: Kimi / ChatGPT / OpenCode Go / Grok (the ones the author actually subscribes to), 120s polling, over-limit alerts
+- **Subscription quotas**: Kimi / ChatGPT / OpenCode Go / Grok / Cursor (the ones the author actually subscribes to), 120s polling, over-limit alerts
 - **Ranges**: Today / Weekly / Monthly / All
 - **Sessions**: per-session detail (**ccusage session reports only**)
 - **Desktop float ball**: today's usage at a glance
@@ -54,6 +54,9 @@ Written here only for agents ccusage does not cover. Fail-soft: missing files or
 | **ZCode** | `~/.zcode/cli/db/db.sqlite` | yes | yes (UNC to the WSL home) | always 0 | **no** (daily rows only) |
 | **DSH** | `~/.dsh/sessions/**/session.jsonl.zstd` | yes | yes | always 0 | **no** |
 | **Qoder** | `%APPDATA%/QoderCN/.../local.db` | yes | **no** | always 0 | **no** |
+| **Cursor** | Cursor official API (local login) | yes | **no** | yes (numeric CSV rows; `Included` counts as 0) | **no** (daily rows only) |
+
+Cursor is not a local file source: it calls the official API with your local login (`usage-summary` + a usage CSV). Auth and semantics: the header comments in `src/main/cursor/`.
 
 If ccusage later reports the same agent name, the local adapter steps aside (`covered by ccusage`) so counts are not doubled.
 
@@ -67,8 +70,9 @@ Quota cards are a separate pipeline from usage. Usage can display anything ccusa
 | ChatGPT / Codex | `~/.codex/auth.json` | yes | no |
 | OpenCode Go | `opencode-go.key` in OpenCode `auth.json` | yes | no |
 | Grok | `~/.grok/auth.json` | yes | no |
+| Cursor | Cursor login (`state.vscdb`, see table above) | no (local login only) | no |
 
-**Not built** (the author does not subscribe): Claude Max/Pro quota, Gemini, GitHub Copilot, Cursor, Alibaba Token Plus, and anything else.
+**Not built** (the author does not subscribe): Claude Max/Pro quota, Gemini, GitHub Copilot, Alibaba Token Plus, and anything else.
 
 Those endpoints are what the CLIs themselves call, not a stable public API. When they drift, the app degrades to error / empty windows. Tokens are DPAPI-encrypted at rest and decrypted only in the main process.
 
@@ -97,6 +101,8 @@ Read this before installing or sending the repo to an AI. These are current desi
 8. **Kimi quota needs `kimi web` running locally.** Grok JWTs last ~6 hours; when they expire, open the Grok CLI once and let it refresh. This app will not run OAuth itself.
 
 9. **Windows only, unsigned installer, no auto-update.** SmartScreen may warn once. macOS / Linux are not supported (`where.exe`, DPAPI, HKCU, WSL UNC).
+
+10. **Cursor usage and quotas depend on the official API plus a local login.** Cursor must be signed in on this machine; when the token expires (Cursor not opened for a while) the row shows skipped/error on Settings until you open Cursor once. The CSV only covers events Cursor actually reported (daily rows, no sessions); column semantics: the header comment in `src/main/cursor/adapter.ts`.
 
 Some remaining behavior is honestly upstream-unknown: when ccusage emits in-progress sessions in `session --json`, when quota JSON fields get renamed, when ZCode/DSH/Qoder schema changes trip the guards. The source-status rows on Settings are the place to look.
 
@@ -141,6 +147,7 @@ Electron main
     │     ├─ ccusage/                Windows daily / session
     │     ├─ wsl/                    same inside the default distro, origin=wsl
     │     ├─ zcode/  dsh/  qoder/    registered on EXTRA_SOURCES[]
+    │     ├─ cursor/                  official API with local login (async API source)
     │     └─ fail-soft merge into UsageSnapshot
     └─ src/main/quota/service.ts     PROVIDERS[] registry, 120s poll
           tokens stay in main; DPAPI at rest
@@ -165,7 +172,8 @@ Have the model read first:
 - `src/shared/usage-model.ts` — output contract for every adapter
 - `src/main/usage/service.ts` — `EXTRA_SOURCES` / `wslFileSources` / `doGetSessions`
 - `src/main/zcode/` — local usage adapter template (reader + adapter + fail-soft `collect*`)
-- `PROVIDERS` in `src/main/quota/service.ts`, plus `src/main/quota/grok.ts` or `codex.ts`
+- `src/main/cursor/` — **API-based** usage adapter template (official client login + official endpoints, async `collect*`)
+- `PROVIDERS` in `src/main/quota/service.ts`, plus `src/main/quota/grok.ts` or `src/main/quota/cursor.ts`
 - `PROVIDER_META` in `src/renderer/src/pages/Subscriptions.vue`
 - `src/shared/skins.ts` and `src/renderer/src/skins.css`
 
@@ -174,6 +182,7 @@ Hard rules:
 - Adapter failure must be `{ daily: null, status: { state: 'skipped' | 'absent', reason } }`. Never throw through the ccusage path
 - Raw JSON/SQLite types stay in that adapter folder; `renderer/` may import `shared/` only
 - Quota tokens must not appear in IPC views, logs, or Vue
+- API-based sources (Cursor) read only the official client's own login; never implement OAuth refresh yourself (it races the client's credential file)
 - Do not distort daily totals to make the Today bars look nicer; bar semantics live in `sessionsHourlyBuckets` (`src/shared/analytics.ts`)
 
 ### Add an agent ccusage does not cover
@@ -182,8 +191,10 @@ Hard rules:
 2. Register Windows in `EXTRA_SOURCES`; register WSL in `wslFileSources` if the files also live in the WSL home
 3. Add a display name in `DISPLAY_NAMES` (`src/shared/agents.ts`)
 4. Tests like `zcode/adapter.test.ts`; real-db integration uses `describe.skipIf`
-5. **Sessions / Today bars will not show this agent** until you also emit `SessionUsage[]` and merge them in `doGetSessions` (none of the three local adapters do that today)
+5. **Sessions / Today bars will not show this agent** until you also emit `SessionUsage[]` and merge them in `doGetSessions` (none of the four adapters do that today)
 6. Cost: compute it, or leave 0
+
+> An agent with no readable local data that must hit an official API (like Cursor) is an **API-based source**: follow `src/main/cursor/` (auth from the official client's login → api fetch → adapter normalize). In `EXTRA_SOURCES`, `collect` returns `Promise<SourceCollectResult>` and `mergeExtraSources` awaits it. Read only the official client's own login; never implement OAuth refresh.
 
 ### Add a quota provider
 
@@ -207,7 +218,7 @@ I am working on coding-usage-dashboard (Electron + Vue 3 + TypeScript) on Window
 Read README.md sections "How it is built", "Known issues and limitations", and "Keep building this with an AI",
 plus src/shared/usage-model.ts and src/main/usage/service.ts.
 
-Goal: <one sentence, e.g. "add a Cursor usage adapter" or "add a Claude quota card">
+Goal: <one sentence, e.g. "add a Gemini CLI usage adapter" or "add a Claude quota card">
 
 Constraints: fail-soft, tokens never leave main, renderer depends on shared only, do not break Windows-only APIs.
 Follow src/main/zcode/ or src/main/quota/grok.ts. List the files you will change before editing.

@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+
+- Cursor usage adapter + quota provider: reads Cursor's own login (`state.vscdb`) and calls the official `cursor.com` API (`usage-summary` + per-event usage CSV). Windows only; token expiry requires opening Cursor once to refresh. See `docs/quota-research-cursor.md`.
+
 ## [0.2.0] - 2026-08-26
 
 First public release.

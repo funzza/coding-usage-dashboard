@@ -2,7 +2,7 @@
 
 [English](README.en.md) | 简体中文
 
-Windows 本地 AI Coding 用量仪表盘。以本机已安装的 [ccusage](https://github.com/ccusage/ccusage) 为主要数据引擎，同时直读 ZCode / DSH / Qoder，并并行采集 **WSL 默认发行版** 内的用量。打开即看，不用再记 CLI 命令。
+Windows 本地 AI Coding 用量仪表盘。以本机已安装的 [ccusage](https://github.com/ccusage/ccusage) 为主要数据引擎，同时直读 ZCode / DSH / Qoder，并带本机登录态直连 Cursor 官方接口，并行采集 **WSL 默认发行版** 内的用量。打开即看，不用再记 CLI 命令。
 
 **仅支持 Windows 10/11。** 全部计算在本机完成，无遥测、无上报。
 
@@ -52,6 +52,9 @@ ccusage 覆盖不到的，才在这里手写读取。失败是 fail-soft：缺�
 | **ZCode** | `~/.zcode/cli/db/db.sqlite`             | 有       | 有（UNC 读 WSL 家目录） | 无，恒 0  | **无**（只有按日聚合）          |
 | **DSH**   | `~/.dsh/sessions/**/session.jsonl.zstd` | 有       | 有                | 无，恒 0  | **无**                  |
 | **Qoder** | `%APPDATA%/QoderCN/.../local.db`        | 有       | **无**            | 无，恒 0  | **无**                  |
+| **Cursor** | Cursor 官方 API（读本机登录态）          | 有       | **无**            | 有（CSV 数值行；Included 计 0） | **无**（只有按日聚合） |
+
+Cursor 不是本地文件源，是带本机登录态调官方接口（`usage-summary` + 用量 CSV），认证与口径见 `src/main/cursor/` 各模块头注释。
 
 以后 ccusage 若开始统计同名 agent，本地适配器会自动让位（`covered by ccusage`），避免双算。
 
@@ -65,8 +68,9 @@ ccusage 覆盖不到的，才在这里手写读取。失败是 fail-soft：缺�
 | ChatGPT / Codex | `~/.codex/auth.json`                       | 有           | 无                   |
 | OpenCode Go     | OpenCode `auth.json` 里的 `opencode-go.key`  | 有           | 无                   |
 | Grok            | `~/.grok/auth.json`                        | 有           | 无                   |
+| Cursor          | Cursor 登录态（`state.vscdb`，见上表）       | 无（只认本机登录态） | 无                   |
 
-**没有做**（不是做不到，是作者没有这些订阅）：Claude Max/Pro 额度、Gemini、GitHub Copilot、Cursor、阿里 Token Plus，以及任何其他家。
+**没有做**（不是做不到，是作者没有这些订阅）：Claude Max/Pro 额度、Gemini、GitHub Copilot、阿里 Token Plus，以及任何其他家。
 
 额度端点是各 CLI 自己在用的接口，不是稳定公开 API。变了会降级成 error / 空窗口，不会把应用打崩。Token 用 Windows DPAPI 加密落盘，只在主进程解密。
 
@@ -95,6 +99,8 @@ ccusage 覆盖不到的，才在这里手写读取。失败是 fail-soft：缺�
 8. **Kimi 额度依赖本机 `kimi web` 在跑。** Grok 的 JWT 大约 6 小时过期，过期后需要再开一次 Grok CLI 让它刷新，应用不会自己做 OAuth。
 
 9. **Windows only，安装包未代码签名，也没有自动更新。** SmartScreen 可能拦一次。macOS / Linux 不能装——主进程用了 `where.exe`、DPAPI、HKCU、WSL UNC。
+
+10. **Cursor 的用量与额度都依赖官方接口 + 本机登录态。** 需要本机已登录 Cursor；长时间没开 Cursor 导致 token 过期时，该项在 Settings 显示 skipped/error，开一次 Cursor 让它刷新即可。CSV 只覆盖 Cursor 有上报的事件（按天聚合、无会话维度），字段口径见 `src/main/cursor/adapter.ts` 头注释。
 
 还有一些作者自己也不完全确定的行为，取决于上游：ccusage 何时把进行中的 session 写进 `session --json`、各家额度窗口字段何时改名、ZCode/DSH/Qoder 下次升库会不会把 schema 改到被守卫跳过。Settings 页的数据源状态行是看这些的地方。
 
@@ -139,6 +145,7 @@ Electron main
     │     ├─ ccusage/                Windows: daily / session
     │     ├─ wsl/                    默认发行版里再跑一遍，agent 打 origin=wsl
     │     ├─ zcode/  dsh/  qoder/    EXTRA_SOURCES[] 注册的本地适配器
+    │     ├─ cursor/                 登录态直连官方接口(异步 API 源)
     │     └─ 全部 fail-soft 合并进 UsageSnapshot
     └─ src/main/quota/service.ts     PROVIDERS[] 注册表，120s 轮询
           token 只在主进程；DPAPI 加密落盘
@@ -163,7 +170,8 @@ UI 只消费 snapshot。换皮肤是 `src/shared/skins.ts` 的 CSS 变量 + `ski
 - `src/shared/usage-model.ts` — 所有适配器的输出契约
 - `src/main/usage/service.ts` — `EXTRA_SOURCES` / `wslFileSources` / `doGetSessions`
 - `src/main/zcode/` — 本地用量适配器样板（reader + adapter + fail-soft `collect*`）
-- `src/main/quota/service.ts` 的 `PROVIDERS`，以及 `src/main/quota/grok.ts` 或 `codex.ts`
+- `src/main/cursor/` — **API 型**用量适配器样板（读官方客户端登录态 + 官方接口，异步 `collect*`）
+- `src/main/quota/service.ts` 的 `PROVIDERS`，以及 `src/main/quota/grok.ts` 或 `src/main/quota/cursor.ts`
 - `src/renderer/src/pages/Subscriptions.vue` 的 `PROVIDER_META`（额度 UI 名单）
 - `src/shared/skins.ts` + `src/renderer/src/skins.css`
 
@@ -172,6 +180,7 @@ UI 只消费 snapshot。换皮肤是 `src/shared/skins.ts` 的 CSS 变量 + `ski
 - 适配器失败必须返回 `{ daily: null, status: { state: 'skipped' | 'absent', reason } }`，禁止 throw 阻断 ccusage
 - 原始 JSON/SQLite schema 留在该 adapter 目录；`renderer/` 只能 import `shared/`
 - 额度 token 不准出现在 IPC 视图、日志、Vue；明文只在 main 采集那一瞬间
+- API 型源（Cursor）只读官方客户端自己的登录态，不要自己实现 OAuth refresh（会和客户端抢写登录态）
 - 不要为了「柱状图好看」去改 daily 数字；Today 柱的口径在 `sessionsHourlyBuckets`（`src/shared/analytics.ts`）
 
 ### 加一个 ccusage 没有的 Agent
@@ -180,8 +189,10 @@ UI 只消费 snapshot。换皮肤是 `src/shared/skins.ts` 的 CSS 变量 + `ski
 2. 在 `usage/service.ts` 的 `EXTRA_SOURCES` 注册 Windows；若 WSL 家目录也有数据，再注册 `wslFileSources`
 3. 显示名补到 `src/shared/agents.ts` 的 `DISPLAY_NAMES`
 4. 单测仿 `zcode/adapter.test.ts`；本机有库时的 integration 用 `describe.skipIf`
-5. **Sessions / Today 柱状图默认不会出现这家。** 要出现，还得产出 `SessionUsage[]` 并在 `doGetSessions` 里合并（现在三家本地源都没做）
+5. **Sessions / Today 柱状图默认不会出现这家。** 要出现，还得产出 `SessionUsage[]` 并在 `doGetSessions` 里合并（现在四家都没做）
 6. 金额：自己按定价算，或继续填 0
+
+> 本地没有任何可读数据、只能调官方接口的 agent（如 Cursor）走 **API 型源**：参考 `src/main/cursor/`（auth 读登录态 → api 抓取 → adapter 归一化），`EXTRA_SOURCES` 里 `collect` 返回 `Promise<SourceCollectResult>`，`mergeExtraSources` 会 await；凭据只读官方客户端自己的登录态，不自行 OAuth refresh。
 
 ### 加一家订阅额度
 
@@ -205,7 +216,7 @@ UI 只消费 snapshot。换皮肤是 `src/shared/skins.ts` 的 CSS 变量 + `ski
 先读 README.md 的「它是怎么做的」「已知问题与局限」「拿这份代码继续让 AI 开发」，
 以及 src/shared/usage-model.ts 和 src/main/usage/service.ts。
 
-目标：<一句话，例如「新增 Cursor 用量适配器」或「给 Claude 订阅加额度卡片」>
+目标：<一句话，例如「新增 Gemini CLI 用量适配器」或「给 Claude 订阅加额度卡片」>
 
 约束：fail-soft、token 不出主进程、renderer 只依赖 shared、不要把 Windows-only 的 API 改坏。
 对照 src/main/zcode/ 或 src/main/quota/grok.ts 的现有写法。先列要改的文件再动代码。

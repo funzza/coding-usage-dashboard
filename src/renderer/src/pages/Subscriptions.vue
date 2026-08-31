@@ -19,7 +19,8 @@ const PROVIDER_META: Array<{ id: string; name: string; supportsManual: boolean; 
   { id: 'kimi', name: 'Kimi', supportsManual: false, tokenHint: '' },
   { id: 'codex', name: 'ChatGPT', supportsManual: true, tokenHint: 'access_token from ~/.codex/auth.json (~10 day TTL)' },
   { id: 'opencode-go', name: 'OpenCode Go', supportsManual: true, tokenHint: 'API key (opencode-go.key in auth.json)' },
-  { id: 'grok', name: 'Grok', supportsManual: true, tokenHint: 'key from ~/.grok/auth.json (6h TTL — re-paste when expired)' }
+  { id: 'grok', name: 'Grok', supportsManual: true, tokenHint: 'key from ~/.grok/auth.json (6h TTL — re-paste when expired)' },
+  { id: 'cursor', name: 'Cursor', supportsManual: false, tokenHint: '' }
 ]
 
 const accounts = ref<QuotaAccountConfigView[]>([])

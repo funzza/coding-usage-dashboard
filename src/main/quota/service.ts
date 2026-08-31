@@ -7,6 +7,7 @@
  * 与 ccusage 刷新不同:这些是轻量 GET(秒级),默认 120s 轮询一次。
  */
 import { collectCodexQuota, codexCredentialExists } from './codex'
+import { collectCursorQuota, cursorCredentialExists } from './cursor'
 import {
   addManualAccount as configAddManualAccount,
   decryptToken,
@@ -53,7 +54,8 @@ const PROVIDERS: ProviderDef[] = [
   { id: 'kimi', agent: 'kimi', displayName: 'Kimi', supportsManual: false, localCredentialExists: kimiCredentialExists, collect: (_cred, origin) => collectKimiQuota(origin) },
   { id: 'codex', agent: 'codex', displayName: 'ChatGPT', supportsManual: true, localCredentialExists: codexCredentialExists, collect: (cred) => collectCodexQuota(cred) },
   { id: 'opencode-go', agent: 'opencode', displayName: 'OpenCode Go', supportsManual: true, localCredentialExists: opencodeGoCredentialExists, collect: (cred) => collectOpencodeGoQuota(cred) },
-  { id: 'grok', agent: 'grok', displayName: 'Grok', supportsManual: true, localCredentialExists: grokCredentialExists, collect: (cred) => collectGrokQuota(cred) }
+  { id: 'grok', agent: 'grok', displayName: 'Grok', supportsManual: true, localCredentialExists: grokCredentialExists, collect: (cred) => collectGrokQuota(cred) },
+  { id: 'cursor', agent: 'cursor', displayName: 'Cursor', supportsManual: false, localCredentialExists: cursorCredentialExists, collect: (cred) => collectCursorQuota(cred) }
 ]
 
 const PROVIDER_IDS = PROVIDERS.map((p) => p.id)
